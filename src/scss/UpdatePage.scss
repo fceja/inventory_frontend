@@ -1,0 +1,44 @@
+// image container
+.upload-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  height: 200px;
+}
+
+// item details container
+.main-container {
+  margin-top: 50px;
+}
+.item-title,
+.item-name {
+  height: 30px;
+  padding: 10px;
+}
+
+.item-details {
+  width: 100%;
+}
+
+.items-top,
+.items-bot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+}
+
+.quantity-container,
+.min-level-container,
+.price-container,
+.total-container {
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
