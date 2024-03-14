@@ -13,13 +13,17 @@
 .main-container {
   margin-top: 50px;
 }
-.item-title,
-.item-name {
-  height: 30px;
-  padding: 10px;
+.parent-folder {
+  margin-left: 10px;
+  margin-bottom: 20px;
 }
 
-.item-details {
+.item-name-input,
+.item-name {
+  margin-left: 10px;
+}
+
+.form-item-details {
   width: 100%;
 }
 
@@ -41,4 +45,12 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+}
+
+.btn-container {
+  width: 100%;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
