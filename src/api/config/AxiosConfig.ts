@@ -7,8 +7,6 @@ export const api = axios.create({
 
 // custom error handler
 const errorHandler = (error: AxiosError) => {
-  console.error(error);
-
   return Promise.reject(error);
 };
 
