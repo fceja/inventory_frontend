@@ -14,7 +14,7 @@ const Login = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const response = await SystemAuthApi.login(formData);
+    const response = await SystemAuthApi.systemLogin(formData);
     if (response && response.status === 200 && response.data.success) {
       console.log("Login sucessful.");
     }

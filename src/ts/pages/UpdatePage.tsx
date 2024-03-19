@@ -2,26 +2,29 @@ import { useState } from "react";
 
 import "../../scss/UpdatePage.scss";
 import Login from "../components/Login";
-import { ProductApi } from "../../api/ProductApi";
+import { ProductsApi } from "../../api/ProductsApi";
 
 const UpdatePage = () => {
   const [formData, setFormData] = useState({
     name: "",
-    quantity: "",
-    minLevel: "",
-    price: "",
-    totalValue: "",
+    quantity: 0,
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [event.target.name]: event.target.value });
+    const { name, value } = event.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: name === "quantity" ? parseInt(value, 10) : value,
+    }));
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    console.log("inside handle submit.");
-    console.log(formData);
+    const response = await ProductsApi.create(formData);
+    if (response && response.status === 200 && response.data.success) {
+      console.log("Product created.");
+    }
   };
 
   return (
@@ -36,6 +39,7 @@ const UpdatePage = () => {
             name="name"
             className="item-name-input"
             onChange={handleChange}
+            required
           />
           <div className="items-top">
             <div className="quantity-container">
@@ -46,6 +50,7 @@ const UpdatePage = () => {
                 min="0"
                 id="quantity"
                 onChange={handleChange}
+                required
               />
             </div>
             <div className="min-level-container">

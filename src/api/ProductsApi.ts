@@ -1,21 +1,20 @@
-import { api } from "./config/AxiosConfig";
+import { apiClient } from "./config/AxiosConfig";
 import { defineCancelApiObject } from "./utils/AxiosUtils";
 
 interface ProductI {
   name: string;
-  description: string;
   quantity: number;
 }
 
-export const ProductApi = {
+export const ProductsApi = {
   create: async (product: ProductI, cancel = false) => {
     const cancelSignal =
       cancel && cancelApiObject
-        ? cancelApiObject[ProductApi.create.name].handleRequestCancellation()
+        ? cancelApiObject[ProductsApi.create.name].handleRequestCancellation()
             .signal
         : undefined;
 
-    await api.request({
+    return await apiClient.request({
       url: "/products",
       method: "POST",
       data: product,
@@ -24,4 +23,4 @@ export const ProductApi = {
   },
 };
 
-const cancelApiObject = defineCancelApiObject(ProductApi);
+const cancelApiObject = defineCancelApiObject(ProductsApi);

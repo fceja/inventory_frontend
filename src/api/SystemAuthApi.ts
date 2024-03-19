@@ -1,4 +1,4 @@
-import { api } from "./config/AxiosConfig";
+import { apiClient } from "./config/AxiosConfig";
 import { defineCancelApiObject } from "./utils/AxiosUtils";
 
 interface SystemUserI {
@@ -7,14 +7,14 @@ interface SystemUserI {
 }
 
 export const SystemAuthApi = {
-  login: async (systemUser: SystemUserI, cancel = false) => {
+  systemLogin: async (systemUser: SystemUserI, cancel = false) => {
     const cancelSignal =
       cancel && cancelApiObject
-        ? cancelApiObject[SystemAuthApi.login.name].handleRequestCancellation()
+        ? cancelApiObject[SystemAuthApi.systemLogin.name].handleRequestCancellation()
             .signal
         : undefined;
 
-    return await api.request({
+    return await apiClient.request({
       url: "/systemAuth/systemLogin",
       method: "POST",
       data: systemUser,
