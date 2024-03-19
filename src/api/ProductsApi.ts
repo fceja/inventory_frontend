@@ -21,6 +21,20 @@ export const ProductsApi = {
       signal: cancelSignal,
     });
   },
+  get: async (cancel = false) => {
+    const cancelSignal =
+      cancel && cancelApiObject
+        ? cancelApiObject[ProductsApi.get.name].handleRequestCancellation()
+            .signal
+        : undefined;
+
+    return await apiClient.request({
+      url: "/products",
+      method: "GET",
+      data: null,
+      signal: cancelSignal,
+    });
+  },
 };
 
 const cancelApiObject = defineCancelApiObject(ProductsApi);
