@@ -10,8 +10,9 @@ export const SystemAuthApi = {
   systemLogin: async (systemUser: SystemUserI, cancel = false) => {
     const cancelSignal =
       cancel && cancelApiObject
-        ? cancelApiObject[SystemAuthApi.systemLogin.name].handleRequestCancellation()
-            .signal
+        ? cancelApiObject[
+            SystemAuthApi.systemLogin.name
+          ].handleRequestCancellation().signal
         : undefined;
 
     return await apiClient.request({

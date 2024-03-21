@@ -16,27 +16,29 @@ const Login = () => {
 
     const response = await SystemAuthApi.systemLogin(formData);
     if (response && response.status === 200 && response.data.success) {
-      console.log("Login sucessful.");
+      console.log("Login successful.");
     }
   };
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <label>Email</label>
+        <label htmlFor="email">Email</label>
         <input
           type="email"
           name="email"
           value={formData.email}
           onChange={handleChange}
+          autoComplete="email"
           required
         ></input>
-        <label>Password</label>
+        <label htmlFor="password">Password</label>
         <input
           type="password"
           name="password"
           value={formData.password}
           onChange={handleChange}
+          autoComplete="current-password"
           required
         ></input>
         <button type="submit">Login</button>
