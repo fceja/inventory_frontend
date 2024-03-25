@@ -1,4 +1,7 @@
-import { apiClient } from "./config/AxiosConfig";
+import { Dispatch } from "redux";
+
+import useApiClient from "./config/AxiosConfig";
+import { AuthActionT } from "../ts/store/auth/authActions";
 import { defineCancelApiObject } from "./utils/AxiosUtils";
 
 interface SystemUserI {
@@ -6,13 +9,14 @@ interface SystemUserI {
   password: string;
 }
 
-export const SystemAuthApi = {
-  systemLogin: async (systemUser: SystemUserI, cancel = false) => {
+const SystemAuthApi = (dispatch: Dispatch<AuthActionT>) => {
+  const apiClient = useApiClient(dispatch);
+  const cancelApiObject = defineCancelApiObject(SystemAuthApi);
+
+  const systemLogin = async (systemUser: SystemUserI, cancel = false) => {
     const cancelSignal =
       cancel && cancelApiObject
-        ? cancelApiObject[
-            SystemAuthApi.systemLogin.name
-          ].handleRequestCancellation().signal
+        ? cancelApiObject.systemLogin.handleRequestCancellation().signal
         : undefined;
 
     return await apiClient.request({
@@ -21,7 +25,9 @@ export const SystemAuthApi = {
       data: systemUser,
       signal: cancelSignal,
     });
-  },
+  };
+
+  return { systemLogin };
 };
 
-const cancelApiObject = defineCancelApiObject(SystemAuthApi);
+export default SystemAuthApi;
