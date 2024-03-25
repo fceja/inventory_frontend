@@ -1,26 +1,29 @@
 import axios from "axios";
+import { Dispatch } from "redux";
 
-export const apiClient = axios.create({
-  withCredentials: true,
-  baseURL: import.meta.env.VITE_API_BASE_URL,
-});
+import { loginUser, AuthActionT } from "../../ts/store/auth/authActions";
 
-apiClient.interceptors.response.use(
-  /**
-   * parse authorization bearer token from response and
-   * apply to subsequent axios client requests
-   */
-  (response) => {
-    const token = response.headers["authorization"];
-    if (token) {
-      apiClient.defaults.headers.common["authorization"] = `${token}`;
-    }
+const useApiClient = (dispatch: Dispatch<AuthActionT>) => {
+  const apiClient = axios.create({
+    withCredentials: true,
+    baseURL: import.meta.env.VITE_API_BASE_URL,
+  });
 
-    return response;
-  },
+  // Add interceptor for responses
+  apiClient.interceptors.response.use(
+    (response) => {
+      const token: string = response.headers["authorization"];
+      if (token) {
+        dispatch(loginUser(token) as AuthActionT);
+      }
+      return response;
+    },
+    (error) => {
+      return Promise.reject(error);
+    },
+  );
 
-  // leaving empty, since we don't want axios errors logged
-  (_error) => {
-    return;
-  },
-);
+  return apiClient;
+};
+
+export default useApiClient;
