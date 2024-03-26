@@ -1,15 +1,9 @@
-import { Action } from "redux";
-
 import { combineReducers } from "@reduxjs/toolkit";
 
-const placeholderReducer = (state = {}, _action: Action) => {
-  // reducer does nothing, it returns the initial state
-  // including to statisfy console error
-  return state;
-};
+import authReducer from "./auth/authReducer";
 
 const rootReducer = combineReducers({
-  placeholder: placeholderReducer,
+  authState: authReducer,
 });
 
 export default rootReducer;
