@@ -1,4 +1,4 @@
-import { apiClient } from "./config/AxiosConfig";
+import useApiClient from "./config/AxiosConfig";
 import { defineCancelApiObject } from "./utils/AxiosUtils";
 
 interface ProductI {
@@ -6,12 +6,14 @@ interface ProductI {
   quantity: number;
 }
 
-export const ProductsApi = {
-  create: async (product: ProductI, cancel = false) => {
+const ProductsApi = (dispatch: any, authState: any) => {
+  const apiClient = useApiClient(dispatch, authState);
+  const cancelApiObject = defineCancelApiObject(ProductsApi);
+
+  const create = async (product: ProductI, cancel = false) => {
     const cancelSignal =
       cancel && cancelApiObject
-        ? cancelApiObject[ProductsApi.create.name].handleRequestCancellation()
-            .signal
+        ? cancelApiObject.create.handleRequestCancellation().signal
         : undefined;
 
     return await apiClient.request({
@@ -20,12 +22,12 @@ export const ProductsApi = {
       data: product,
       signal: cancelSignal,
     });
-  },
-  get: async (cancel = false) => {
+  };
+
+  const get = async (cancel = false) => {
     const cancelSignal =
       cancel && cancelApiObject
-        ? cancelApiObject[ProductsApi.get.name].handleRequestCancellation()
-            .signal
+        ? cancelApiObject.get.handleRequestCancellation().signal
         : undefined;
 
     return await apiClient.request({
@@ -34,7 +36,9 @@ export const ProductsApi = {
       data: null,
       signal: cancelSignal,
     });
-  },
+  };
+
+  return { create, get };
 };
 
-const cancelApiObject = defineCancelApiObject(ProductsApi);
+export default ProductsApi;
