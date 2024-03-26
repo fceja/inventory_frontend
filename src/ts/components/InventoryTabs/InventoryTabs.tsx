@@ -1,16 +1,21 @@
 import { useEffect, useState } from "react";
-import Login from "../../components/Login";
+import { useDispatch, useSelector } from "react-redux";
 
-import { ProductsApi } from "../../../api/ProductsApi";
+import { RootState } from "../../store/ConfigureStore";
+import Login from "../../components/Login";
+import ProductsApi from "../../../api/ProductsApi";
 
 const InventoryTabs = () => {
+  const dispatch = useDispatch();
+  const authState = useSelector((state: RootState) => state.authState);
+
   const [content, setContent] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     if (isLoggedIn) {
       const fetchData = async () => {
-        const response = await ProductsApi.get();
+        const response = await ProductsApi(dispatch, authState).get();
         if (response && response.status === 200 && response.data.success) {
           setContent(response.data.products);
         }
@@ -19,11 +24,17 @@ const InventoryTabs = () => {
     } else console.log("Must be logged in.");
   }, [isLoggedIn]);
 
+  useEffect(() => {
+    if (content) {
+      console.log("inside content");
+      console.log(content);
+    }
+  }, [content]);
+
   const handleClick = (number: string) => {
+    console.log(`number`);
+    console.log(number);
     setIsLoggedIn(true);
-    console.log(`number -> ${number}`);
-    console.log(`content -> ${content}`);
-    console.log(content);
   };
 
   return (

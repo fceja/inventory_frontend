@@ -1,10 +1,15 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import "../../scss/UpdatePage.scss";
+import { RootState } from "../store/ConfigureStore";
 import Login from "../components/Login";
-import { ProductsApi } from "../../api/ProductsApi";
+import ProductsApi from "../../api/ProductsApi";
 
 const UpdatePage = () => {
+  const dispatch = useDispatch();
+  const authState = useSelector((state: RootState) => state.authState);
+
   const [formData, setFormData] = useState({
     name: "",
     quantity: 0,
@@ -21,7 +26,7 @@ const UpdatePage = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const response = await ProductsApi.create(formData);
+    const response = await ProductsApi(dispatch, authState).create(formData);
     if (response && response.status === 200 && response.data.success) {
       console.log("Product created.");
     }
