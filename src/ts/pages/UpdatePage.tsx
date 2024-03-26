@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import "../../scss/UpdatePage.scss";
-import { RootState } from "../store/ConfigureStore";
-import Login from "../components/Login";
-import ProductsApi from "../../api/ProductsApi";
+import "@scss/UpdatePage.scss";
+import { RootState } from "@store/ConfigureStore";
+import Login from "@components/Login";
+import ProductsApi from "@api/ProductsApi";
 
 const UpdatePage = () => {
   const dispatch = useDispatch();

@@ -19,7 +19,16 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+
+    /* Alias paths */
+    "paths": {
+      "@api/*": ["./src/api/*"],
+      "@components/*": ["./src/ts/components/*"],
+      "@pages/*": ["./src/ts/pages/*"],
+      "@scss/*": ["./src/scss/*"],
+      "@store/*": ["./src/ts/store/*"]
+    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

@@ -1,4 +1,4 @@
-import { AuthActionT } from "./authActions";
+import { AuthActionT } from "@store/auth/authActions";
 
 interface InitialStateI {
   isLoggedIn: boolean;

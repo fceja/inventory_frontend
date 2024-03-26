@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 
-import "../../scss/App.scss";
-import HomePage from "../pages/HomePage";
-import InventoryPage from "../pages/InventoryPage";
-import UpdatePage from "../pages/UpdatePage";
+import "@scss/App.scss";
+import HomePage from "@pages/HomePage";
+import InventoryPage from "@pages/InventoryPage";
+import UpdatePage from "@pages/UpdatePage";
 
 const App = () => {
   return (

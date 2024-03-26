@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import SystemAuthApi from "../../api/SystemAuthApi";
+import SystemAuthApi from "@api/SystemAuthApi";
 
 const Login = () => {
   const dispatch = useDispatch();
