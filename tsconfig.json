@@ -25,10 +25,10 @@
     "baseUrl": "./",
     "paths": {
       "@api/*": ["./src/api/*"],
-      "@components/*": ["./src/ts/components/*"],
-      "@pages/*": ["src/ts/pages/*"],
+      "@components/*": ["src/frontend/components/*"],
+      "@pages/*": ["src/frontend/pages/*"],
       "@scss/*": ["./src/scss/*"],
-      "@store/*": ["./src/ts/store/*"]
+      "@store/*": ["src/store/*"]
     }
   },
   "include": ["src"],

@@ -8,10 +8,10 @@ export default defineConfig({
   resolve: {
     alias: {
       "@api": path.resolve(__dirname, "./src/api"),
-      "@components": path.resolve(__dirname, "./src/ts/components"),
-      "@pages": path.resolve(__dirname, "./src/ts/pages"),
+      "@components": path.resolve(__dirname, "./src/frontend/components"),
+      "@pages": path.resolve(__dirname, "./src/frontend/pages"),
       "@scss": path.resolve(__dirname, "./src/scss"),
-      "@store": path.resolve(__dirname, "./src/ts/store"),
+      "@store": path.resolve(__dirname, "./src/store"),
     },
   },
 });
