@@ -18,8 +18,8 @@ const useApiClient = (dispatch: Dispatch<AuthActionT>, authState?: any) => {
 
       return request;
     },
-    (error) => {
-      return Promise.reject(error);
+    (_error) => {
+      // leaving empty, since we don't want anything logged in console
     },
   );
 
@@ -32,8 +32,8 @@ const useApiClient = (dispatch: Dispatch<AuthActionT>, authState?: any) => {
       }
       return response;
     },
-    (error) => {
-      return Promise.reject(error);
+    (_error) => {
+      // leaving empty, since we don't want anything logged in console
     },
   );
 
