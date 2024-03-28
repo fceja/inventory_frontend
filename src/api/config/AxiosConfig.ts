@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Dispatch } from "redux";
 
-import { loginUser, AuthActionT } from "@store/auth/authActions";
+import { authUser, AuthActionT } from "@store/auth/authActions";
 
 const useApiClient = (dispatch: Dispatch<AuthActionT>, authState?: any) => {
   const apiClient = axios.create({
@@ -28,7 +28,7 @@ const useApiClient = (dispatch: Dispatch<AuthActionT>, authState?: any) => {
     (response) => {
       const token: string = response.headers["authorization"];
       if (token) {
-        dispatch(loginUser(token) as AuthActionT);
+        dispatch(authUser(token) as AuthActionT);
       }
       return response;
     },
