@@ -1,30 +1,33 @@
 import { Action } from "redux";
+import { validateToken } from "@store/auth/authUtils";
 
-interface AuthAction extends Action {
-  type: "AUTH_USER";
-  payload: { token: string };
+const SET_AUTH_TOKEN = "SET_AUTH_TOKEN";
+const SET_AUTHD = "SET_AUTHD";
+
+interface SetAuthdAction extends Action {
+  type: "SET_AUTHD";
+  payload: { isAuthd: boolean };
 }
 
-interface LoginAction extends Action {
-  type: "LOGIN_USER";
-  payload: { token: string };
+interface SetAuthTokenAction extends Action {
+  type: "SET_AUTH_TOKEN";
+  payload: { authToken: string };
 }
 
-interface LogoutAction extends Action {
-  type: "LOGOUT_USER";
-}
+export type AuthActionT = SetAuthdAction | SetAuthTokenAction;
 
-export type AuthActionT = AuthAction | LoginAction | LogoutAction;
+export const setAuthd = (token: string): AuthActionT => {
+  const isValid = validateToken(token);
 
-const LOGIN_USER = "LOGIN_USER";
-const AUTH_USER = "AUTH_USER";
+  return {
+    type: SET_AUTHD,
+    payload: { isAuthd: isValid },
+  };
+};
 
-export const authUser = (token: string) => ({
-  type: AUTH_USER,
-  payload: { token },
-});
-
-export const loginUser = (token: string) => ({
-  type: LOGIN_USER,
-  payload: { token },
-});
+export const setAuthToken = (token: string): AuthActionT => {
+  return {
+    type: SET_AUTH_TOKEN,
+    payload: { authToken: token },
+  };
+};

@@ -1,5 +1,4 @@
 import { AuthActionT } from "@store/auth/authActions";
-import { validateToken } from "@store/auth/authUtils";
 
 interface InitialStateI {
   isAuthd: boolean;
@@ -13,25 +12,16 @@ const initialState: InitialStateI = {
 
 const authReducer = (state = initialState, action: AuthActionT) => {
   switch (action.type) {
-    case "AUTH_USER":
-      const isValid = validateToken(action.payload.token);
-
+    case "SET_AUTHD":
       return {
         ...state,
-        isAuthd: isValid,
-        authToken: action.payload.token,
+        isAuthd: action.payload.isAuthd,
       };
 
-    case "LOGIN_USER":
+    case "SET_AUTH_TOKEN":
       return {
         ...state,
-        authToken: action.payload.token,
-      };
-
-    case "LOGOUT_USER":
-      return {
-        ...state,
-        authToken: null,
+        authToken: action.payload.authToken,
       };
 
     default:
