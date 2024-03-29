@@ -12,7 +12,7 @@ export const validateToken = (token: string) => {
 
     // check token expiration
     const currentTime = Math.floor(Date.now() / 1000);
-    if (!decodedToken.exp || decodedToken.exp < currentTime) {
+    if (!decodedToken.exp || decodedToken.exp <= currentTime) {
       return false;
     }
 
