@@ -12,6 +12,13 @@ const initialState: InitialStateI = {
 
 const authReducer = (state = initialState, action: AuthActionT) => {
   switch (action.type) {
+    case "CLEAR_AUTH":
+      return {
+        ...state,
+        authToken: action.payload.authToken,
+        isAuthd: action.payload.isAuthd,
+      };
+
     case "SET_AUTHD":
       return {
         ...state,
@@ -28,4 +35,5 @@ const authReducer = (state = initialState, action: AuthActionT) => {
       return state;
   }
 };
+
 export default authReducer;

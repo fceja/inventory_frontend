@@ -1,8 +1,15 @@
 import { Action } from "redux";
+
 import { validateToken } from "@store/auth/authUtils";
 
+const CLEAR_AUTH = "CLEAR_AUTH";
 const SET_AUTH_TOKEN = "SET_AUTH_TOKEN";
 const SET_AUTHD = "SET_AUTHD";
+
+interface ClearAuthAction extends Action {
+  type: "CLEAR_AUTH";
+  payload: { isAuthd: boolean; authToken: null };
+}
 
 interface SetAuthdAction extends Action {
   type: "SET_AUTHD";
@@ -14,7 +21,7 @@ interface SetAuthTokenAction extends Action {
   payload: { authToken: string };
 }
 
-export type AuthActionT = SetAuthdAction | SetAuthTokenAction;
+export type AuthActionT = ClearAuthAction | SetAuthdAction | SetAuthTokenAction;
 
 export const setAuthd = (token: string): AuthActionT => {
   const isValid = validateToken(token);
@@ -29,5 +36,12 @@ export const setAuthToken = (token: string): AuthActionT => {
   return {
     type: SET_AUTH_TOKEN,
     payload: { authToken: token },
+  };
+};
+
+export const clearAuth = (): AuthActionT => {
+  return {
+    type: CLEAR_AUTH,
+    payload: { isAuthd: false, authToken: null },
   };
 };
