@@ -1,3 +1,13 @@
+import Login from "@components/Login";
+import HamburgerMenu from "@components/hamburgerMenu/HamburgerMenu";
+
 const NavBar = () => {
-  return <div> This is NavBar.</div>;
+  return (
+    <>
+      <HamburgerMenu />
+      <Login />
+    </>
+  );
 };
+
+export default NavBar;

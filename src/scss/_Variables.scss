@@ -1,0 +1,90 @@
+// colors
+$default-teal: teal;
+$default-error-red: rgb(212, 5, 5);
+$default-light-gray: rgb(218, 214, 214);
+$default-white: rgb(255, 255, 255);
+$default-black: rgb(0, 0, 0);
+$default-linear-gradient: rgba(255, 255, 255, 0.67);
+$default-whitesmoke: whitesmoke;
+
+// spacing
+$default-container-margin: 50px;
+$default-container-margin-top-bottom: $default-container-margin 0
+  $default-container-margin 0;
+
+// screen / devices sizes
+$device-sizes: "xs-device", "sm-device", "md-device", "lg-device", "xl-device";
+$default-max-width: 1200px;
+
+$device-breakpoint-zero: 0px;
+$device-breakpoint-xs: 320px;
+$device-breakpoint-sm: 576px;
+$device-breakpoint-md: 768px;
+$device-breakpoint-lg: 992px;
+$device-breakpoint-xl: 1200px;
+
+// define min/max width breakpoints for device sizes
+$device-breakpoints: (
+  xs-device: (
+    max: 576px,
+  ),
+  sm-device: (
+    min: 577px,
+    max: 768px,
+  ),
+  md-device: (
+    min: 769px,
+    max: 992px,
+  ),
+  lg-device: (
+    min: 993px,
+    max: 1200px,
+  ),
+  xl-device: (
+    min: 1201px,
+  ),
+);
+
+// return media query for provided device size
+@mixin media-query($device-sizes) {
+  @each $device-size in $device-sizes {
+    $media-query: null;
+    $min-width: null;
+    $max-width: null;
+
+    $device-breakpoint-config: map-get($device-breakpoints, $device-size);
+
+    // if device-breapoint-config returned, set min/max width
+    @if $device-breakpoint-config {
+      $min-width: if(
+        map-has-key($device-breakpoint-config, min),
+        map-get($device-breakpoint-config, min),
+        null
+      );
+      $max-width: if(
+        map-has-key($device-breakpoint-config, max),
+        map-get($device-breakpoint-config, max),
+        null
+      );
+    }
+
+    // generate media query
+    @if $min-width and $max-width {
+      $media-query: "(min-width: #{$min-width}) and (max-width: #{$max-width})";
+    } @else if $min-width {
+      $media-query: "(min-width: #{$min-width})";
+    } @else if $max-width {
+      $media-query: "(max-width: #{$max-width})";
+    }
+
+    // set media query content if generated, else throw error
+    @if $media-query {
+      @media #{$media-query} {
+        @content;
+      }
+    } @else {
+      content: $breakpoint;
+      @error "No valid media query found for #{$breakpoint}.";
+    }
+  }
+}

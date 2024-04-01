@@ -1,5 +1,7 @@
+import NavBar from "@components/navBar/NavBar";
+
 const HomePage = () => {
-  return <div>This is home page.</div>;
+  return <NavBar />;
 };
 
 export default HomePage;
