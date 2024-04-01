@@ -6,6 +6,11 @@ const CLEAR_AUTH = "CLEAR_AUTH";
 const SET_AUTH_TOKEN = "SET_AUTH_TOKEN";
 const SET_AUTHD = "SET_AUTHD";
 
+interface CheckTokenExpiryAction extends Action {
+  type: "CHECK_TOKEN_EXPIRY";
+  payload: null;
+}
+
 interface ClearAuthAction extends Action {
   type: "CLEAR_AUTH";
   payload: { isAuthd: boolean; authToken: null };
@@ -21,7 +26,11 @@ interface SetAuthTokenAction extends Action {
   payload: { authToken: string };
 }
 
-export type AuthActionT = ClearAuthAction | SetAuthdAction | SetAuthTokenAction;
+export type AuthActionT =
+  | CheckTokenExpiryAction
+  | ClearAuthAction
+  | SetAuthdAction
+  | SetAuthTokenAction;
 
 export const setAuthd = (token: string): AuthActionT => {
   const isValid = validateToken(token);
