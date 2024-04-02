@@ -1,5 +1,11 @@
 @import "./Variables.scss";
 
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* hamburger menu container */
 $menu-bar-container-height: 100px;
 $menu-bar-container-width: 80px;
 
@@ -135,4 +141,10 @@ $menu-bar-container-width: 80px;
 .ham-menu-btn-link-contact:active {
   box-shadow: none;
   transform: translateY(0);
+}
+
+/* user profile container */
+.user-profile {
+  background-color: red;
+  margin-right: 10px;
 }

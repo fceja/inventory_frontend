@@ -1,8 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
-import "@scss/HamburgerMenu.scss";
-
 const HamburgerMenu = () => {
   /* state variables */
   const [burgerClass, setBurgerClass] = useState("hamburger-bar unclicked");
