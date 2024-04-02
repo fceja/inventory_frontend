@@ -2,13 +2,21 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
 const HamburgerMenu = () => {
-  /* state variables */
-  const [burgerClass, setBurgerClass] = useState("hamburger-bar unclicked");
+  const [barClass, setBarClass] = useState("hamburger-bar unclicked");
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [isMenuClicked, setIsMenuClicked] = useState(false);
-  const [menuClass, setMenuClass] = useState("menu hidden");
   const menuRef = useRef<HTMLDivElement>(null);
 
-  /* handles closure of menu if clicked outside menu container */
+  /* adds click listener if hamburger menu is opened */
+  useEffect(() => {
+    if (isMenuClicked) {
+      document.addEventListener("click", handleClickOutsideMenu, true);
+    } else {
+      document.removeEventListener("click", handleClickOutsideMenu, true);
+    }
+  }, [isMenuClicked]);
+
+  /* handles closure of menu if clicked outside of menu container */
   const handleClickOutsideMenu = (event: MouseEvent) => {
     const targetNode = event.target as Node;
 
@@ -26,31 +34,16 @@ const HamburgerMenu = () => {
     }
   };
 
-  /* adds click listener if hamburger menu is opened */
-  useEffect(() => {
-    if (isMenuClicked) {
-      document.addEventListener("click", handleClickOutsideMenu, true);
-    } else {
-      document.removeEventListener("click", handleClickOutsideMenu, true);
-    }
-  });
-
   /* update hamburger menu visibility */
   const updateMenuVisibility = () => {
     if (!isMenuClicked) {
-      /* make visible */
-      setBurgerClass("hamburger-bar clicked");
-      setMenuClass("menu visible");
+      setIsMenuVisible(true);
+      setBarClass("hamburger-bar clicked");
     } else {
-      /* hide */
-      setBurgerClass("hamburger-bar unclicked");
-      setMenuClass("menu hidden");
+      setIsMenuVisible(false);
+      setBarClass("hamburger-bar unclicked");
     }
     setIsMenuClicked(!isMenuClicked);
-  };
-
-  const handleOnClick = () => {
-    updateMenuVisibility();
   };
 
   return (
@@ -60,30 +53,36 @@ const HamburgerMenu = () => {
           className="hamburger-menu-bar-container"
           onClick={updateMenuVisibility}
         >
-          <div className={burgerClass}></div>
-          <div className={burgerClass}></div>
-          <div className={burgerClass}></div>
+          <div className={barClass}></div>
+          <div className={barClass}></div>
+          <div className={barClass}></div>
         </div>
       </div>
-      <div className={`${menuClass} shadow`} ref={menuRef}>
-        <Link className="ham-menu-btn-link" to="/" onClick={handleOnClick}>
-          Home
-        </Link>
-        <Link
-          className="ham-menu-btn-link"
-          to="/update"
-          onClick={handleOnClick}
-        >
-          Update
-        </Link>
-        <Link
-          className="ham-menu-btn-link ham-menu-btn-link-contact"
-          to="/inventory"
-          onClick={handleOnClick}
-        >
-          Inventory
-        </Link>
-      </div>
+      {isMenuVisible && (
+        <div className="menu shadow" ref={menuRef}>
+          <Link
+            className="ham-menu-btn-link"
+            to="/"
+            onClick={updateMenuVisibility}
+          >
+            Home
+          </Link>
+          <Link
+            className="ham-menu-btn-link"
+            to="/update"
+            onClick={updateMenuVisibility}
+          >
+            Update
+          </Link>
+          <Link
+            className="ham-menu-btn-link ham-menu-btn-link-contact"
+            to="/inventory"
+            onClick={updateMenuVisibility}
+          >
+            Inventory
+          </Link>
+        </div>
+      )}
     </>
   );
 };
