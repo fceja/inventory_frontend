@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import "@scss/UpdatePage.scss";
 import { RootState } from "@store/ConfigureStore";
-import Login from "@components/Login";
+import Login from "@components/login/Login";
 import ProductsApi from "@api/ProductsApi";
 
 const UpdatePage = () => {

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { RootState } from "@store/ConfigureStore";
-import Login from "@components/Login";
+import Login from "@components/login/Login";
 import ProductsApi from "@api/ProductsApi";
 
 const InventoryTabs = () => {
