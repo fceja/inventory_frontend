@@ -10,7 +10,7 @@ const Modal: React.FC<{
 
   useEffect(() => {
     const div = document.createElement("div");
-    div.id = "root-modal";
+    div.id = `root-${className}`;
     document.body.appendChild(div);
     setModalRoot(div);
 
@@ -22,8 +22,8 @@ const Modal: React.FC<{
   if (!isOpen || !modalRoot) return null;
 
   return createPortal(
-      <div className={`${className}`}>{children}</div>,
-      modalRoot,
+    <div className={`${className} shadow`}>{children}</div>,
+    modalRoot,
   );
 };
 

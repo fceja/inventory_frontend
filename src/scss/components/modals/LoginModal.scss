@@ -1,25 +1,49 @@
 @import "@scss/Variables.scss";
 
-.login-modal {
-    margin: 20px;
-    height: 300px;
-    width: 75vw;
-    margin-left: auto;
-    margin-right: auto;
+#root-login-modal {
+    background-color: rgba(195, 195, 195, 0.141);
+    backdrop-filter: blur(5px);
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    z-index: 100;
 }
 
-.login-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.login {
+    &-modal {
+        background-color: white;
 
-    label, button {
-        margin-top:10px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-evenly;
+
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 101;
+
+        margin-left: auto;
+        margin-right: auto;
+
+        height: 300px;
+        width: 75vw;
+    }
+
+    &-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        label,
+        button {
+            margin-top: 10px;
+        }
     }
 }
