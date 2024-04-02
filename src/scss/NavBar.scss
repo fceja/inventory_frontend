@@ -1,5 +1,11 @@
 @import "./Variables.scss";
 
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .nav-bar {
   display: flex;
   justify-content: space-between;
@@ -145,6 +151,16 @@ $menu-bar-container-width: 80px;
 
 /* user profile container */
 .user-profile {
-  background-color: red;
-  margin-right: 10px;
+  @include flex-center;
+}
+
+.img-container {
+  @include flex-center;
+
+  text-align: center;
+  text-wrap: wrap;
+
+  border-style: dashed;
+  height: 80%;
+  width: 80%;
 }
