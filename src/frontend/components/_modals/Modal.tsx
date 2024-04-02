@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
-const ModalOverlay: React.FC<{
+const Modal: React.FC<{
+  className: string;
   isOpen: boolean;
   children: any;
-}> = ({ isOpen, children }) => {
+}> = ({ className, isOpen, children }) => {
   const [modalRoot, setModalRoot] = useState<null | HTMLDivElement>(null);
 
   useEffect(() => {
     const div = document.createElement("div");
-    div.id = "modal-root";
+    div.id = "root-modal";
     document.body.appendChild(div);
     setModalRoot(div);
 
@@ -21,12 +22,9 @@ const ModalOverlay: React.FC<{
   if (!isOpen || !modalRoot) return null;
 
   return createPortal(
-    <div className="modal-overlay">
-      <div className="modal">{children}</div>
-    </div>,
-
-    modalRoot,
+      <div className={`${className}`}>{children}</div>,
+      modalRoot,
   );
 };
 
-export default ModalOverlay;
+export default Modal;

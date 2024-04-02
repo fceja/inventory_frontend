@@ -1,7 +1,6 @@
+import "@scss/components/NavBar.scss";
 import UserProfile from "@components/userProfile/UserProfile";
 import HamburgerMenu from "@components/hamburgerMenu/HamburgerMenu";
-
-import "@scss/NavBar.scss";
 
 const NavBar = () => {
   return (

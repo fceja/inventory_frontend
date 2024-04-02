@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import "@scss/UpdatePage.scss";
+import "@scss/pages/UpdatePage.scss";
 import { RootState } from "@store/ConfigureStore";
 import ProductsApi from "@api/ProductsApi";
 
@@ -33,7 +33,7 @@ const UpdatePage = () => {
 
   return (
     <>
-      <div className="upload-image shadow">Image container.</div>
+      <div className="upload-image shadow">Item image container.</div>
       <div className="main-container shadow">
         <form onSubmit={handleSubmit}>
           <div className="parent-folder">Parent folder</div>

@@ -1,11 +1,12 @@
-import ModalOverlay from "@components/_modals/ModalOverlay";
+import "@scss/components/modals/LoginModal.scss"
+import Modal from "@components/_modals/Modal";
 import LoginForm from "@components/_forms/LoginForm";
 
 const LoginModal = () => {
   return (
-    <ModalOverlay isOpen={true}>
+    <Modal className="login-modal" isOpen={true}>
       <LoginForm />
-    </ModalOverlay>
+    </Modal>
   );
 };
 
