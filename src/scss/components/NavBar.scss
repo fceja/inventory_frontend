@@ -1,11 +1,5 @@
 @import "@scss/Variables.scss";
 
-@mixin flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 /* navigation bar container */
 .nav-bar {
   display: flex;
