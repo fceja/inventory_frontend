@@ -1,7 +1,7 @@
-import NavBar from "@components/navBar/NavBar";
+import "@scss/Homepage.scss";
 
 const HomePage = () => {
-  return <NavBar />;
+  return <div className="homepage-container">This is Homepage.</div>;
 };
 
 export default HomePage;
