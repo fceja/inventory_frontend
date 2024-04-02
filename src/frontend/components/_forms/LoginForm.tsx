@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 
 import SystemAuthApi from "@api/SystemAuthApi";
 
-const Login = () => {
+const LoginForm = () => {
   const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
@@ -51,4 +51,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginForm;

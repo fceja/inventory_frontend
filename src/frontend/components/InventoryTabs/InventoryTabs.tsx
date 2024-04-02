@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { RootState } from "@store/ConfigureStore";
-import Login from "@components/login/Login";
 import ProductsApi from "@api/ProductsApi";
 
 const InventoryTabs = () => {
@@ -57,20 +56,16 @@ const InventoryTabs = () => {
           Placeholder 3
         </button>
       </div>
-
       {authState.isAuthd && (
         <div id="main-authd" className="tabcontent">
           <h3>Authorized content</h3>
           <p>Authorized lorem epsum.</p>
         </div>
       )}
-
       <div id="main-public" className="tabcontent">
         <h3>Public content</h3>
         <p>Public lorem epsum.</p>
       </div>
-
-      <Login />
     </>
   );
 };
