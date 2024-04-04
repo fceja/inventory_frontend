@@ -28,7 +28,8 @@
       "@components/*": ["src/frontend/components/*"],
       "@pages/*": ["src/frontend/pages/*"],
       "@scss/*": ["./src/scss/*"],
-      "@store/*": ["src/store/*"]
+      "@store/*": ["src/store/*"],
+      "@utils/*": ["src/utils/*"]
     }
   },
   "include": ["src"],

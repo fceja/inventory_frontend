@@ -1,6 +1,6 @@
 import { Action } from "redux";
 
-import { validateToken } from "@store/auth/authUtils";
+import { validateToken } from "@utils/store/AuthUtils";
 
 const CLEAR_AUTH = "CLEAR_AUTH";
 const SET_AUTH_TOKEN = "SET_AUTH_TOKEN";

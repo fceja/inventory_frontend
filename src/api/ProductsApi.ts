@@ -1,5 +1,5 @@
 import useApiClient from "@api/config/AxiosConfig";
-import { defineCancelApiObject } from "@api/utils/AxiosUtils";
+import { defineCancelApiObject } from "@utils/api/AxiosUtils";
 
 interface ProductI {
   name: string;

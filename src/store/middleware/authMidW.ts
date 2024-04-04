@@ -25,8 +25,6 @@ export const checkTokenExpiryMiddleware =
       const decodedToken = jwtDecode(token.split("Bearer ")[1]);
       const currentTime = Math.floor(Date.now() / 1000);
 
-      const result = decodedToken && decodedToken.exp;
-
       if (decodedToken && decodedToken.exp) {
         const timeDiff = decodedToken.exp - currentTime;
 

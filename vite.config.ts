@@ -12,6 +12,7 @@ export default defineConfig({
       "@pages": path.resolve(__dirname, "./src/frontend/pages"),
       "@scss": path.resolve(__dirname, "./src/scss"),
       "@store": path.resolve(__dirname, "./src/store"),
+      "@utils": path.resolve(__dirname, "./src/utils"),
     },
   },
 });
