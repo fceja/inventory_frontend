@@ -26,6 +26,7 @@
     "paths": {
       "@api/*": ["./src/api/*"],
       "@components/*": ["src/frontend/components/*"],
+      "@hooks/*": ["src/frontend/hooks/*"],
       "@pages/*": ["src/frontend/pages/*"],
       "@scss/*": ["./src/scss/*"],
       "@store/*": ["src/store/*"],

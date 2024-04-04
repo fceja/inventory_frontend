@@ -1,4 +1,5 @@
 import { Dispatch } from "redux";
+
 import { clearAuth, AuthActionT } from "@store/auth/authActions";
 
 let logoutTimer: NodeJS.Timeout | null = null;
