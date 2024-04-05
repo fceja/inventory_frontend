@@ -4,6 +4,7 @@ import { Dispatch } from "redux";
 import { setAuthd, setAuthToken, AuthActionT } from "@store/auth/authActions";
 
 const useApiClient = (dispatch: Dispatch<AuthActionT>, authState?: any) => {
+
   const apiClient = axios.create({
     withCredentials: true,
     baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -12,8 +13,10 @@ const useApiClient = (dispatch: Dispatch<AuthActionT>, authState?: any) => {
   // Add interceptor for request
   apiClient.interceptors.request.use(
     (request) => {
-      if (authState) {
+      if (authState && authState.isAuthd) {
         request.headers["authorization"] = authState.authToken;
+      } else {
+        request.headers["authorization"] = null;
       }
 
       return request;
