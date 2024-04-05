@@ -17,6 +17,7 @@ export const useLogoutTimeout = (isAuthd: boolean) => {
 
         }
 
+        document.addEventListener('click', logoutTimeoutHandler);
         document.addEventListener('mousemove', logoutTimeoutHandler);
         document.addEventListener('keydown', logoutTimeoutHandler);
 
