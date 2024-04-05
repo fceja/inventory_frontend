@@ -1,7 +1,11 @@
 import { useState, useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
+import { RootState } from "@store/ConfigureStore";
+
 const HamburgerMenu = () => {
+  const isAuthd = useSelector((state: RootState) => state.authState.isAuthd);
   const [barClass, setBarClass] = useState("hamburger-bar unclicked");
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [isMenuClicked, setIsMenuClicked] = useState(false);
@@ -16,23 +20,13 @@ const HamburgerMenu = () => {
     }
   }, [isMenuClicked]);
 
-  /* handles closure of menu if clicked outside of menu container */
-  const handleClickOutsideMenu = (event: MouseEvent) => {
-    const targetNode = event.target as Node;
-
-    if (
-      isMenuClicked &&
-      menuRef.current &&
-      !menuRef.current.contains(targetNode) &&
-      targetNode instanceof HTMLElement &&
-      targetNode.className !==
-        "hamburger-menu-bar-container" /* exclude since handled in onClick */ &&
-      targetNode.className !==
-        "hamburger-bar clicked" /* exclude since handled in onClick */
-    ) {
-      updateMenuVisibility();
+  /* hides hamburger menu is not authd */
+  useEffect(() => {
+    if (!isAuthd) {
+      setIsMenuVisible(false);
+      setBarClass("hamburger-bar unclicked");
     }
-  };
+  }, [isAuthd])
 
   /* update hamburger menu visibility */
   const updateMenuVisibility = () => {
@@ -44,6 +38,23 @@ const HamburgerMenu = () => {
       setBarClass("hamburger-bar unclicked");
     }
     setIsMenuClicked(!isMenuClicked);
+  };
+
+  /* handles closure of menu if clicked outside of menu container */
+  const handleClickOutsideMenu = (event: MouseEvent) => {
+    const targetNode = event.target as Node;
+    if (
+      isMenuClicked &&
+      menuRef.current &&
+      !menuRef.current.contains(targetNode) &&
+      targetNode instanceof HTMLElement &&
+      targetNode.className !==
+      "hamburger-menu-bar-container" /* exclude since handled in onClick */ &&
+      targetNode.className !==
+      "hamburger-bar clicked" /* exclude since handled in onClick */
+    ) {
+      updateMenuVisibility();
+    }
   };
 
   return (
