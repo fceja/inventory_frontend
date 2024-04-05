@@ -4,6 +4,7 @@ import { RootState } from "@store/ConfigureStore";
 import LoginModal from "@components/_modals/LoginModal";
 import { useLogoutTimeout } from "@hooks/LogoutTimeout.hook"
 import NavBar from "@components/navBar/NavBar";
+import Footer from "@components/footer/Footer";
 
 
 interface LayoutProps {
@@ -19,6 +20,7 @@ const Layout = ({ children }: LayoutProps) => {
     <div className="page-layout">
       <NavBar />
       {!isAuthd ? <LoginModal /> : children}
+      <Footer />
     </div>
   );
 };
