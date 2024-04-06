@@ -1,11 +1,10 @@
 import { useSelector } from "react-redux";
 
 import { RootState } from "@store/ConfigureStore";
+import Footer from "@components/footer/Footer";
 import LoginModal from "@components/_modals/LoginModal";
 import { useLogoutTimeout } from "@hooks/LogoutTimeout.hook"
 import NavBar from "@components/navBar/NavBar";
-import Footer from "@components/footer/Footer";
-
 
 interface LayoutProps {
   children: React.ReactNode;
