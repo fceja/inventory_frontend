@@ -9,6 +9,8 @@
         justify-content: space-between;
 
         height: 60px;
+        padding-top: 10px;
+        padding-bottom: 10px;
     }
 
     &-heirarchy,
@@ -21,6 +23,28 @@
 
         width: 100px;
         height: inherit;
+    }
+
+    &-stats {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        height: 40px;
+
+        &-count,
+        &-items-count,
+        &-items-quantity,
+        &-total-value {
+            @include flex-center;
+            text-align: center;
+
+            padding: 5px;
+            border-style: dashed;
+            height: inherit;
+
+            box-sizing: border-box;
+        }
     }
 
 }
