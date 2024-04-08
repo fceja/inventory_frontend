@@ -76,7 +76,7 @@ const HamburgerMenu = () => {
             to="/"
             onClick={updateMenuVisibility}
           >
-            Home
+            Dashboard
           </Link>
           <Link
             className="ham-menu-btn-link"
@@ -86,7 +86,7 @@ const HamburgerMenu = () => {
             Update
           </Link>
           <Link
-            className="ham-menu-btn-link ham-menu-btn-link-contact"
+            className="ham-menu-btn-link"
             to="/inventory"
             onClick={updateMenuVisibility}
           >

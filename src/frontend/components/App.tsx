@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 
 import "@scss/App.scss";
-import HomePage from "@pages/HomePage";
+import Dashboard from "@pages/DashboardPage";
 import InventoryPage from "@pages/InventoryPage";
 import Layout from "@pages/Layout";
 import UpdatePage from "@pages/UpdatePage";
@@ -13,7 +13,7 @@ const App = () => {
         path="/"
         element={
           <Layout>
-            <HomePage />
+            <Dashboard />
           </Layout>
         }
       ></Route>
