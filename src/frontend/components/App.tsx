@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 
 import "@scss/App.scss";
 import Dashboard from "@pages/DashboardPage";
+import FolderItemsPage from "@pages/FolderItemsPage";
 import InventoryPage from "@pages/InventoryPage";
 import Layout from "@pages/Layout";
 import UpdatePage from "@pages/UpdatePage";
@@ -14,6 +15,14 @@ const App = () => {
         element={
           <Layout>
             <Dashboard />
+          </Layout>
+        }
+      ></Route>
+      <Route
+        path="/folderItems"
+        element={
+          <Layout>
+            <FolderItemsPage />
           </Layout>
         }
       ></Route>

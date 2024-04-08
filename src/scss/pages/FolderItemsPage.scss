@@ -1,0 +1,26 @@
+@import "@scss/Variables.scss";
+
+.folder {
+    &-navigation {
+        @include flex-center;
+        text-align: center;
+
+        display: flex;
+        justify-content: space-between;
+
+        height: 60px;
+    }
+
+    &-heirarchy,
+    &-options {
+        @include flex-center;
+        text-align: center;
+
+        box-sizing: border-box;
+        border-style: dashed;
+
+        width: 100px;
+        height: inherit;
+    }
+
+}
