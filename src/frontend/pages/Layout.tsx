@@ -16,12 +16,16 @@ const Layout = ({ children }: LayoutProps) => {
   useLogoutTimeout(isAuthd)
 
   return (
-    <div className="page-layout">
-      <NavBar />
-      {!isAuthd ? <LoginModal /> : children}
-      <Footer />
-    </div>
-  );
-};
+    <>
+      {!isAuthd ? <LoginModal /> :
+        <div className="page-layout">
+          <NavBar />
+          {children}
+          <Footer />
+        </div>
+      }
+    </>
+  )
+}
 
 export default Layout;
