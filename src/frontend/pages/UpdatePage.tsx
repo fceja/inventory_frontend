@@ -37,20 +37,19 @@ const UpdatePage = () => {
       <div className="main-container shadow">
         <form onSubmit={handleSubmit}>
           <div className="parent-folder">Parent folder</div>
-          <div className="item-name">Enter Item Name</div>
+          <label className="item-name" htmlFor="item-name-input">Enter Item Name</label>
           <input
             type="string"
-            name="name"
             className="item-name-input"
+            id="item-name-input"
             onChange={handleChange}
             required
           />
           <div className="items-top">
             <div className="quantity-container">
-              <label className="quantity-label">quantity</label>
+              <label className="quantity-label" htmlFor="quantity">quantity</label>
               <input
                 type="number"
-                name="quantity"
                 min="0"
                 id="quantity"
                 onChange={handleChange}
@@ -58,10 +57,9 @@ const UpdatePage = () => {
               />
             </div>
             <div className="min-level-container">
-              <label className="min-level">min level</label>
+              <label className="min-level" htmlFor="min-level">min level</label>
               <input
                 type="number"
-                name="minLevel"
                 min="0"
                 id="min-level"
                 onChange={handleChange}
@@ -70,20 +68,18 @@ const UpdatePage = () => {
           </div>
           <div className="items-bot">
             <div className="price-container">
-              <label className="price">price</label>
+              <label className="price" htmlFor="price">price</label>
               <input
                 type="number"
-                name="price"
                 min="0"
                 id="price"
                 onChange={handleChange}
               />
             </div>
             <div className="total-value-container">
-              <label className="total-value">total value</label>
+              <label className="total-value" htmlFor="total-value">total value</label>
               <input
                 type="number"
-                name="totalValue"
                 min="0"
                 id="total-value"
                 onChange={handleChange}
