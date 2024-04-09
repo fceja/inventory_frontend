@@ -1,6 +1,6 @@
 const FolderHierarchy = () => {
     return (
-        <span className="folder-heirarchy">Folder Heirarchy</span>
+        <span className="folder-nav-heirarchy">Folder Heirarchy</span>
     )
 }
 

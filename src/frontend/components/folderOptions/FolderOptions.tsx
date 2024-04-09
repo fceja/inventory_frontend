@@ -1,6 +1,6 @@
 const FolderOptions = () => {
     return (
-        <span className="folder-options">Folder Options</span>
+        <span className="folder-nav-options">Folder Options</span>
     )
 }
 

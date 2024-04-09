@@ -3,7 +3,7 @@ import FolderOptions from "@components/folderOptions/FolderOptions"
 
 const FolderNavigation = () => {
     return (
-        <div className="folder-navigation">
+        <div className="folder-nav">
             <FolderHierarchy />
             <span> Items </span>
             <FolderOptions />

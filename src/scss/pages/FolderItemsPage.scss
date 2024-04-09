@@ -1,50 +1,65 @@
 @import "@scss/Variables.scss";
 
-.folder {
-    &-navigation {
-        @include flex-center;
-        text-align: center;
+.folder-nav {
+    @include flex-center;
+    text-align: center;
 
-        display: flex;
-        justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 
-        height: 60px;
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
+    height: 60px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 
     &-heirarchy,
     &-options {
         @include flex-center;
         text-align: center;
-
         box-sizing: border-box;
         border-style: dashed;
 
         width: 100px;
         height: inherit;
     }
+}
 
-    &-stats {
-        display: flex;
-        justify-content: space-between;
+.folder-stats {
+    display: flex;
+    justify-content: space-between;
+
+    height: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    &-count,
+    &-items-count,
+    &-items-quantity,
+    &-total-value {
+        @include flex-center;
+        text-align: center;
+        border-style: dashed;
+
+        height: inherit;
+        padding: 5px;
+        box-sizing: border-box;
+    }
+}
+
+.folder {
+    border-style: dashed;
+
+    height: 100px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    box-sizing: border-box;
+
+    &-item {
+        border-style: dashed;
+
+        height: 100px;
         padding-top: 10px;
         padding-bottom: 10px;
-        height: 40px;
+        box-sizing: border-box;
 
-        &-count,
-        &-items-count,
-        &-items-quantity,
-        &-total-value {
-            @include flex-center;
-            text-align: center;
-
-            padding: 5px;
-            border-style: dashed;
-            height: inherit;
-
-            box-sizing: border-box;
-        }
     }
-
 }
