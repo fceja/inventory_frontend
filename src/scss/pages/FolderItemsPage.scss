@@ -52,14 +52,14 @@
     padding-top: 10px;
     padding-bottom: 10px;
     box-sizing: border-box;
+}
 
-    &-item {
-        border-style: dashed;
+.item {
+    border-style: dashed;
 
-        height: 100px;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        box-sizing: border-box;
+    height: 100px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    box-sizing: border-box;
 
-    }
 }

@@ -1,16 +1,14 @@
 import "@scss/pages/FolderItemsPage.scss"
 import FolderNavigation from "@components/folderNavigation/FolderNavigation"
 import FolderStats from "@components/folderStats/FolderStats"
-import Folder from "@components/folder/Folder"
-import FolderItem from "@components/folderItem/FolderItem"
+import FolderNodes from "@components/folderNodes/FolderNodes"
 
 const FolderItemsPage = () => {
     return (
         <>
             <FolderNavigation />
             <FolderStats />
-            <Folder />
-            <FolderItem />
+            <FolderNodes />
         </>
     )
 }
