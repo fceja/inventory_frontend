@@ -80,7 +80,7 @@ const HamburgerMenu = () => {
           </Link>
           <Link
             className="ham-menu-btn-link"
-            to="/folder/main"
+            to="/folders/main"
             onClick={updateMenuVisibility}
           >
             Folder Content

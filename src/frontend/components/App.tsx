@@ -2,8 +2,9 @@ import { Route, Routes } from "react-router-dom";
 
 import "@scss/App.scss";
 import Dashboard from "@pages/DashboardPage";
-import FolderContentPage from "@pages/FolderContentPage";
+import FolderPage from "@pages/FolderPage";
 import InventoryPage from "@pages/InventoryPage";
+import ItemPage from "@pages/ItemPage";
 import Layout from "@pages/Layout";
 import UpdatePage from "@pages/UpdatePage";
 
@@ -19,10 +20,10 @@ const App = () => {
         }
       ></Route>
       <Route
-        path="/folder/:folderId?"
+        path="/folders/:folderId?"
         element={
           <Layout>
-            <FolderContentPage />
+            <FolderPage />
           </Layout>
         }
       ></Route>
@@ -31,6 +32,14 @@ const App = () => {
         element={
           <Layout>
             <InventoryPage />
+          </Layout>
+        }
+      ></Route>
+      <Route
+        path="/items/:itemId"
+        element={
+          <Layout>
+            <ItemPage />
           </Layout>
         }
       ></Route>

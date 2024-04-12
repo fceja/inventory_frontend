@@ -1,9 +1,9 @@
 import useApiClient from "@api/config/AxiosConfig";
 import { defineCancelApiObject } from "@utils/api/AxiosUtils";
 
-const FolderNodesApi = (dispatch: any, authState: any) => {
+const FoldersApi = (dispatch: any, authState: any) => {
     const apiClient = useApiClient(dispatch, authState);
-    const cancelApiObject = defineCancelApiObject(FolderNodesApi)
+    const cancelApiObject = defineCancelApiObject(FoldersApi)
 
     const get = async (folderId: string, cancel = false) => {
         const cancelSignal =
@@ -18,7 +18,8 @@ const FolderNodesApi = (dispatch: any, authState: any) => {
             signal: cancelSignal
         })
     };
+
     return { get }
 }
 
-export default FolderNodesApi;
+export default FoldersApi;

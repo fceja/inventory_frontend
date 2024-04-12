@@ -5,7 +5,7 @@ import { Dispatch } from "redux";
 
 import { AuthActionT } from "@store/auth/authActions";
 import { RootState } from "@store/ConfigureStore";
-import FolderNodesApi from "@api/FolderNodesApi"
+import FoldersApi from "@api/FoldersApi"
 
 interface SubFolderI {
     folderId: number,
@@ -35,7 +35,7 @@ const FolderNodes = () => {
     useEffect(() => {
         const fetchData = async () => {
             if (folderId !== null) {
-                const response = await FolderNodesApi(dispatch, authState).get(folderId);
+                const response = await FoldersApi(dispatch, authState).get(folderId);
                 if (response && response.status === 200 && response.data.success) {
                     console.log(response.data.folderNodes);
                     setNodeData(response.data.folderNodes);
@@ -50,7 +50,7 @@ const FolderNodes = () => {
             const subFolderNode = node as SubFolderI
 
             return (
-                <Link key={`node-${index}`} to={`/folder/${subFolderNode.folderId}`} >
+                <Link key={`node-${index}`} to={`/folders/${subFolderNode.folderId}`} >
                     <div key={index} className={`${subFolderNode.nodeType}-node`}>{`${subFolderNode.name} ${subFolderNode.nodeType}`}</div>
                 </Link>
             )
@@ -59,7 +59,7 @@ const FolderNodes = () => {
             const itemNode = node as ItemI;
 
             return (
-                <Link key={`node-${index}`} to={`/item/${itemNode.itemId}`} >
+                <Link key={`node-${index}`} to={`/items/${itemNode.itemId}`} >
                     <div key={index} className={`${itemNode.nodeType}-node`}>{`${itemNode.name} ${itemNode.nodeType}`}</div>
                 </Link>
             )
