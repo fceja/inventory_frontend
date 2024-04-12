@@ -45,7 +45,7 @@
     }
 }
 
-.folder {
+[class*="-node"] {
     border-style: dashed;
 
     height: 100px;

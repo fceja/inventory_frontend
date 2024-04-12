@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 
 import "@scss/App.scss";
 import Dashboard from "@pages/DashboardPage";
-import FolderItemsPage from "@pages/FolderItemsPage";
+import FolderContentPage from "@pages/FolderContentPage";
 import InventoryPage from "@pages/InventoryPage";
 import Layout from "@pages/Layout";
 import UpdatePage from "@pages/UpdatePage";
@@ -19,10 +19,10 @@ const App = () => {
         }
       ></Route>
       <Route
-        path="/folderItems"
+        path="/folder/:folderId?/content"
         element={
           <Layout>
-            <FolderItemsPage />
+            <FolderContentPage />
           </Layout>
         }
       ></Route>

@@ -1,7 +1,7 @@
 import { FolderActionT } from "@store/folder/folderActions";
 
 interface InitialStateI {
-    folderLevel: number | null;
+    folderLevel: string | null;
 }
 
 const initialState: InitialStateI = {

@@ -4,12 +4,12 @@ const SET_FOLDER_LEVEL = "SET_FOLDER_LEVEL"
 
 interface SetFolderLevelAction extends Action {
     type: typeof SET_FOLDER_LEVEL;
-    payload: { folderLevel: number };
+    payload: { folderLevel: string };
 }
 
 export type FolderActionT = SetFolderLevelAction
 
-export const setFolderLevel = (level: number): FolderActionT => {
+export const setFolderLevel = (level: string): FolderActionT => {
     return {
         type: SET_FOLDER_LEVEL,
         payload: { folderLevel: level }

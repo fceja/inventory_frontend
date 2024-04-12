@@ -5,7 +5,7 @@ const FolderNodesApi = (dispatch: any, authState: any) => {
     const apiClient = useApiClient(dispatch, authState);
     const cancelApiObject = defineCancelApiObject(FolderNodesApi)
 
-    const get = async (folderId: number, cancel = false) => {
+    const get = async (folderId: string, cancel = false) => {
         const cancelSignal =
             cancel && cancelApiObject
                 ? cancelApiObject.get.handleRequestCancellation().signal

@@ -3,7 +3,7 @@ import FolderNavigation from "@components/folderNavigation/FolderNavigation"
 import FolderStats from "@components/folderStats/FolderStats"
 import FolderNodes from "@components/folderNodes/FolderNodes"
 
-const FolderItemsPage = () => {
+const FolderContentPage = () => {
     return (
         <>
             <FolderNavigation />
@@ -13,4 +13,4 @@ const FolderItemsPage = () => {
     )
 }
 
-export default FolderItemsPage
+export default FolderContentPage
