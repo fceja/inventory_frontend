@@ -19,7 +19,7 @@ const App = () => {
         }
       ></Route>
       <Route
-        path="/folder/:folderId?/content"
+        path="/folder/:folderId?"
         element={
           <Layout>
             <FolderContentPage />
