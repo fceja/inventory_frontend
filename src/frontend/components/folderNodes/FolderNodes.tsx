@@ -68,13 +68,17 @@ const FolderNodes = () => {
     }
 
     return (
-        <>
-            {nodeData && (
+        <div className="folder-nodes">
+            {nodeData && nodeData.length > 0 ? (
                 <>
                     {nodeData.map((node, index) => renderNode(node, index))}
                 </>
+            ) : (
+                <>
+                    Folder empty.
+                </>
             )}
-        </>
+        </div>
     );
 };
 

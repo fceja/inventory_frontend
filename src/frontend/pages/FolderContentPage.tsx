@@ -5,11 +5,11 @@ import FolderNodes from "@components/folderNodes/FolderNodes"
 
 const FolderContentPage = () => {
     return (
-        <>
+        <div className="folder-content">
             <FolderNavigation />
             <FolderStats />
             <FolderNodes />
-        </>
+        </div>
     )
 }
 
