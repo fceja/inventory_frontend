@@ -50,7 +50,7 @@ const FolderNodes = () => {
             const subFolderNode = node as SubFolderI
 
             return (
-                <Link key={`node-${index}`} to={`/folders/${subFolderNode.folderId}`} >
+                <Link key={`node-${index}`} to={`/folder/${subFolderNode.folderId}`} >
                     <div key={index} className={`${subFolderNode.nodeType}-node`}>{`${subFolderNode.name} ${subFolderNode.nodeType}`}</div>
                 </Link>
             )
@@ -59,7 +59,7 @@ const FolderNodes = () => {
             const itemNode = node as ItemI;
 
             return (
-                <Link key={`node-${index}`} to={`/items/${itemNode.itemId}`} >
+                <Link key={`node-${index}`} to={`/item/${itemNode.itemId}`} >
                     <div key={index} className={`${itemNode.nodeType}-node`}>{`${itemNode.name} ${itemNode.nodeType}`}</div>
                 </Link>
             )
