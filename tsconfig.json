@@ -24,13 +24,30 @@
     /* Alias paths */
     "baseUrl": "./",
     "paths": {
-      "@api/*": ["./src/api/*"],
-      "@components/*": ["src/frontend/components/*"],
-      "@hooks/*": ["src/frontend/hooks/*"],
-      "@pages/*": ["src/frontend/pages/*"],
-      "@scss/*": ["./src/scss/*"],
-      "@store/*": ["src/store/*"],
-      "@utils/*": ["src/utils/*"]
+      "@api/*": [
+        "./src/api/*"
+      ],
+      "@components/*": [
+        "src/frontend/components/*"
+      ],
+      "@common/*": [
+        "src/frontend/common/*"
+      ],
+      "@hooks/*": [
+        "src/frontend/hooks/*"
+      ],
+      "@pages/*": [
+        "src/frontend/pages/*"
+      ],
+      "@scss/*": [
+        "./src/scss/*"
+      ],
+      "@store/*": [
+        "src/store/*"
+      ],
+      "@utils/*": [
+        "src/utils/*"
+      ]
     }
   },
   "include": ["src"],
