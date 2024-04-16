@@ -15,7 +15,7 @@ interface ItemDataI {
 
 const ItemPage = () => {
     const [itemName, setItemName] = useState<string>('Item not found')
-    const [folderPath, setFolderPath] = useState<string>('/folders/main')
+    const [folderPath, setFolderPath] = useState<string>('/folder/main')
     const [itemData, setItemData] = useState<ItemDataI | null>(null)
     const dispatch: Dispatch<AuthActionT> = useDispatch();
     const authState = useSelector((state: RootState) => state.authState);
@@ -37,7 +37,7 @@ const ItemPage = () => {
 
         if (itemData) {
             setItemName(itemData.name)
-            setFolderPath(`/folders/${itemData.parentFolderId}`)
+            setFolderPath(`/folder/${itemData.parentFolderId}`)
 
         }
 
