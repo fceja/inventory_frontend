@@ -6,6 +6,7 @@ import FolderPage from "@pages/FolderPage";
 import InventoryPage from "@pages/InventoryPage";
 import ItemPage from "@pages/ItemPage";
 import Layout from "@pages/Layout";
+import NotFoundPage from "@pages/NotFoundPage";
 import UpdatePage from "@pages/UpdatePage";
 
 const App = () => {
@@ -20,7 +21,7 @@ const App = () => {
         }
       ></Route>
       <Route
-        path="/folders/:folderId?"
+        path="/folder/:folderId"
         element={
           <Layout>
             <FolderPage />
@@ -36,7 +37,7 @@ const App = () => {
         }
       ></Route>
       <Route
-        path="/items/:itemId"
+        path="/item/:itemId"
         element={
           <Layout>
             <ItemPage />
@@ -51,6 +52,8 @@ const App = () => {
           </Layout>
         }
       ></Route>
+      <Route path="/folder/*" element={<NotFoundPage />} />
+      <Route path="/item/*" element={<NotFoundPage />} />
     </Routes>
   );
 };
