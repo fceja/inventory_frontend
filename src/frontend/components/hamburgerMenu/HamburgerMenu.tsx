@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
+import { PAGE_PATHS } from "@common/Constants"
 import { RootState } from "@store/ConfigureStore";
 
 const HamburgerMenu = () => {
@@ -73,31 +74,24 @@ const HamburgerMenu = () => {
         <div className="menu shadow" ref={menuRef}>
           <Link
             className="ham-menu-btn-link"
-            to="/"
+            to={PAGE_PATHS.DASHBOARD}
             onClick={updateMenuVisibility}
           >
             Dashboard
           </Link>
           <Link
             className="ham-menu-btn-link"
-            to="/folder/main"
+            to={PAGE_PATHS.FOLDER}
             onClick={updateMenuVisibility}
           >
             Folder Content
           </Link>
           <Link
             className="ham-menu-btn-link"
-            to="/update"
+            to={PAGE_PATHS.UPDATE}
             onClick={updateMenuVisibility}
           >
             Update
-          </Link>
-          <Link
-            className="ham-menu-btn-link"
-            to="/inventory"
-            onClick={updateMenuVisibility}
-          >
-            Inventory
           </Link>
         </div>
       )}

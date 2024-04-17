@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 
 import "@scss/App.scss";
+import { PAGE_PATHS } from "@common/Constants"
 import Dashboard from "@pages/DashboardPage";
 import FolderPage from "@pages/FolderPage";
-import InventoryPage from "@pages/InventoryPage";
 import ItemPage from "@pages/ItemPage";
 import Layout from "@pages/Layout";
 import NotFoundPage from "@pages/NotFoundPage";
@@ -13,7 +13,7 @@ const App = () => {
   return (
     <Routes>
       <Route
-        path="/"
+        path={PAGE_PATHS.DASHBOARD}
         element={
           <Layout>
             <Dashboard />
@@ -29,14 +29,6 @@ const App = () => {
         }
       ></Route>
       <Route
-        path="/inventory"
-        element={
-          <Layout>
-            <InventoryPage />
-          </Layout>
-        }
-      ></Route>
-      <Route
         path="/item/:itemId"
         element={
           <Layout>
@@ -45,15 +37,22 @@ const App = () => {
         }
       ></Route>
       <Route
-        path="/update"
+        path={PAGE_PATHS.UPDATE}
         element={
           <Layout>
             <UpdatePage />
           </Layout>
         }
       ></Route>
-      <Route path="/folder/*" element={<NotFoundPage />} />
-      <Route path="/item/*" element={<NotFoundPage />} />
+      <Route
+        path={PAGE_PATHS.NOT_FOUND}
+        element={
+          <Layout>
+            <NotFoundPage />
+          </Layout>
+        }
+      ></Route>
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 };
