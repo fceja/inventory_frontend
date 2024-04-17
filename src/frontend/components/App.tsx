@@ -10,6 +10,7 @@ import NotFoundPage from "@pages/NotFoundPage";
 import UpdatePage from "@pages/UpdatePage";
 
 const App = () => {
+
   return (
     <Routes>
       <Route
@@ -21,7 +22,7 @@ const App = () => {
         }
       ></Route>
       <Route
-        path="/folder/:folderId"
+        path={PAGE_PATHS.FOLDERS}
         element={
           <Layout>
             <FolderPage />
@@ -29,7 +30,7 @@ const App = () => {
         }
       ></Route>
       <Route
-        path="/item/:itemId"
+        path={PAGE_PATHS.ITEMS}
         element={
           <Layout>
             <ItemPage />

@@ -37,7 +37,6 @@ const FolderNodes = () => {
             if (folderId !== null) {
                 const response = await FoldersApi(dispatch, authState).get(folderId);
                 if (response && response.status === 200 && response.data.success) {
-                    console.log(response.data.folderNodes);
                     setNodeData(response.data.folderNodes);
                 }
             };
