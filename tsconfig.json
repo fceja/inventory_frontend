@@ -46,6 +46,9 @@
       "@store/*": [
         "src/store/*"
       ],
+      "@validations/*": [
+        "src/frontend/validations/*"
+      ],
       "@utils/*": [
         "src/utils/*"
       ]
