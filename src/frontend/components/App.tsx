@@ -8,9 +8,19 @@ import ItemPage from "@pages/ItemPage";
 import Layout from "@pages/Layout";
 import NotFoundPage from "@pages/NotFoundPage";
 import UpdatePage from "@pages/UpdatePage";
+import { validateAndDispatchFolderRoute } from "@validations/ValidateFoldersParams"
+
+const FolderRoute = () => {
+  const isValid = validateAndDispatchFolderRoute()
+
+  return (
+    <Layout>
+      {!isValid ? <NotFoundPage /> : <FolderPage />}
+    </Layout>
+  )
+}
 
 const App = () => {
-
   return (
     <Routes>
       <Route
@@ -24,9 +34,7 @@ const App = () => {
       <Route
         path={PAGE_PATHS.FOLDERS}
         element={
-          <Layout>
-            <FolderPage />
-          </Layout>
+          <FolderRoute />
         }
       ></Route>
       <Route
@@ -53,8 +61,11 @@ const App = () => {
           </Layout>
         }
       ></Route>
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
+      <Route path="*" element={
+        <Layout>
+          <NotFoundPage />
+        </Layout>} />
+    </Routes >
   );
 };
 
