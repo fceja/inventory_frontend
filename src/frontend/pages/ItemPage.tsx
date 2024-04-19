@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import "@scss/pages/ItemPage.scss"
+import { PAGE_PATHS } from "@common/Constants"
 import { AuthActionT } from "@store/auth/authActions";
 import { RootState } from "@store/ConfigureStore";
 import ItemsApi from "@api/ItemsApi"
@@ -15,7 +16,7 @@ interface ItemDataI {
 
 const ItemPage = () => {
     const [itemName, setItemName] = useState<string>('Item not found')
-    const [folderPath, setFolderPath] = useState<string>('/folder/main')
+    const [folderPath, setFolderPath] = useState<string>(PAGE_PATHS.FOLDERS.replace(":folderId", 'main'))
     const [itemData, setItemData] = useState<ItemDataI | null>(null)
     const dispatch: Dispatch<AuthActionT> = useDispatch();
     const authState = useSelector((state: RootState) => state.authState);
@@ -37,7 +38,7 @@ const ItemPage = () => {
 
         if (itemData) {
             setItemName(itemData.name)
-            setFolderPath(`/folder/${itemData.parentFolderId}`)
+            setFolderPath(PAGE_PATHS.FOLDERS.replace(":folderId", `${itemData.parentFolderId}`))
 
         }
 

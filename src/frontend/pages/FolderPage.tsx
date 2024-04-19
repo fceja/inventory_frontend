@@ -1,25 +1,72 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import { useDispatch } from 'react-redux';
+import { useParams } from "react-router-dom";
+import { Dispatch } from "redux";
 
 import "@scss/pages/FolderPage.scss"
+import { AuthActionT } from "@store/auth/authActions";
+import { PAGE_PATHS } from "@common/Constants"
+import { setCurLevelFolderId, FolderActionT } from "@store/folder/folderActions";
 import FolderNavigation from "@components/folderNavigation/FolderNavigation"
-import FolderStats from "@components/folderStats/FolderStats"
 import FolderNodes from "@components/folderNodes/FolderNodes"
+import FolderStats from "@components/folderStats/FolderStats"
+import NotFoundPage from "@pages/NotFoundPage";
+
+const isStringAllZeroes = (inputString: string) => {
+    return /^0+$/.test(inputString)
+}
+
+const isStringANumber = (inputString: string) => {
+    return !isNaN(parseFloat(inputString)) && isFinite(+inputString)
+}
+
+const pathEndsWithString = (inputString: string) => {
+    const path = window.location.pathname
+    return path.endsWith(`/${inputString}`) || path.endsWith(`/${inputString}/`)
+}
+
 
 const FolderPage = () => {
+    let { folderId } = useParams();
+    const [isValid, setIsValid] = useState(false)
+    const dispatch: Dispatch<AuthActionT | FolderActionT> = useDispatch();
+
     useEffect(() => {
-        // if browser url path {folderId} is '0', update to 'main'
-        if (window.location.pathname.split('/folders/')[1] === '0') {
-            const newURL = window.location.pathname.replace('/folders/0', '/folders/main');
-            window.history.pushState({}, '', newURL);
+        console.log(`folderId inside folder page`)
+        console.log(folderId)
+        if (!folderId) return setIsValid(false)
+
+        if (folderId === 'main') {
+            dispatch(setCurLevelFolderId('0'))
+            setIsValid(true)
+        }
+
+        else if (isStringAllZeroes(folderId)) {
+            window.history.pushState({}, 'Update URL to main', PAGE_PATHS.FOLDERS.replace(':folderId', 'main'));
+            dispatch(setCurLevelFolderId('0'))
+            setIsValid(true)
+        }
+        else if (isStringANumber(folderId) && pathEndsWithString(folderId)) {
+            dispatch(setCurLevelFolderId(folderId))
+            setIsValid(true)
+        }
+        else {
+            dispatch(setCurLevelFolderId(null))
+            setIsValid(false)
         }
 
     }, [])
 
     return (
         <div className="folder-content">
-            <FolderNavigation />
-            <FolderStats />
-            <FolderNodes />
+            {!isValid ? <NotFoundPage />
+                :
+                <>
+                    <FolderNavigation />
+                    <FolderStats />
+                    <FolderNodes />
+                </>
+            }
         </div>
     )
 }
