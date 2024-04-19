@@ -12,7 +12,7 @@ const FoldersApi = (dispatch: any, authState: any) => {
                 : undefined;
 
         return await apiClient.request({
-            url: `/folderNodes/${folderId}`,
+            url: `/folders/${folderId}`,
             method: "GET",
             data: null,
             signal: cancelSignal
