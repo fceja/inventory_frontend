@@ -4,7 +4,11 @@ import {
     FolderActionT
 } from "@store/folder/folderActions";
 
-const folderReducer = (state = {}, action: FolderActionT) => {
+const initialState = {
+    curLevelFolderId: null
+}
+
+const folderReducer = (state = initialState, action: FolderActionT) => {
     switch (action.type) {
         case SET_FOLDER_LEVEL:
             return {

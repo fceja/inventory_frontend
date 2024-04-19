@@ -31,8 +31,8 @@ const useApiClient = (dispatch: Dispatch<AuthActionT>, authState?: any) => {
     (response) => {
       const token: string = response.headers["authorization"];
       if (token) {
-        dispatch(setAuthd(token) as AuthActionT);
-        dispatch(setAuthToken(token) as AuthActionT);
+        dispatch(setAuthd(token));
+        dispatch(setAuthToken(token));
       }
       return response;
     },
