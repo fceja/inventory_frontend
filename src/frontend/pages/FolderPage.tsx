@@ -32,8 +32,6 @@ const FolderPage = () => {
     const dispatch: Dispatch<AuthActionT | FolderActionT> = useDispatch();
 
     useEffect(() => {
-        console.log(`folderId inside folder page`)
-        console.log(folderId)
         if (!folderId) return setIsValid(false)
 
         if (folderId === 'main') {
@@ -55,7 +53,7 @@ const FolderPage = () => {
             setIsValid(false)
         }
 
-    }, [])
+    }, [folderId])
 
     return (
         <div className="folder-content">

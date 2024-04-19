@@ -1,11 +1,13 @@
 import {
     SET_FOLDER_LEVEL,
     SET_CUR_LEVEL_FOLDER_ID,
+    SET_PARENT_FOLDER_ID,
     FolderActionT
 } from "@store/folder/folderActions";
 
 const initialState = {
-    curLevelFolderId: null
+    curLevelFolderId: null,
+    parentFolderId: null
 }
 
 const folderReducer = (state = initialState, action: FolderActionT) => {
@@ -19,6 +21,11 @@ const folderReducer = (state = initialState, action: FolderActionT) => {
             return {
                 ...state,
                 curLevelFolderId: action.payload.curLevelFolderId
+            }
+        case SET_PARENT_FOLDER_ID:
+            return {
+                ...state,
+                parentFolderId: action.payload.parentFolderId
             }
 
         default:

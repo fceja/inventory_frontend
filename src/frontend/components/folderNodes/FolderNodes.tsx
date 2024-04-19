@@ -4,7 +4,9 @@ import { useParams, Link } from "react-router-dom";
 import { Dispatch } from "redux";
 
 import { AuthActionT } from "@store/auth/authActions";
+import { FolderActionT } from "@store/folder/folderActions";
 import { RootState } from "@store/ConfigureStore";
+import { setParentFolderId } from "@store/folder/folderActions";
 import FoldersApi from "@api/FoldersApi"
 
 interface SubFolderI {
@@ -23,9 +25,10 @@ type FolderNode = SubFolderI | ItemI;
 
 const FolderNodes = () => {
     const [nodeData, setNodeData] = useState<FolderNode[] | null>(null);
-    const dispatch: Dispatch<AuthActionT> = useDispatch();
+    const dispatch: Dispatch<AuthActionT | FolderActionT> = useDispatch();
     const authState = useSelector((state: RootState) => state.authState);
     let { folderId } = useParams();
+
 
     // verify final string is a number
     if (!folderId) throw new Error('TODO - redirect error comp')
@@ -44,13 +47,18 @@ const FolderNodes = () => {
         fetchData();
     }, [folderId]);
 
+    const handleNodeClick = () => {
+        dispatch(setParentFolderId(folderId))
+    }
+
+
     const renderNode = (node: FolderNode, index: number) => {
         if (node.nodeType === "folder") {
             const subFolderNode = node as SubFolderI
 
             return (
                 <Link key={`node-${index}`} to={`/folders/${subFolderNode.folderId}`} >
-                    <div key={index} className={`${subFolderNode.nodeType}-node`}>{`${subFolderNode.name} ${subFolderNode.nodeType}`}</div>
+                    <div key={index} onClick={handleNodeClick} className={`${subFolderNode.nodeType}-node`}>{`${subFolderNode.name} ${subFolderNode.nodeType}`}</div>
                 </Link>
             )
 
