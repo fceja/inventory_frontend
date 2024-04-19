@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Dispatch } from "redux";
 
 import { AuthActionT } from "@store/auth/authActions";
-import { FolderActionT } from "@store/folder/folderActions";
 import { RootState } from "@store/ConfigureStore";
+import { PAGE_PATHS } from "@common/Constants"
+import { FolderActionT } from "@store/folder/folderActions";
 import { setParentFolderId } from "@store/folder/folderActions";
 import FoldersApi from "@api/FoldersApi"
 
@@ -27,39 +28,28 @@ const FolderNodes = () => {
     const [nodeData, setNodeData] = useState<FolderNode[] | null>(null);
     const dispatch: Dispatch<AuthActionT | FolderActionT> = useDispatch();
     const authState = useSelector((state: RootState) => state.authState);
-    let { folderId } = useParams();
-
-
-    // verify final string is a number
-    if (!folderId) throw new Error('TODO - redirect error comp')
-    if (folderId === 'main') folderId = '0'
-    if (!(!isNaN(parseFloat(folderId)) && isFinite(+folderId))) throw new Error('TODO - redirect error comp')
+    const folderState = useSelector((state: RootState) => state.folderState);
 
     useEffect(() => {
         const fetchData = async () => {
-            if (folderId !== null) {
-                const response = await FoldersApi(dispatch, authState).get(folderId);
-                if (response && response.status === 200 && response.data.success) {
-                    dispatch(setParentFolderId(response.data.folder[0].parentFolderId))
-                    setNodeData(response.data.folderNodes);
-                }
-            };
+            if (!folderState.curLevelFolderId) return;
+
+            const response = await FoldersApi(dispatch, authState).get(folderState.curLevelFolderId);
+            if (response && response.status === 200 && response.data.success) {
+                dispatch(setParentFolderId(response.data.folder.parentFolderId))
+                setNodeData(response.data.folderNodes);
+            }
         }
         fetchData();
-    }, [folderId]);
-
-    const handleNodeClick = () => {
-        dispatch(setParentFolderId(folderId))
-    }
-
+    }, [folderState.curLevelFolderId]);
 
     const renderNode = (node: FolderNode, index: number) => {
         if (node.nodeType === "folder") {
             const subFolderNode = node as SubFolderI
 
             return (
-                <Link key={`node-${index}`} to={`/folders/${subFolderNode.folderId}`} >
-                    <div key={index} onClick={handleNodeClick} className={`${subFolderNode.nodeType}-node`}>{`${subFolderNode.name} ${subFolderNode.nodeType}`}</div>
+                <Link key={`node-${index}`} to={`${PAGE_PATHS.FOLDERS.replace(':folderId', `${subFolderNode.folderId}`)}`} >
+                    <div key={index} className={`${subFolderNode.nodeType}-node`}>{`${subFolderNode.name} ${subFolderNode.nodeType}`}</div>
                 </Link>
             )
 
@@ -67,7 +57,7 @@ const FolderNodes = () => {
             const itemNode = node as ItemI;
 
             return (
-                <Link key={`node-${index}`} to={`/items/${itemNode.itemId}`} >
+                <Link key={`node-${index}`} to={`${PAGE_PATHS.ITEMS.replace(':itemId', `${itemNode.itemId}`)}`} >
                     <div key={index} className={`${itemNode.nodeType}-node`}>{`${itemNode.name} ${itemNode.nodeType}`}</div>
                 </Link>
             )
