@@ -34,7 +34,7 @@ const FolderNodes = () => {
         const fetchData = async () => {
             if (!folderState.curLevelFolderId) return;
 
-            const response = await FoldersApi(dispatch, authState).get(folderState.curLevelFolderId);
+            const response = await FoldersApi(dispatch, authState).getByFolderId(folderState.curLevelFolderId);
             if (response && response.status === 200 && response.data.success) {
                 dispatch(setParentFolderId(response.data.folder.parentFolderId))
                 setNodeData(response.data.folderNodes);
