@@ -26,31 +26,31 @@
     "baseUrl": "./",
     "paths": {
       "@api/*": [
-        "./src/api/*"
+        "src/ts/api/*"
       ],
       "@components/*": [
-        "src/frontend/components/*"
+        "src/ts/frontend/components/*"
       ],
       "@common/*": [
-        "src/frontend/common/*"
+        "src/ts/frontend/common/*"
       ],
       "@hooks/*": [
-        "src/frontend/hooks/*"
+        "src/ts/frontend/hooks/*"
       ],
       "@pages/*": [
-        "src/frontend/pages/*"
+        "src/ts/frontend/pages/*"
       ],
       "@scss/*": [
         "./src/scss/*"
       ],
       "@store/*": [
-        "src/store/*"
+        "src/ts/frontend/store/*"
       ],
       "@validations/*": [
-        "src/frontend/validations/*"
+        "src/ts/frontend/validations/*"
       ],
       "@utils/*": [
-        "src/utils/*"
+        "src/ts/utils/*"
       ]
     }
   },
