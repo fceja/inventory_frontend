@@ -10,7 +10,10 @@ import NotFoundPage from "@pages/NotFoundPage";
 
 interface ItemDataI {
     parentFolderId: number,
-    name: string
+    name: string,
+    minLevel: string
+    quantity: number
+    value: number
 }
 
 const Item = () => {
@@ -39,16 +42,35 @@ const Item = () => {
     return (
         <>
             {!itemData ? <NotFoundPage /> :
-                <div className="item-header">
-                    <span className="item-name">{`Item name: ${itemData.name}`}</span>
-                    <div
-                        onClick={handleCloseItem}
-                        className="item-close"
-                    >
-                        <div className="item-close-bar"></div>
-                        <div className="item-close-bar"></div>
+                <>
+                    <div className="item-header">
+                        <div
+                            onClick={handleCloseItem}
+                            className="item-close"
+                        >
+                            <div className="item-close-bar"></div>
+                            <div className="item-close-bar"></div>
+                        </div>
                     </div>
-                </div>
+                    <div className="images">
+                        <span className="item-image">Image</span>
+                        <span className="item-qrcode">Qr code</span>
+                    </div>
+                    <div className="item-description">
+                        <div className="item-details">
+                            <div>Folder path: TODO</div>
+                            <div >{`Item name: ${itemData.name}`}</div>
+                        </div>
+                        <div className="item-quantity">
+                            <span>Quantity: {`${itemData.quantity}`}</span>
+                            <span>Min Level: {itemData.minLevel ? itemData.minLevel : '-'}</span>
+                        </div>
+                        <div className="item-price">
+                            <span>Price: {`$${itemData.value}`}</span>
+                            <span>Total Value: {`$${itemData.quantity * itemData.value}`}</span>
+                        </div>
+                    </div>
+                </>
             }
         </>
     )
