@@ -68,9 +68,13 @@ $menu-bar-container-width: 52px;
 }
 
 .images {
+    margin: 0 15px 0 15px;
+    padding: 10px 10px 10px 10px;
+
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-around;
+    border-style: dashed;
 }
 
 .item {
