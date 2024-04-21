@@ -18,7 +18,7 @@ interface SubFolderI {
 }
 
 interface ItemI {
-    itemId: number,
+    itemId: string,
     name: string,
     nodeType: string;
 }
@@ -46,7 +46,7 @@ const FolderNodes = () => {
     }, [folderState.curLevelFolderId]);
 
 
-    const handleItemClick = (itemId: number) => {
+    const handleItemClick = (itemId: string) => {
         dispatch(setSelectedItemId(itemId))
     }
 
