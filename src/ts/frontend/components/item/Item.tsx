@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import "@scss/pages/ItemPage.scss"
 import { AuthActionT } from "@store/auth/AuthActions";
 import { RootState } from "@store/ConfigureStore";
 import { setSelectedItemId, ItemActionT } from "@store/item/ItemActions";

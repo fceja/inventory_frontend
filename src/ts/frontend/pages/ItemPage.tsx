@@ -3,7 +3,6 @@ import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import "@scss/pages/ItemPage.scss"
 import { PAGE_PATHS } from "@common/Constants"
 import { AuthActionT } from "@store/auth/AuthActions";
 import { RootState } from "@store/ConfigureStore";

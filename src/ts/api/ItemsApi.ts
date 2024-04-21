@@ -5,7 +5,7 @@ const ItemsApi = (dispatch: any, authState: any) => {
     const apiClient = useApiClient(dispatch, authState);
     const cancelApiObject = defineCancelApiObject(ItemsApi)
 
-    const getById = async (itemId: number, cancel = false) => {
+    const getById = async (itemId: string, cancel = false) => {
         const cancelSignal =
             cancel && cancelApiObject
                 ? cancelApiObject.get.handleRequestCancellation().signal
