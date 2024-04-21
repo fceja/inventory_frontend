@@ -70,6 +70,9 @@ const Item = () => {
                             <span>Total Value: {`$${itemData.quantity * itemData.value}`}</span>
                         </div>
                     </div>
+                    <div className="btn-edit">
+                        <button>Edit</button>
+                    </div>
                 </>
             }
         </>

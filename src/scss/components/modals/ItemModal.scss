@@ -29,6 +29,7 @@ $menu-bar-container-height: 60px;
 $menu-bar-container-width: 52px;
 
 .item-header {
+    margin: 0 0 15px 0;
     position: relative;
     height: $menu-bar-container-height;
 }
@@ -121,5 +122,18 @@ $menu-bar-container-width: 52px;
         span {
             width: 50%;
         }
+    }
+}
+
+.btn-edit {
+    // margin: 10px;
+    margin: 10px 0 10px 0;
+    width: 100%;
+
+    @include flex-center;
+
+    button {
+        width: 150px;
+
     }
 }
