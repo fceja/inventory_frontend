@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { Dispatch } from "redux";
 import { useDispatch, useSelector } from 'react-redux';
 
-import { AuthActionT } from "@store/auth/authActions";
-import { FolderActionT } from "@store/folder/folderActions";
+import { AuthActionT } from "@store/auth/AuthActions";
+import { FolderActionT } from "@store/folder/FolderActions";
 import { RootState } from "@store/ConfigureStore";
 import FoldersApi from "@api/FoldersApi"
 

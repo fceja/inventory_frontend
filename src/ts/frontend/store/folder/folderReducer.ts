@@ -3,7 +3,7 @@ import {
     SET_CUR_LEVEL_FOLDER_ID,
     SET_PARENT_FOLDER_ID,
     FolderActionT
-} from "@store/folder/folderActions";
+} from "@store/folder/FolderActions";
 
 const initialState = {
     curLevelFolderId: null,

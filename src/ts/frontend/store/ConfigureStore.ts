@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import { checkTokenExpiryMiddleware } from "@store/middleware/authMidW";
+import { checkTokenExpiryMiddleware } from "@store/middleware/AuthMidW";
 import rootReducer from "@store/RootReducer";
 
 const savedState = localStorage.getItem('reduxState');

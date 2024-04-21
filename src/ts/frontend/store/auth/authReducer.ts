@@ -1,4 +1,4 @@
-import { AuthActionT } from "@store/auth/authActions";
+import { AuthActionT } from "@store/auth/AuthActions";
 
 interface InitialStateI {
   isAuthd: boolean;

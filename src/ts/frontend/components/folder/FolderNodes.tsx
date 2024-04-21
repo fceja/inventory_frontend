@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import { Dispatch } from "redux";
 
-import { AuthActionT } from "@store/auth/authActions";
+import { AuthActionT } from "@store/auth/AuthActions";
 import { RootState } from "@store/ConfigureStore";
 import { PAGE_PATHS } from "@common/Constants"
-import { FolderActionT } from "@store/folder/folderActions";
-import { setParentFolderId } from "@store/folder/folderActions";
+import { setParentFolderId, FolderActionT } from "@store/folder/FolderActions";
+import { setSelectedItemId, ItemActionT } from "@store/item/ItemActions";
 import FoldersApi from "@api/FoldersApi"
+import ItemModal from "@components/modals/ItemModal"
 
 interface SubFolderI {
     folderId: number,
@@ -26,9 +27,10 @@ type FolderNode = SubFolderI | ItemI;
 
 const FolderNodes = () => {
     const [nodeData, setNodeData] = useState<FolderNode[] | null>(null);
-    const dispatch: Dispatch<AuthActionT | FolderActionT> = useDispatch();
+    const dispatch: Dispatch<AuthActionT | FolderActionT | ItemActionT> = useDispatch();
     const authState = useSelector((state: RootState) => state.authState);
     const folderState = useSelector((state: RootState) => state.folderState);
+    const itemState = useSelector((state: RootState) => state.itemState);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -42,6 +44,11 @@ const FolderNodes = () => {
         }
         fetchData();
     }, [folderState.curLevelFolderId]);
+
+
+    const handleItemClick = (itemId: number) => {
+        dispatch(setSelectedItemId(itemId))
+    }
 
     const renderNode = (node: FolderNode, index: number) => {
         if (node.nodeType === "folder") {
@@ -57,26 +64,33 @@ const FolderNodes = () => {
             const itemNode = node as ItemI;
 
             return (
-                <Link key={`node-${index}`} to={`${PAGE_PATHS.ITEMS.replace(':itemId', `${itemNode.itemId}`)}`} >
-                    <div key={index} className={`${itemNode.nodeType}-node`}>{`${itemNode.name} ${itemNode.nodeType}`}</div>
-                </Link>
+                <div
+                    key={index}
+                    className={`${itemNode.nodeType}-node`}
+                    onClick={() => handleItemClick(itemNode.itemId)}>{`${itemNode.name} ${itemNode.nodeType}`}
+                </div>
             )
 
         } else throw new Error('Invalid node type.')
     }
 
     return (
-        <div className="folder-nodes">
-            {nodeData && nodeData.length > 0 ? (
-                <>
-                    {nodeData.map((node, index) => renderNode(node, index))}
-                </>
-            ) : (
-                <>
-                    Folder empty.
-                </>
-            )}
-        </div>
+        <>
+            <div className="folder-nodes">
+                {nodeData && nodeData.length > 0 ? (
+                    <>
+                        {nodeData.map((node, index) => renderNode(node, index))}
+                    </>
+                ) : (
+                    <>
+                        Folder empty.
+                    </>
+                )}
+            </div>
+            {itemState.selectedItemId &&
+                <ItemModal />
+            }
+        </>
     );
 };
 

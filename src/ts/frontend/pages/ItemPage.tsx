@@ -5,7 +5,7 @@ import { Dispatch } from 'redux';
 
 import "@scss/pages/ItemPage.scss"
 import { PAGE_PATHS } from "@common/Constants"
-import { AuthActionT } from "@store/auth/authActions";
+import { AuthActionT } from "@store/auth/AuthActions";
 import { RootState } from "@store/ConfigureStore";
 import ItemsApi from "@api/ItemsApi"
 

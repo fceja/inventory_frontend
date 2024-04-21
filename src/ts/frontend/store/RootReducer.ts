@@ -1,8 +1,8 @@
 import { combineReducers } from "@reduxjs/toolkit";
 
-import authReducer from "@store/auth/authReducer";
-import folderReducer from "@store/folder/folderReducer"
-import itemReducer from "@store/item/itemReducer"
+import authReducer from "@store/auth/AuthReducer";
+import folderReducer from "@store/folder/FolderReducer"
+import itemReducer from "@store/item/ItemReducer"
 
 const rootReducer = combineReducers({
   authState: authReducer,

@@ -1,7 +1,7 @@
 import { Dispatch } from "redux";
 
 import useApiClient from "@api/config/AxiosConfig";
-import { AuthActionT } from "@store/auth/authActions";
+import { AuthActionT } from "@store/auth/AuthActions";
 import { defineCancelApiObject } from "@api/utils/AxiosUtils";
 
 interface SystemUserI {

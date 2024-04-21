@@ -1,7 +1,7 @@
 import {
     SET_SELECTED_ITEM_ID,
     ItemActionT
-} from "@store/item/itemActions"
+} from "@store/item/ItemActions"
 
 const initialState = {
     selectedItemId: null

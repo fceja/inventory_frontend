@@ -4,9 +4,9 @@ import { useParams } from "react-router-dom";
 import { Dispatch } from "redux";
 
 import "@scss/pages/FolderPage.scss"
-import { AuthActionT } from "@store/auth/authActions";
+import { AuthActionT } from "@store/auth/AuthActions";
 import { PAGE_PATHS } from "@common/Constants"
-import { setCurLevelFolderId, FolderActionT } from "@store/folder/folderActions";
+import { setCurLevelFolderId, FolderActionT } from "@store/folder/FolderActions";
 import FolderNavigation from "@components/folder/FolderNavigation"
 import FolderNodes from "@components/folder/FolderNodes"
 import FolderStats from "@components/folder/FolderStats"

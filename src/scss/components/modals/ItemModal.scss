@@ -1,0 +1,70 @@
+@import "@scss/Variables.scss";
+
+#root-item-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(195, 195, 195, 0.141);
+    backdrop-filter: blur(5px);
+}
+
+.item-modal {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 300px;
+    min-width: 400px;
+    max-width: 400px;
+
+    transform: translate(-50%, -50%);
+
+    background-color: white;
+}
+
+.item-header {
+    height: 100px;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* ham menu container */
+$menu-bar-container-height: 60px;
+$menu-bar-container-width: 52px;
+
+.item-close {
+    max-height: $menu-bar-container-height;
+    min-height: $menu-bar-container-height;
+    max-width: $menu-bar-container-width;
+    min-width: $menu-bar-container-width;
+    margin-right: 15px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    cursor: pointer;
+}
+
+.item-close-bar {
+    width: 100%;
+    height: 10px;
+
+    background-color: $default-light-teal;
+    border-radius: 0.5em;
+}
+
+.item-close-bar:nth-child(1) {
+    transform: translate(0, 13px) rotate(45deg);
+}
+
+.item-close-bar:nth-child(2) {
+    transform: translate(0, -10px) rotate(-45deg);
+}

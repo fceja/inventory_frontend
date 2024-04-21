@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Dispatch } from "redux";
 
-import { setAuthd, setAuthToken, AuthActionT } from "@store/auth/authActions";
+import { setAuthd, setAuthToken, AuthActionT } from "@store/auth/AuthActions";
 
 const useApiClient = (dispatch: Dispatch<AuthActionT>, authState?: any) => {
 

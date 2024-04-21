@@ -1,7 +1,7 @@
 import { Canceler } from "axios";
 import { jwtDecode } from "jwt-decode";
 
-import { clearAuth } from "@store/auth/authActions";
+import { clearAuth } from "@store/auth/AuthActions";
 
 let tokenExpiryTimeout: NodeJS.Timeout | null = null;
 
