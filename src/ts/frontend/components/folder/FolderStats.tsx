@@ -8,10 +8,10 @@ import { RootState } from "@store/ConfigureStore";
 import FoldersApi from "@api/FoldersApi"
 
 interface statsDataI {
-    folderTotal: string | null
-    itemTotal: string | null
-    quantityTotal: string | null
-    valueTotal: string | null
+    folderTotal: number | null
+    itemTotal: number | null
+    quantityTotal: number | null
+    priceTotal: number | null
 }
 
 const FolderStats = () => {
@@ -19,7 +19,7 @@ const FolderStats = () => {
     const authState = useSelector((state: RootState) => state.authState);
     const folderState = useSelector((state: RootState) => state.folderState);
     const [statsData, setStatsData] = useState<statsDataI>(
-        { folderTotal: null, itemTotal: null, quantityTotal: null, valueTotal: null }
+        { folderTotal: null, itemTotal: null, quantityTotal: null, priceTotal: null }
     )
 
     useEffect(() => {
@@ -41,7 +41,7 @@ const FolderStats = () => {
                     <label className="folder-stats-count">Folder Total: {statsData.folderTotal}</label>
                     <label className="folder-stats-items-count">Item Total: {statsData.itemTotal}</label>
                     <label className="folder-stats-items-quantity">Quantity Total: {statsData.quantityTotal}</label>
-                    <label className="folder-stats-total-value">Value Total: ${statsData.valueTotal}</label>
+                    <label className="folder-stats-total-value">Value Total: ${statsData.priceTotal}</label>
                 </>
             }
         </div >
