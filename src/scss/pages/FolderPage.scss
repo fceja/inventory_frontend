@@ -1,16 +1,17 @@
 @import "@scss/Variables.scss";
 
+.folder-content {
+    padding: 0 10px 0 10px;
+}
+
 .folder-nav {
     height: 60px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    margin: 15px 0 0 0;
 
     @include flex-center;
     justify-content: space-between;
 
     text-align: center;
-
-
 
     &-heirarchy,
     &-level-up {
@@ -27,7 +28,6 @@
         svg {
             height: 25px;
         }
-
     }
 
     .disabled {
@@ -36,9 +36,7 @@
 }
 
 .folder-stats {
-    height: 50px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    margin: 15px 0 0 0;
 
     display: flex;
     justify-content: space-between;
@@ -61,13 +59,12 @@
 
 .folder-nodes {
     box-sizing: border-box;
-    padding: 5px;
 }
 
 .folder-node,
 .item-node {
     height: 100px;
-    margin: 10px;
+    margin: 15px 0 0 0;
 
     border-style: dashed;
 }

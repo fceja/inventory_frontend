@@ -2,6 +2,8 @@
 
 /* navigation bar container */
 .nav-bar {
+  padding: 0 10px 0 10px;
+
   display: flex;
   justify-content: space-between;
 }
@@ -25,9 +27,6 @@ $menu-bar-container-width: 80px;
   min-height: $menu-bar-container-height;
   max-width: $menu-bar-container-width;
   min-width: $menu-bar-container-width;
-
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .hamburger-bar {
@@ -59,7 +58,7 @@ $menu-bar-container-width: 80px;
 
 /* animations */
 .hamburger-bar.clicked:nth-child(1) {
-  transform: rotate(45deg) translate(0, calc($menu-bar-container-width / 2) - 1);
+  transform: rotate(45deg) translate(16px, calc($menu-bar-container-width / 2) - 16);
   transition: ease-out 0.5s;
 }
 
@@ -69,7 +68,7 @@ $menu-bar-container-width: 80px;
 }
 
 .hamburger-bar.clicked:nth-child(3) {
-  transform: rotate(-45deg) translate(0, -1 * (calc($menu-bar-container-width / 2) - 1));
+  transform: rotate(-45deg) translate(16px, -1 * (calc($menu-bar-container-width / 2) - 16));
   transition: ease-out 0.5s;
 }
 
@@ -146,5 +145,5 @@ $menu-bar-container-width: 80px;
 
   border-style: dashed;
   height: 80%;
-  width: 80%;
+  width: 125px;
 }
