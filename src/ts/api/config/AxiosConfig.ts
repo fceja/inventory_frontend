@@ -4,7 +4,6 @@ import { Dispatch } from "redux";
 import { setAuthd, setAuthToken, AuthActionT } from "@store/auth/AuthActions";
 
 const useApiClient = (dispatch: Dispatch<AuthActionT>, authState?: any) => {
-
   const apiClient = axios.create({
     withCredentials: true,
     baseURL: import.meta.env.VITE_API_BASE_URL,
