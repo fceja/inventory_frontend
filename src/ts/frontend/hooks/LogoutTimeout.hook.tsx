@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-import { cancelLogoutTimeout, resetLogoutTimer } from "@store/utils/LogoutUtils"
+import { cancelLogoutTimeout, resetLogoutTimer } from "@utils/store/LogoutUtils"
 
 export const useLogoutTimeout = (isAuthd: boolean) => {
     const dispatch = useDispatch();

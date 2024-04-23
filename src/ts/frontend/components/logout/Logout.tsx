@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 
 import { clearAuth, AuthActionT } from "@store/auth/AuthActions";
-import { cancelLogoutTimeout } from "@store/utils/LogoutUtils"
+import { cancelLogoutTimeout } from "@utils/store/LogoutUtils"
 
 const Logout = () => {
     const dispatch: Dispatch<AuthActionT> = useDispatch();

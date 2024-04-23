@@ -50,7 +50,7 @@
         "src/ts/frontend/validations/*"
       ],
       "@utils/*": [
-        "src/ts/utils/*"
+        "src/ts/frontend/utils/*"
       ]
     }
   },

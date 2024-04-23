@@ -14,7 +14,7 @@ export default defineConfig({
       "@pages": path.resolve(__dirname, "./src/ts/frontend/pages"),
       "@scss": path.resolve(__dirname, "./src/scss"),
       "@store": path.resolve(__dirname, "./src/ts/frontend/store"),
-      "@utils": path.resolve(__dirname, "./src/ts/utils"),
+      "@utils": path.resolve(__dirname, "./src/ts/frontend/utils"),
       "@validations": path.resolve(__dirname, "./src/ts/frontend/validations"),
     },
   },

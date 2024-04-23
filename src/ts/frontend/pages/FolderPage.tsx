@@ -13,25 +13,11 @@ import FolderNavigation from "@components/folder/FolderNavigation"
 import FolderNodes from "@components/folder/FolderNodes"
 import FolderStats from "@components/folder/FolderStats"
 import NotFoundPage from "@pages/NotFoundPage";
-
-const isStringAllZeroes = (inputString: string) => {
-    return /^0+$/.test(inputString)
-}
-
-const isStringANumber = (inputString: string) => {
-    return !isNaN(parseFloat(inputString)) && isFinite(+inputString)
-}
-
-const pathEndsWithString = (inputString: string) => {
-    const path = window.location.pathname
-    return path.endsWith(`/${inputString}`) || path.endsWith(`/${inputString}/`)
-}
-
+import { isStringAllZeroes, isStringANumber, pathEndsWithString } from "@utils/string/StringUtils"
 
 const FolderPage = () => {
     const dispatch: Dispatch<AuthActionT | FolderActionT> = useDispatch();
     const authState = useSelector((state: RootState) => state.authState);
-    const folderState = useSelector((state: RootState) => state.folderState);
 
     const [isValid, setIsValid] = useState(false)
     const [nodeData, setNodeData] = useState(null);
