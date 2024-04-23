@@ -88,6 +88,13 @@ const HamburgerMenu = () => {
           </Link>
           <Link
             className="ham-menu-btn-link"
+            to={PAGE_PATHS.SEARCH}
+            onClick={updateMenuVisibility}
+          >
+            Search
+          </Link>
+          <Link
+            className="ham-menu-btn-link"
             to={PAGE_PATHS.UPDATE}
             onClick={updateMenuVisibility}
           >

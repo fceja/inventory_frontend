@@ -7,6 +7,7 @@ import FolderPage from "@pages/FolderPage";
 import ItemPage from "@pages/ItemPage";
 import Layout from "@pages/Layout";
 import NotFoundPage from "@pages/NotFoundPage";
+import SearchPage from "@pages/SearchPage";
 import UpdatePage from "@pages/UpdatePage";
 
 const App = () => {
@@ -33,6 +34,14 @@ const App = () => {
         element={
           <Layout>
             <ItemPage />
+          </Layout>
+        }
+      ></Route>
+      <Route
+        path={PAGE_PATHS.SEARCH}
+        element={
+          <Layout>
+            <SearchPage />
           </Layout>
         }
       ></Route>
