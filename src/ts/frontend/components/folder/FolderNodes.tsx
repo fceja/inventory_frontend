@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import { Dispatch } from "redux";
@@ -6,9 +5,7 @@ import { Dispatch } from "redux";
 import { AuthActionT } from "@store/auth/AuthActions";
 import { RootState } from "@store/ConfigureStore";
 import { PAGE_PATHS } from "@common/Constants"
-import { setParentFolderId, FolderActionT } from "@store/folder/FolderActions";
 import { setSelectedItemId, ItemActionT } from "@store/item/ItemActions";
-import FoldersApi from "@api/FoldersApi"
 import ItemModal from "@components/modals/ItemModal"
 
 interface SubFolderI {
@@ -25,26 +22,15 @@ interface ItemI {
 
 type FolderNode = SubFolderI | ItemI;
 
-const FolderNodes = () => {
-    const [nodeData, setNodeData] = useState<FolderNode[] | null>(null);
-    const dispatch: Dispatch<AuthActionT | FolderActionT | ItemActionT> = useDispatch();
-    const authState = useSelector((state: RootState) => state.authState);
-    const folderState = useSelector((state: RootState) => state.folderState);
+interface PropsI {
+    nodeData: FolderNode[] | null;
+}
+
+const FolderNodes: React.FC<PropsI> = (props) => {
+    const dispatch: Dispatch<AuthActionT | ItemActionT> = useDispatch();
     const itemState = useSelector((state: RootState) => state.itemState);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            if (!folderState.folderId) return;
-
-            const response = await FoldersApi(dispatch, authState).getByFolderId(folderState.folderId);
-            if (response && response.status === 200 && response.data.success) {
-                dispatch(setParentFolderId(response.data.folder.parentFolderId))
-                setNodeData(response.data.folderNodes);
-            }
-        }
-        fetchData();
-    }, [folderState.folderId]);
-
+    const { nodeData } = props
 
     const handleItemClick = (itemId: string) => {
         dispatch(setSelectedItemId(itemId))
@@ -79,7 +65,7 @@ const FolderNodes = () => {
             <div className="folder-nodes">
                 {nodeData && nodeData.length > 0 ? (
                     <>
-                        {nodeData.map((node, index) => renderNode(node, index))}
+                        {nodeData.map((node: FolderNode, index: number) => renderNode(node, index))}
                     </>
                 ) : (
                     <>

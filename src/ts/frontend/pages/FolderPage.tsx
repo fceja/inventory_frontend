@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react"
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
 import { Dispatch } from "redux";
 
 import "@scss/pages/FolderPage.scss"
 import { AuthActionT } from "@store/auth/AuthActions";
+import { RootState } from "@store/ConfigureStore";
 import { PAGE_PATHS } from "@common/Constants"
-import { setFolderId, FolderActionT } from "@store/folder/FolderActions";
+import { setFolderId, setParentFolderId, FolderActionT } from "@store/folder/FolderActions";
+import FoldersApi from "@api/FoldersApi"
 import FolderNavigation from "@components/folder/FolderNavigation"
 import FolderNodes from "@components/folder/FolderNodes"
 import FolderStats from "@components/folder/FolderStats"
@@ -27,9 +29,14 @@ const pathEndsWithString = (inputString: string) => {
 
 
 const FolderPage = () => {
-    let { folderId } = useParams();
-    const [isValid, setIsValid] = useState(false)
     const dispatch: Dispatch<AuthActionT | FolderActionT> = useDispatch();
+    const authState = useSelector((state: RootState) => state.authState);
+    const folderState = useSelector((state: RootState) => state.folderState);
+
+    const [isValid, setIsValid] = useState(false)
+    const [nodeData, setNodeData] = useState(null);
+
+    let { folderId } = useParams();
 
     useEffect(() => {
         if (!folderId) return setIsValid(false)
@@ -55,6 +62,19 @@ const FolderPage = () => {
 
     }, [folderId])
 
+    useEffect(() => {
+        const fetchData = async () => {
+            if (!folderState.folderId) return;
+
+            const response = await FoldersApi(dispatch, authState).getByFolderId(folderState.folderId);
+            if (response && response.status === 200 && response.data.success) {
+                dispatch(setParentFolderId(response.data.folder.parentFolderId))
+                setNodeData(response.data.folderNodes);
+            }
+        }
+        fetchData();
+    }, [folderState.folderId]);
+
     return (
         <div className="folder-content">
             {!isValid ? <NotFoundPage />
@@ -62,7 +82,7 @@ const FolderPage = () => {
                 <>
                     <FolderNavigation />
                     <FolderStats />
-                    <FolderNodes />
+                    <FolderNodes nodeData={nodeData} />
                 </>
             }
         </div>
