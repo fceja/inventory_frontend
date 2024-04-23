@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from "redux";
 
+import "@scss/pages/SearchPage.scss"
 import { AuthActionT } from "@store/auth/AuthActions";
 import { RootState } from "@store/ConfigureStore";
 import SearchApi from "@api/SearchApi";
 
 const SearchPage = () => {
     const [searchInput, setSearchInput] = useState("");
+    const [lastSearchTerm, setlastSearchTerm] = useState("");
     const [includeFolders, setIncludeFolders] = useState(true);
     const [includeItems, setIncludeItems] = useState(true);
     const [handleSubmit, setHandleSubmit] = useState(false);
@@ -24,16 +26,16 @@ const SearchPage = () => {
         return () => clearTimeout(timer);
     }, [searchInput]);
 
+    const fetchData = async () => {
+        const response = await SearchApi(dispatch, authState).getAutoCompleteData(searchInput, includeFolders, includeItems);
+        if (response && response.status === 200 && response.data.success) {
+            setData(response.data);
+        }
+    };
+
     useEffect(() => {
         if (searchInput && handleSubmit) {
-            const fetchData = async () => {
-                const response = await SearchApi(dispatch, authState).getAutoCompleteData(searchInput, includeFolders, includeItems);
-                if (response && response.status === 200 && response.data.success) {
-                    console.log(`response.data`);
-                    console.log(response.data);
-                    setData(response.data);
-                }
-            };
+            setlastSearchTerm(searchInput)
             fetchData();
         }
     }, [searchInput, handleSubmit]);
@@ -43,34 +45,53 @@ const SearchPage = () => {
         setHandleSubmit(false);
     };
 
+    const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === "Enter") {
+            console.log('triggered')
+            event.preventDefault();
+
+            if (searchInput && handleSubmit) {
+                if (lastSearchTerm !== searchInput) {
+                    setlastSearchTerm(searchInput)
+                    fetchData();
+                }
+            }
+        }
+    };
+
     return (
-        <>
-            <div>This is Search.</div>
+        <div className="search-content">
             <form onSubmit={(event) => event.preventDefault()}>
+
                 <input
                     type="search"
                     value={searchInput}
                     placeholder="Search..."
-                    onChange={handleInputChange}
+                    onChange={(event) => handleInputChange(event)}
+                    onKeyDown={(event) => handleKeyPress(event)}
                 />
-                <label htmlFor="folders">Folders</label>
-                <input
-                    type="checkbox"
-                    id="foldersCheckbox"
-                    name="folders"
-                    onChange={(event) => setIncludeFolders(event.target.checked)}
-                    checked
-                />
-                <label htmlFor="items">Items</label>
-                <input
-                    type="checkbox"
-                    id="itemsCheckbox"
-                    name="items"
-                    onChange={(event) => setIncludeItems(event.target.checked)}
-                    checked
-                />
+                <div className="folders-checkbox">
+                    <label htmlFor="folders">Folders</label>
+                    <input
+                        type="checkbox"
+                        id="foldersCheckbox"
+                        name="folders"
+                        onChange={(event) => setIncludeFolders(event.target.checked)}
+                        checked={includeFolders}
+                    />
+                </div>
+                <div className="items-checkbox">
+                    <label htmlFor="items">Items</label>
+                    <input
+                        type="checkbox"
+                        id="itemsCheckbox"
+                        name="items"
+                        onChange={(event) => setIncludeItems(event.target.checked)}
+                        checked={includeItems}
+                    />
+                </div>
             </form>
-        </>
+        </div>
     );
 }
 
