@@ -7,7 +7,7 @@ import "@scss/pages/FolderPage.scss"
 import { AuthActionT } from "@store/auth/AuthActions";
 import { RootState } from "@store/ConfigureStore";
 import { PAGE_PATHS } from "@common/Constants"
-import { setFolderId, setParentFolderId, FolderActionT } from "@store/folder/FolderActions";
+import { setFolderId, setFolderName, setParentFolderId, FolderActionT } from "@store/folder/FolderActions";
 import FoldersApi from "@api/FoldersApi"
 import FolderNavigation from "@components/folder/FolderNavigation"
 import FolderNodes from "@components/folder/FolderNodes"
@@ -28,38 +28,37 @@ const FolderPage = () => {
         if (!folderId) return setIsValid(false)
 
         if (folderId === 'main') {
-            dispatch(setFolderId('0'))
+            folderId = '0'
             setIsValid(true)
         }
 
         else if (isStringAllZeroes(folderId)) {
             window.history.pushState({}, 'Update URL to main', PAGE_PATHS.FOLDERS.replace(':folderId', 'main'));
-            dispatch(setFolderId('0'))
+            folderId = '0'
             setIsValid(true)
         }
         else if (isStringANumber(folderId) && pathEndsWithString(folderId)) {
-            dispatch(setFolderId(folderId))
             setIsValid(true)
         }
         else {
-            dispatch(setFolderId(null))
             setIsValid(false)
+            return;
         }
 
-    }, [folderId])
-
-    useEffect(() => {
         const fetchData = async () => {
-            if (!folderState.folderId) return;
+            if (!folderId) return;
 
-            const response = await FoldersApi(dispatch, authState).getByFolderId(folderState.folderId);
+            const response = await FoldersApi(dispatch, authState).getByFolderId(folderId);
             if (response && response.status === 200 && response.data.success) {
                 dispatch(setParentFolderId(response.data.folder.parentFolderId))
+                dispatch(setFolderName(response.data.folder.name))
                 setNodeData(response.data.folderNodes);
             }
         }
         fetchData();
-    }, [folderState.folderId]);
+        dispatch(setFolderId(Number(folderId)))
+
+    }, [folderId])
 
     return (
         <div className="folder-content">

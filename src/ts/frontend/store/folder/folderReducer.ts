@@ -1,6 +1,5 @@
 import {
     SET_FOLDER_ID,
-    SET_FOLDER_LEVEL,
     SET_FOLDER_NAME,
     SET_PARENT_FOLDER_ID,
     FolderActionT
@@ -20,16 +19,10 @@ const folderReducer = (state = initialState, action: FolderActionT) => {
                 folderId: action.payload.folderId
             }
 
-        case SET_FOLDER_LEVEL:
-            return {
-                ...state,
-                folderLevel: action.payload.folderLevel
-            }
-
         case SET_FOLDER_NAME:
             return {
                 ...state,
-                folderLevel: action.payload.folderName
+                folderName: action.payload.folderName
             }
 
         case SET_PARENT_FOLDER_ID:
