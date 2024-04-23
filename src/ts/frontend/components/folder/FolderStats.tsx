@@ -11,7 +11,7 @@ interface statsDataI {
     folderTotal: number | null
     itemTotal: number | null
     quantityTotal: number | null
-    priceTotal: number | null
+    valueTotal: number | null
 }
 
 const FolderStats = () => {
@@ -19,20 +19,20 @@ const FolderStats = () => {
     const authState = useSelector((state: RootState) => state.authState);
     const folderState = useSelector((state: RootState) => state.folderState);
     const [statsData, setStatsData] = useState<statsDataI>(
-        { folderTotal: null, itemTotal: null, quantityTotal: null, priceTotal: null }
+        { folderTotal: null, itemTotal: null, quantityTotal: null, valueTotal: null }
     )
 
     useEffect(() => {
         const fetchData = async () => {
-            if (!folderState.curLevelFolderId) return;
+            if (!folderState.folderId) return;
 
-            const response = await FoldersApi(dispatch, authState).getAggregatedDataByFolderId(folderState.curLevelFolderId);
+            const response = await FoldersApi(dispatch, authState).getAggregatedDataByFolderId(folderState.folderId);
             if (response && response.status === 200 && response.data.success) {
                 setStatsData(response.data.folder)
             }
         }
         fetchData();
-    }, [folderState.curLevelFolderId]);
+    }, [folderState.folderId]);
 
     return (
         <div className="folder-stats">
@@ -41,7 +41,7 @@ const FolderStats = () => {
                     <label className="folder-stats-count">Folder Total: {statsData.folderTotal}</label>
                     <label className="folder-stats-items-count">Item Total: {statsData.itemTotal}</label>
                     <label className="folder-stats-items-quantity">Quantity Total: {statsData.quantityTotal}</label>
-                    <label className="folder-stats-total-value">Value Total: ${statsData.priceTotal}</label>
+                    <label className="folder-stats-total-value">Value Total: ${statsData.valueTotal}</label>
                 </>
             }
         </div >

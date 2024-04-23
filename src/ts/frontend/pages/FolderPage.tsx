@@ -6,7 +6,7 @@ import { Dispatch } from "redux";
 import "@scss/pages/FolderPage.scss"
 import { AuthActionT } from "@store/auth/AuthActions";
 import { PAGE_PATHS } from "@common/Constants"
-import { setCurLevelFolderId, FolderActionT } from "@store/folder/FolderActions";
+import { setFolderId, FolderActionT } from "@store/folder/FolderActions";
 import FolderNavigation from "@components/folder/FolderNavigation"
 import FolderNodes from "@components/folder/FolderNodes"
 import FolderStats from "@components/folder/FolderStats"
@@ -35,21 +35,21 @@ const FolderPage = () => {
         if (!folderId) return setIsValid(false)
 
         if (folderId === 'main') {
-            dispatch(setCurLevelFolderId('0'))
+            dispatch(setFolderId('0'))
             setIsValid(true)
         }
 
         else if (isStringAllZeroes(folderId)) {
             window.history.pushState({}, 'Update URL to main', PAGE_PATHS.FOLDERS.replace(':folderId', 'main'));
-            dispatch(setCurLevelFolderId('0'))
+            dispatch(setFolderId('0'))
             setIsValid(true)
         }
         else if (isStringANumber(folderId) && pathEndsWithString(folderId)) {
-            dispatch(setCurLevelFolderId(folderId))
+            dispatch(setFolderId(folderId))
             setIsValid(true)
         }
         else {
-            dispatch(setCurLevelFolderId(null))
+            dispatch(setFolderId(null))
             setIsValid(false)
         }
 

@@ -34,16 +34,16 @@ const FolderNodes = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            if (!folderState.curLevelFolderId) return;
+            if (!folderState.folderId) return;
 
-            const response = await FoldersApi(dispatch, authState).getByFolderId(folderState.curLevelFolderId);
+            const response = await FoldersApi(dispatch, authState).getByFolderId(folderState.folderId);
             if (response && response.status === 200 && response.data.success) {
                 dispatch(setParentFolderId(response.data.folder.parentFolderId))
                 setNodeData(response.data.folderNodes);
             }
         }
         fetchData();
-    }, [folderState.curLevelFolderId]);
+    }, [folderState.folderId]);
 
 
     const handleItemClick = (itemId: string) => {

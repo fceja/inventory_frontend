@@ -6,7 +6,7 @@ import {
 } from "@store/folder/FolderActions";
 
 const initialState = {
-    curLevelFolderId: null,
+    folderId: null,
     parentFolderId: null
 }
 
@@ -20,7 +20,7 @@ const folderReducer = (state = initialState, action: FolderActionT) => {
         case SET_CUR_LEVEL_FOLDER_ID:
             return {
                 ...state,
-                curLevelFolderId: action.payload.curLevelFolderId
+                folderId: action.payload.folderId
             }
         case SET_PARENT_FOLDER_ID:
             return {

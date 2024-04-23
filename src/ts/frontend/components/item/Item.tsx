@@ -13,7 +13,7 @@ interface ItemDataI {
     name: string,
     minLevel: string
     quantity: number
-    value: number
+    price: number
 }
 
 const Item = () => {
@@ -66,8 +66,8 @@ const Item = () => {
                             <span>Min Level: {itemData.minLevel ? itemData.minLevel : '-'}</span>
                         </div>
                         <div className="item-price">
-                            <span>Price: {`$${itemData.value}`}</span>
-                            <span>Total Value: {`$${itemData.quantity * itemData.value}`}</span>
+                            <span>Price: {`$${itemData.price}`}</span>
+                            <span>Total Value: {`$${itemData.quantity * itemData.price}`}</span>
                         </div>
                     </div>
                     <div className="btn-edit">

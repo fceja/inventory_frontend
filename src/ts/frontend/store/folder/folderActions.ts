@@ -7,9 +7,9 @@ interface SetFolderLevelAction {
     payload: { folderLevel: string };
 }
 
-interface SetCurLevelFolderIdAction {
+interface SetFolderIdAction {
     type: typeof SET_CUR_LEVEL_FOLDER_ID;
-    payload: { curLevelFolderId: string | null };
+    payload: { folderId: string | null };
 }
 
 interface SetParentFolderIdAction {
@@ -17,7 +17,7 @@ interface SetParentFolderIdAction {
     payload: { parentFolderId: string | null };
 }
 
-export type FolderActionT = SetFolderLevelAction | SetCurLevelFolderIdAction | SetParentFolderIdAction
+export type FolderActionT = SetFolderLevelAction | SetFolderIdAction | SetParentFolderIdAction
 
 export const setFolderLevel = (level: string): FolderActionT => {
     return {
@@ -26,10 +26,10 @@ export const setFolderLevel = (level: string): FolderActionT => {
     }
 }
 
-export const setCurLevelFolderId = (folderId: string | null): FolderActionT => {
+export const setFolderId = (folderId: string | null): FolderActionT => {
     return {
         type: SET_CUR_LEVEL_FOLDER_ID,
-        payload: { curLevelFolderId: folderId }
+        payload: { folderId: folderId }
     }
 }
 

@@ -10,14 +10,14 @@ const FolderOptions = () => {
     const folderState = useSelector((state: RootState) => state.folderState);
 
     useEffect(() => {
-        if (folderState.curLevelFolderId === '0') {
+        if (folderState.folderId === '0') {
             // at root folder, no parent folders
             setIsDisabled(true)
         } else {
             // parent folders exist
             setIsDisabled(false)
         }
-    }, [folderState.curLevelFolderId])
+    }, [folderState.folderId])
 
     return (
         <>
