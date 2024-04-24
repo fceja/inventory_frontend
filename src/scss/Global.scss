@@ -95,3 +95,12 @@ $device-breakpoints: (
   align-items: center;
   justify-content: center;
 }
+
+.error {
+  color: red;
+}
+
+.errorMessage {
+  color: red;
+  font-size: 14px;
+}
