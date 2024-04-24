@@ -10,8 +10,7 @@ $default-whitesmoke: whitesmoke;
 
 // spacing
 $default-container-margin: 50px;
-$default-container-margin-top-bottom: $default-container-margin 0
-  $default-container-margin 0;
+$default-container-margin-top-bottom: $default-container-margin 0 $default-container-margin 0;
 
 // screen / devices sizes
 $device-sizes: "xs-device", "sm-device", "md-device", "lg-device", "xl-device";
@@ -26,23 +25,18 @@ $device-breakpoint-xl: 1200px;
 
 // define min/max width breakpoints for device sizes
 $device-breakpoints: (
-  xs-device: (
-    max: 576px,
+  xs-device: (max: 576px,
   ),
-  sm-device: (
-    min: 577px,
+  sm-device: (min: 577px,
     max: 768px,
   ),
-  md-device: (
-    min: 769px,
+  md-device: (min: 769px,
     max: 992px,
   ),
-  lg-device: (
-    min: 993px,
+  lg-device: (min: 993px,
     max: 1200px,
   ),
-  xl-device: (
-    min: 1201px,
+  xl-device: (min: 1201px,
   ),
 );
 
@@ -57,24 +51,24 @@ $device-breakpoints: (
 
     // if device-breapoint-config returned, set min/max width
     @if $device-breakpoint-config {
-      $min-width: if(
-        map-has-key($device-breakpoint-config, min),
-        map-get($device-breakpoint-config, min),
-        null
-      );
-      $max-width: if(
-        map-has-key($device-breakpoint-config, max),
-        map-get($device-breakpoint-config, max),
-        null
-      );
+      $min-width: if(map-has-key($device-breakpoint-config, min),
+          map-get($device-breakpoint-config, min),
+          null);
+      $max-width: if(map-has-key($device-breakpoint-config, max),
+          map-get($device-breakpoint-config, max),
+          null);
     }
 
     // generate media query
     @if $min-width and $max-width {
       $media-query: "(min-width: #{$min-width}) and (max-width: #{$max-width})";
-    } @else if $min-width {
+    }
+
+    @else if $min-width {
       $media-query: "(min-width: #{$min-width})";
-    } @else if $max-width {
+    }
+
+    @else if $max-width {
       $media-query: "(max-width: #{$max-width})";
     }
 
@@ -83,7 +77,9 @@ $device-breakpoints: (
       @media #{$media-query} {
         @content;
       }
-    } @else {
+    }
+
+    @else {
       content: $breakpoint;
       @error "No valid media query found for #{$breakpoint}.";
     }
@@ -97,10 +93,10 @@ $device-breakpoints: (
 }
 
 .error {
-  color: red;
+  color: $default-error-red;
 }
 
-.errorMessage {
-  color: red;
-  font-size: 14px;
+.error-underline {
+  text-decoration: underline;
+  text-decoration-color: $default-error-red;
 }
