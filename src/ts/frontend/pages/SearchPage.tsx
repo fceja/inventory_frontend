@@ -13,6 +13,7 @@ const SearchPage = () => {
     const [lastSearchTerm, setlastSearchTerm] = useState("");
     const [foldersLastSearchTerm, setFoldersLastSearchTerm] = useState("");
     const [itemsLastSearchTerm, setItemsLastSearchTerm] = useState("");
+    const [isLoading, setIsLoading] = useState(false)
 
     const [includeFolders, setIncludeFolders] = useState(true);
     const [includeItems, setIncludeItems] = useState(true);
@@ -27,13 +28,19 @@ const SearchPage = () => {
     const authState = useSelector((state: RootState) => state.authState);
 
     const fetchData = async () => {
-        const response = await SearchApi(dispatch, authState).getAutoCompleteData(searchInput, includeFolders, includeItems);
-        if (response && response.status === 200 && response.data.success) {
-            (includeFolders && response.data.results.folders.length > 0) ?
-                setFoldersData(response.data.results.folders) : setFoldersData(null);
+        setIsLoading(true)
 
-            (includeItems && response.data.results.items.length > 0) ?
-                setItemsData(response.data.results.items) : setItemsData(null);
+        try {
+            const response = await SearchApi(dispatch, authState).getAutoCompleteData(searchInput, includeFolders, includeItems);
+            if (response && response.status === 200 && response.data.success) {
+                if (includeFolders && response.data.results.folders.length > 0) setFoldersData(response.data.results.folders);
+
+                if (includeItems && response.data.results.items.length > 0) setItemsData(response.data.results.items);
+            }
+        } catch (error) {
+            console.error(error)
+        } finally {
+            setIsLoading(false)
         }
     };
 
@@ -149,42 +156,38 @@ const SearchPage = () => {
                 <div className={"folder-item-error error"}>Must select at least one option.</div>
             }
             <div className="search-results">
-                {includeFolders && foldersData && handleSubmit && (
-                    <>
+                {isLoading ? null : (
+                    includeFolders && handleSubmit && (
                         <div className="folder-results">
                             Folder results:
-                            <ul>
-                                {foldersData.map(elem => (
-                                    <li className="li-folder" key={elem.folderId}>{elem.name}</li>
-                                ))}
-                            </ul>
+                            {foldersData ? (
+                                <ul>
+                                    {foldersData.map(elem => (
+                                        <li className="li-folder" key={elem.folderId}>{elem.name}</li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <div className="empty">[None]</div>
+                            )}
                         </div>
-                    </>
+                    )
                 )}
-                {includeFolders && !foldersData && handleSubmit &&
-                    <>
-                        <div className="folder-results empty">Folder results:
-                            <div>[None]</div>
+                {isLoading ? null : (
+                    includeItems && handleSubmit && (
+                        <div className="item-results">
+                            Item results:
+                            {itemsData ? (
+                                <ul>
+                                    {itemsData.map(elem => (
+                                        <li className="li-item" key={elem.itemId}>{elem.name}</li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <div className="empty">[None]</div>
+                            )}
                         </div>
-                    </>
-                }
-                {includeItems && itemsData && handleSubmit &&
-                    <div className="item-results">
-                        Item results:
-                        <ul>
-                            {itemsData.map(elem => (
-                                <li className="li-item" key={elem.itemId}>{elem.name}</li>
-                            ))}
-                        </ul>
-                    </div>
-                }
-                {includeItems && !itemsData && handleSubmit &&
-                    <>
-                        <div className="item-results empty">Item results:
-                            <div>[None]</div>
-                        </div>
-                    </>
-                }
+                    )
+                )}
             </div >
         </div>
     );
