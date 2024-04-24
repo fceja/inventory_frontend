@@ -18,8 +18,8 @@ const SearchPage = () => {
     const [includeItems, setIncludeItems] = useState(true);
     const [showCheckboxError, setShowCheckboxError] = useState(false)
 
-    const [foldersData, setFoldersData] = useState(null);
-    const [itemsData, setItemsData] = useState(null);
+    const [foldersData, setFoldersData] = useState<FolderDataI[] | null>(null);
+    const [itemsData, setItemsData] = useState<ItemDataI[] | null>(null);
 
     const [handleSubmit, setHandleSubmit] = useState(false);
 
@@ -54,6 +54,17 @@ const SearchPage = () => {
             }
         }
     };
+    interface FolderDataI {
+        folderId: number,
+        name: string,
+        nodeType: string;
+    }
+
+    interface ItemDataI {
+        itemId: string,
+        name: string,
+        nodeType: string;
+    }
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -139,18 +150,44 @@ const SearchPage = () => {
                     <div className={"folder-item-error error"}>Must select at least one option.</div>
                 }
             </div>
+
+
             <div className="search-results">
-                {includeFolders && foldersData && handleSubmit &&
-                    <div>Folder results.</div>
-                }
+                {includeFolders && foldersData && handleSubmit && (
+                    <>
+                        <div className="folder-results">
+                            Folder results:
+                            <ul>
+                                {foldersData.map(elem => (
+                                    <li className="li-folder" key={elem.folderId}>{elem.name}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    </>
+                )}
                 {includeFolders && !foldersData && handleSubmit &&
-                    <div>No folder results.</div>
+                    <>
+                        <div className="folder-results empty">Folder results:
+                            <div>[None]</div>
+                        </div>
+                    </>
                 }
                 {includeItems && itemsData && handleSubmit &&
-                    <div>Item results.</div>
+                    <div className="item-results">
+                        Item results:
+                        <ul>
+                            {itemsData.map(elem => (
+                                <li className="li-item" key={elem.itemId}>{elem.name}</li>
+                            ))}
+                        </ul>
+                    </div>
                 }
                 {includeItems && !itemsData && handleSubmit &&
-                    <div>No item results.</div>
+                    <>
+                        <div className="item-results empty">Item results:
+                            <div>[None]</div>
+                        </div>
+                    </>
                 }
             </div >
         </>

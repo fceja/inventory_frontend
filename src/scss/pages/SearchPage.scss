@@ -23,10 +23,35 @@
 
 .search-results {
     margin-top: 25px;
+
     @include flex-center;
     flex-direction: column;
+    padding: 0 15px 0 15px;
+}
+
+.folder-results,
+.item-results {
+    width: 100%;
+}
+
+.li-folder,
+.li-item {
+    padding: 15px;
+
+    border-style: solid;
+    overflow: scroll;
+
+    list-style-type: none;
 }
 
 .folder-item-error {
     text-align: center;
+}
+
+.empty {
+    padding: 35px;
+
+    div {
+        text-align: center;
+    }
 }
