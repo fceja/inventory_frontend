@@ -1,0 +1,15 @@
+@import "@scss/Variables.scss";
+
+.search-content {
+    @include flex-center;
+}
+
+.folders-checkbox,
+.items-checkbox {
+    @include flex-center;
+}
+
+.search-results {
+    margin-top: 25px;
+    background-color: red;
+}
