@@ -29,6 +29,8 @@ const SearchPage = () => {
 
     const fetchData = async () => {
         setIsLoading(true)
+        setFoldersData(null)
+        setItemsData(null)
 
         try {
             const response = await SearchApi(dispatch, authState).getAutoCompleteData(searchInput, includeFolders, includeItems);
