@@ -1,6 +1,10 @@
 @import "@scss/Global.scss";
 
-.search-content {
+.search-page {
+    padding: 15px 15px 0 15px;
+}
+
+.search-search-form {
     width: 300px;
     margin: 50px auto 0 auto;
 }
@@ -26,7 +30,6 @@
 
     @include flex-center;
     flex-direction: column;
-    padding: 0 15px 0 15px;
 }
 
 .folder-results,
