@@ -5,20 +5,6 @@ const FoldersApi = (dispatch: any, authState: any) => {
     const apiClient = useApiClient(dispatch, authState);
     const cancelApiObject = defineCancelApiObject(FoldersApi)
 
-    const getByFolderId = async (folderId: string, cancel = false) => {
-        const cancelSignal =
-            cancel && cancelApiObject
-                ? cancelApiObject.get.handleRequestCancellation().signal
-                : undefined;
-
-        return await apiClient.request({
-            url: `/folders/${folderId}`,
-            method: "GET",
-            data: null,
-            signal: cancelSignal
-        })
-    };
-
     const getAggregatedDataByFolderId = async (folderId: string, cancel = false) => {
         const cancelSignal =
             cancel && cancelApiObject
@@ -27,6 +13,20 @@ const FoldersApi = (dispatch: any, authState: any) => {
 
         return await apiClient.request({
             url: `/folders/${folderId}/aggregatedData`,
+            method: "GET",
+            data: null,
+            signal: cancelSignal
+        })
+    };
+
+    const getByFolderId = async (folderId: string, cancel = false) => {
+        const cancelSignal =
+            cancel && cancelApiObject
+                ? cancelApiObject.get.handleRequestCancellation().signal
+                : undefined;
+
+        return await apiClient.request({
+            url: `/folders/${folderId}`,
             method: "GET",
             data: null,
             signal: cancelSignal

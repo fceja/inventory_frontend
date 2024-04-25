@@ -19,36 +19,70 @@ const FolderPage = () => {
     const dispatch: Dispatch<AuthActionT | FolderActionT> = useDispatch();
     const authState = useSelector((state: RootState) => state.authState);
 
+    const [isANumber, setIsANumber] = useState(false);
+    const [isAString, setIsAString] = useState(false);
     const [isValid, setIsValid] = useState(false)
     const [nodeData, setNodeData] = useState(null);
 
+    const [finalFolderId, setFinalFolderId] = useState("");
     let { folderId } = useParams();
 
     useEffect(() => {
-        if (!folderId) return setIsValid(false)
-
-        if (folderId === 'main') {
-            folderId = '0'
-            setIsValid(true)
-        }
-
-        else if (isStringAllZeroes(folderId)) {
-            window.history.pushState({}, 'Update URL to main', PAGE_PATHS.FOLDERS.replace(':folderId', 'main'));
-            folderId = '0'
-            setIsValid(true)
-        }
-        else if (isStringANumber(folderId) && pathEndsWithString(folderId)) {
-            setIsValid(true)
-        }
-        else {
+        // determines if folderId param is a number or string
+        if (!folderId) {
+            setIsANumber(false)
+            setIsAString(false)
             setIsValid(false)
+
             return;
         }
 
-        const fetchData = async () => {
-            if (!folderId) return;
+        if (isStringANumber(folderId)) {
+            setIsAString(false)
+            setIsANumber(true)
 
-            const response = await FoldersApi(dispatch, authState).getByFolderId(folderId);
+        } else {
+            setIsANumber(false)
+            setIsAString(true)
+        }
+
+    }, [folderId])
+
+    useEffect(() => {
+        // handles operations if folderId param is a number
+        if (!folderId || !isANumber) return;
+
+        if (isStringAllZeroes(folderId)) {
+            window.history.pushState({}, 'Update URL to main', PAGE_PATHS.FOLDERS.replace(':folderId', 'main'));
+            setFinalFolderId("0")
+            setIsValid(true)
+        }
+        else if (isStringANumber(folderId) && pathEndsWithString(folderId)) {
+            setFinalFolderId(folderId)
+            setIsValid(true)
+        }
+        else return setIsValid(false);
+
+    }, [folderId, isANumber])
+
+    useEffect(() => {
+        // handles operations if folderId param is a string
+        if (!folderId || !isAString) return;
+
+        if (folderId === 'main') {
+            setFinalFolderId("0")
+            setIsValid(true)
+        }
+        else return setIsValid(false);
+
+    }, [folderId, isAString])
+
+    useEffect(() => {
+        // if valid, handles api call
+        if (!isValid || !finalFolderId) return;
+
+        const fetchData = async () => {
+            const response = await FoldersApi(dispatch, authState).getByFolderId(finalFolderId);
             if (response && response.status === 200 && response.data.success) {
                 dispatch(setParentFolderId(response.data.folder.parentFolderId))
                 dispatch(setFolderName(response.data.folder.name))
@@ -56,9 +90,9 @@ const FolderPage = () => {
             }
         }
         fetchData();
-        dispatch(setFolderId(Number(folderId)))
+        dispatch(setFolderId(Number(finalFolderId)))
 
-    }, [folderId])
+    }, [isValid, finalFolderId])
 
     return (
         <div className="folder-content">
