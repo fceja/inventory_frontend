@@ -17,22 +17,23 @@ interface statsDataI {
 const FolderStats = () => {
     const dispatch: Dispatch<AuthActionT | FolderActionT> = useDispatch();
     const authState = useSelector((state: RootState) => state.authState);
-    const folderState = useSelector((state: RootState) => state.folderState);
+    const { folderId } = useSelector((state: RootState) => state.folderState);
+
     const [statsData, setStatsData] = useState<statsDataI>(
         { folderTotal: null, itemTotal: null, quantityTotal: null, valueTotal: null }
     )
 
     useEffect(() => {
-        const fetchData = async () => {
-            if (!folderState.folderId) return;
+        if (folderId === null || !(folderId >= 0)) return;
 
-            const response = await FoldersApi(dispatch, authState).getAggregatedDataByFolderId(folderState.folderId);
+        const fetchData = async () => {
+            const response = await FoldersApi(dispatch, authState).getAggregatedDataByFolderId(folderId);
             if (response && response.status === 200 && response.data.success) {
                 setStatsData(response.data.folder)
             }
         }
         fetchData();
-    }, [folderState.folderId]);
+    }, [folderId]);
 
     return (
         <div className="folder-stats">

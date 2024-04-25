@@ -24,7 +24,7 @@ const FolderPage = () => {
     const [isValid, setIsValid] = useState(false)
     const [nodeData, setNodeData] = useState(null);
 
-    const [finalFolderId, setFinalFolderId] = useState("");
+    const [finalFolderId, setFinalFolderId] = useState<number | null>(null);
     let { folderId } = useParams();
 
     useEffect(() => {
@@ -54,11 +54,11 @@ const FolderPage = () => {
 
         if (isStringAllZeroes(folderId)) {
             window.history.pushState({}, 'Update URL to main', PAGE_PATHS.FOLDERS.replace(':folderId', 'main'));
-            setFinalFolderId("0")
+            setFinalFolderId(0)
             setIsValid(true)
         }
         else if (isStringANumber(folderId) && pathEndsWithString(folderId)) {
-            setFinalFolderId(folderId)
+            setFinalFolderId(Number(folderId))
             setIsValid(true)
         }
         else return setIsValid(false);
@@ -70,7 +70,7 @@ const FolderPage = () => {
         if (!folderId || !isAString) return;
 
         if (folderId === 'main') {
-            setFinalFolderId("0")
+            setFinalFolderId(0)
             setIsValid(true)
         }
         else return setIsValid(false);
@@ -78,8 +78,8 @@ const FolderPage = () => {
     }, [folderId, isAString])
 
     useEffect(() => {
-        // if valid, handles api call
-        if (!isValid || !finalFolderId) return;
+        // if valid, makes api call
+        if (!isValid || finalFolderId === null || !(finalFolderId >= 0)) return;
 
         const fetchData = async () => {
             const response = await FoldersApi(dispatch, authState).getByFolderId(finalFolderId);

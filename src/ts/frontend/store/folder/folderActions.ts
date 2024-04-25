@@ -9,7 +9,7 @@ interface SetFolderIdAction {
 
 interface SetFolderNameAction {
     type: typeof SET_FOLDER_NAME;
-    payload: { folderName: string };
+    payload: { folderName: string | null };
 }
 
 interface SetParentFolderIdAction {
