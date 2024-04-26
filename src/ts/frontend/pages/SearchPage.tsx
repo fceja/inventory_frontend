@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from "redux";
 
@@ -7,116 +7,109 @@ import { AuthActionT } from "@store/auth/AuthActions";
 import { RootState } from "@store/ConfigureStore";
 import SearchApi from "@api/SearchApi";
 
+interface FolderDataI {
+    folderId: number,
+    name: string,
+    nodeType: string;
+}
+
+interface ItemDataI {
+    itemId: string,
+    name: string,
+    nodeType: string;
+}
+
 const SearchPage = () => {
-    const [searchInput, setSearchInput] = useState("");
-    const [isSearchInputDisabled, setIsSearchInputDisabled] = useState(false)
-    const [lastSearchTerm, setlastSearchTerm] = useState("");
-    const [foldersLastSearchTerm, setFoldersLastSearchTerm] = useState("");
-    const [itemsLastSearchTerm, setItemsLastSearchTerm] = useState("");
-    const [isLoading, setIsLoading] = useState(false)
-
-    const [includeFolders, setIncludeFolders] = useState(true);
-    const [includeItems, setIncludeItems] = useState(true);
-    const [showCheckboxError, setShowCheckboxError] = useState(false)
-
-    const [foldersData, setFoldersData] = useState<FolderDataI[] | null>(null);
-    const [itemsData, setItemsData] = useState<ItemDataI[] | null>(null);
-
-    const [handleSubmit, setHandleSubmit] = useState(false);
-
     const dispatch: Dispatch<AuthActionT> = useDispatch();
     const authState = useSelector((state: RootState) => state.authState);
 
+    const [checkboxState, setCheckboxState] = useState({
+        includeFolders: true,
+        includeItems: true
+    })
+    const [foldersData, setFoldersData] = useState<FolderDataI[] | null>(null);
+    const handleSubmitRef = useRef(false);
+    const isLoadingRef = useRef(false)
+    const [itemsData, setItemsData] = useState<ItemDataI[] | null>(null);
+    const lastSearchTermRef = useRef("");
+    const [searchInput, setSearchInput] = useState("");
+
+    const memoizedState = useMemo(() => {
+        if (!checkboxState.includeFolders && !checkboxState.includeItems) {
+            return {
+                isSearchInputDisabled: true,
+                showCheckboxError: true
+            };
+        } else {
+            return {
+                isSearchInputDisabled: false,
+                showCheckboxError: false
+            };
+        }
+    }, [checkboxState]);
+    const { isSearchInputDisabled, showCheckboxError } = memoizedState;
+
     const fetchData = async () => {
-        setIsLoading(true)
-        setFoldersData(null)
-        setItemsData(null)
+        if (!searchInput || !handleSubmitRef.current) return;
+        lastSearchTermRef.current = searchInput
 
         try {
-            const response = await SearchApi(dispatch, authState).getAutoCompleteData(searchInput, includeFolders, includeItems);
+            const response = await SearchApi(dispatch, authState).getAutoCompleteData(searchInput, checkboxState.includeFolders, checkboxState.includeItems);
             if (response && response.status === 200 && response.data.success) {
-                if (includeFolders && response.data.results.folders.length > 0) setFoldersData(response.data.results.folders);
+                if (checkboxState.includeFolders && response.data.results.folders.length > 0) {
+                    setFoldersData(response.data.results.folders)
+                }
 
-                if (includeItems && response.data.results.items.length > 0) setItemsData(response.data.results.items);
+
+                if (checkboxState.includeItems && response.data.results.items.length > 0) {
+                    setItemsData(response.data.results.items)
+                };
             }
         } catch (error) {
             console.error(error)
-        } finally {
-            setIsLoading(false)
         }
-    };
+    }
+
+    const handleCheckboxChange = (name: keyof typeof checkboxState) => {
+        setCheckboxState(prevState => ({
+            ...prevState,
+            [name]: !prevState[name]
+        }))
+    }
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchInput(event.target.value);
-        setHandleSubmit(false);
+
+        handleSubmitRef.current = false
     };
 
     const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter") {
             event.preventDefault();
 
-            if (searchInput && handleSubmit) {
-                if (lastSearchTerm !== searchInput) {
-                    setlastSearchTerm(searchInput)
+            if (searchInput && handleSubmitRef.current) {
+                if (lastSearchTermRef.current !== searchInput) {
+                    lastSearchTermRef.current = searchInput
                     fetchData();
                 }
             }
         }
     };
-    interface FolderDataI {
-        folderId: number,
-        name: string,
-        nodeType: string;
-    }
-
-    interface ItemDataI {
-        itemId: string,
-        name: string,
-        nodeType: string;
-    }
 
     useEffect(() => {
+        if (!searchInput) return;
+
         const timer = setTimeout(() => {
-            searchInput.length > 2 ? setHandleSubmit(true) : setHandleSubmit(false);
-        }, 700);
+            if (searchInput.length > 2) {
+                handleSubmitRef.current = true
+                isLoadingRef.current = true
+                fetchData()
+                isLoadingRef.current = false
+            }
+        }, 1000);
 
         return () => clearTimeout(timer);
     }, [searchInput]);
-
-    useEffect(() => {
-        if (searchInput && handleSubmit) {
-            setlastSearchTerm(searchInput)
-            fetchData();
-        }
-    }, [searchInput, handleSubmit]);
-
-
-    useEffect(() => {
-        if (includeFolders && handleSubmit && searchInput
-            && (searchInput !== foldersLastSearchTerm)) {
-            setFoldersLastSearchTerm(searchInput)
-            fetchData();
-        }
-    }, [includeFolders])
-
-    useEffect(() => {
-        if (includeItems && handleSubmit && searchInput
-            && (searchInput !== itemsLastSearchTerm)) {
-            setItemsLastSearchTerm(searchInput)
-            fetchData();
-        }
-    }, [includeItems])
-
-    useEffect(() => {
-        if (!includeFolders && !includeItems) {
-            setIsSearchInputDisabled(true)
-            setShowCheckboxError(true)
-        } else {
-            setIsSearchInputDisabled(false)
-            setShowCheckboxError(false)
-        }
-    }, [includeFolders, includeItems])
-
 
     return (
         <div className="search-page">
@@ -136,9 +129,9 @@ const SearchPage = () => {
                         <input
                             type="checkbox"
                             id="foldersCheckbox"
-                            name="folders"
-                            onChange={(event) => setIncludeFolders(event.target.checked)}
-                            checked={includeFolders}
+                            name="includeFolders"
+                            onChange={() => handleCheckboxChange("includeFolders")}
+                            checked={checkboxState.includeFolders}
                         />
 
                     </label>
@@ -147,9 +140,9 @@ const SearchPage = () => {
                         <input
                             type="checkbox"
                             id="itemsCheckbox"
-                            name="items"
-                            onChange={(event) => setIncludeItems(event.target.checked)}
-                            checked={includeItems}
+                            name="includeItems"
+                            onChange={() => handleCheckboxChange("includeItems")}
+                            checked={checkboxState.includeItems}
                         />
                     </label>
                 </div>
@@ -158,8 +151,8 @@ const SearchPage = () => {
                 <div className={"folder-item-error error"}>Must select at least one option.</div>
             }
             <div className="search-results">
-                {isLoading ? null : (
-                    includeFolders && handleSubmit && (
+                {isLoadingRef.current ? null : (
+                    checkboxState.includeFolders && handleSubmitRef.current && (
                         <div className="folder-results">
                             Folder results:
                             {foldersData ? (
@@ -174,8 +167,8 @@ const SearchPage = () => {
                         </div>
                     )
                 )}
-                {isLoading ? null : (
-                    includeItems && handleSubmit && (
+                {isLoadingRef.current ? null : (
+                    checkboxState.includeItems && handleSubmitRef.current && (
                         <div className="item-results">
                             Item results:
                             {itemsData ? (
