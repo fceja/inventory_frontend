@@ -1,10 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { Dispatch } from "redux";
 
 import "@scss/pages/SearchPage.scss"
-import { AuthActionT } from "@store/auth/AuthActions";
-import { RootState } from "@store/ConfigureStore";
 import SearchApi from "@api/SearchApi";
 
 interface FolderDataI {
@@ -20,9 +16,6 @@ interface ItemDataI {
 }
 
 const SearchPage = () => {
-    const dispatch: Dispatch<AuthActionT> = useDispatch();
-    const authState = useSelector((state: RootState) => state.authState);
-
     const [checkboxState, setCheckboxState] = useState({
         includeFolders: true,
         includeItems: true
@@ -54,7 +47,7 @@ const SearchPage = () => {
         lastSearchTermRef.current = searchInput
 
         try {
-            const response = await SearchApi(dispatch, authState).getAutoCompleteData(searchInput, checkboxState.includeFolders, checkboxState.includeItems);
+            const response = await SearchApi().getAutoCompleteData(searchInput, checkboxState.includeFolders, checkboxState.includeItems);
             if (response && response.status === 200 && response.data.success) {
                 if (checkboxState.includeFolders && response.data.results.folders.length > 0) {
                     setFoldersData(response.data.results.folders)

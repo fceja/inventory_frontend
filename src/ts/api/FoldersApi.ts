@@ -1,8 +1,8 @@
 import useApiClient from "@api/config/AxiosConfig";
 import { defineCancelApiObject } from "@api/utils/AxiosUtils";
 
-const FoldersApi = (dispatch: any, authState: any) => {
-    const apiClient = useApiClient(dispatch, authState);
+const FoldersApi = () => {
+    const apiClient = useApiClient();
     const cancelApiObject = defineCancelApiObject(FoldersApi)
 
     const getAggregatedDataByFolderId = async (folderId: number, cancel = false) => {

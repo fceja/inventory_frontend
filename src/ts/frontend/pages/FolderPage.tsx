@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react"
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useParams } from "react-router-dom";
 import { Dispatch } from "redux";
 
 import "@scss/pages/FolderPage.scss"
 import { AuthActionT } from "@store/auth/AuthActions";
-import { RootState } from "@store/ConfigureStore";
 import { PAGE_PATHS } from "@common/Constants"
 import { setFolderId, setFolderName, setParentFolderId, FolderActionT } from "@store/folder/FolderActions";
 import FoldersApi from "@api/FoldersApi"
@@ -17,7 +16,7 @@ import { isStringAllZeroes, isStringANumber, pathEndsWithString } from "@utils/s
 
 const FolderPage = () => {
     const dispatch: Dispatch<AuthActionT | FolderActionT> = useDispatch();
-    const authState = useSelector((state: RootState) => state.authState);
+    // const authState = useSelector((state: RootState) => state.authState);
 
     const [isANumber, setIsANumber] = useState(false);
     const [isAString, setIsAString] = useState(false);
@@ -82,7 +81,7 @@ const FolderPage = () => {
         if (!isValid || finalFolderId === null || !(finalFolderId >= 0)) return;
 
         const fetchData = async () => {
-            const response = await FoldersApi(dispatch, authState).getByFolderId(finalFolderId);
+            const response = await FoldersApi().getByFolderId(finalFolderId);
             if (response && response.status === 200 && response.data.success) {
                 dispatch(setParentFolderId(response.data.folder.parentFolderId))
                 dispatch(setFolderName(response.data.folder.name))

@@ -13,7 +13,6 @@ const store = configureStore({
     getDefaultMiddleware().concat(checkTokenExpiryMiddleware),
 });
 
-
 store.subscribe(() => {
   localStorage.setItem('reduxState', JSON.stringify(store.getState()))
 })

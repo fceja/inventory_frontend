@@ -2,8 +2,8 @@ import axios, { CancelTokenSource } from 'axios';
 
 import useApiClient from "@api/config/AxiosConfig";
 
-const SearchApi = (dispatch: any, authState: any) => {
-    const apiClient = useApiClient(dispatch, authState);
+const SearchApi = () => {
+    const apiClient = useApiClient();
     let cancelTokenSource: CancelTokenSource | null = null;
 
     const getAutoCompleteData = async (searchTerm: string, includeFolders: boolean, includeItems: boolean) => {
