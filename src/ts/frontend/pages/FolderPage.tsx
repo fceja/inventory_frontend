@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useDispatch } from 'react-redux';
 import { useParams } from "react-router-dom";
 import { Dispatch } from "redux";
@@ -6,7 +6,7 @@ import { Dispatch } from "redux";
 import "@scss/pages/FolderPage.scss"
 import { AuthActionT } from "@store/auth/AuthActions";
 import { PAGE_PATHS } from "@common/Constants"
-import { setFolderId, setFolderName, setParentFolderId, FolderActionT } from "@store/folder/FolderActions";
+import { setFolderName, setParentFolderId, FolderActionT } from "@store/folder/FolderActions";
 import FoldersApi from "@api/FoldersApi"
 import FolderNavigation from "@components/folder/FolderNavigation"
 import FolderNodes from "@components/folder/FolderNodes"
@@ -15,87 +15,65 @@ import NotFoundPage from "@pages/NotFoundPage";
 import { isStringAllZeroes, isStringANumber, pathEndsWithString } from "@utils/string/StringUtils"
 
 const FolderPage = () => {
+    console.log('-- render FolderPage --')
     const dispatch: Dispatch<AuthActionT | FolderActionT> = useDispatch();
-    // const authState = useSelector((state: RootState) => state.authState);
 
-    const [isANumber, setIsANumber] = useState(false);
-    const [isAString, setIsAString] = useState(false);
-    const [isValid, setIsValid] = useState(false)
+    const finalFolderIdRef = useRef<number | null>(null);
     const [nodeData, setNodeData] = useState(null);
 
-    const [finalFolderId, setFinalFolderId] = useState<number | null>(null);
     let { folderId } = useParams();
 
-    useEffect(() => {
-        // determines if folderId param is a number or string
-        if (!folderId) {
-            setIsANumber(false)
-            setIsAString(false)
-            setIsValid(false)
+    const fetchData = async () => {
+        if (finalFolderIdRef.current === null || !(finalFolderIdRef.current >= 0)) return;
 
-            return;
+        const response = await FoldersApi().getByFolderId(finalFolderIdRef.current);
+        if (response && response.status === 200 && response.data.success) {
+            dispatch(setParentFolderId(response.data.folder.parentFolderId))
+            dispatch(setFolderName(response.data.folder.name))
+            setNodeData(response.data.folderNodes);
         }
+    }
 
-        if (isStringANumber(folderId)) {
-            setIsAString(false)
-            setIsANumber(true)
-
-        } else {
-            setIsANumber(false)
-            setIsAString(true)
-        }
-
-    }, [folderId])
-
-    useEffect(() => {
+    const processNumber = () => {
         // handles operations if folderId param is a number
-        if (!folderId || !isANumber) return;
+        if (!folderId) return;
 
         if (isStringAllZeroes(folderId)) {
             window.history.pushState({}, 'Update URL to main', PAGE_PATHS.FOLDERS.replace(':folderId', 'main'));
-            setFinalFolderId(0)
-            setIsValid(true)
+            finalFolderIdRef.current = 0
+
+            fetchData()
         }
         else if (isStringANumber(folderId) && pathEndsWithString(folderId)) {
-            setFinalFolderId(Number(folderId))
-            setIsValid(true)
+            finalFolderIdRef.current = Number(folderId)
+
+            fetchData()
         }
-        else return setIsValid(false);
+    }
 
-    }, [folderId, isANumber])
-
-    useEffect(() => {
+    const processString = () => {
         // handles operations if folderId param is a string
-        if (!folderId || !isAString) return;
+        if (!folderId) return;
 
         if (folderId === 'main') {
-            setFinalFolderId(0)
-            setIsValid(true)
-        }
-        else return setIsValid(false);
+            finalFolderIdRef.current = 0
 
-    }, [folderId, isAString])
+            fetchData()
+        }
+    }
 
     useEffect(() => {
-        // if valid, makes api call
-        if (!isValid || finalFolderId === null || !(finalFolderId >= 0)) return;
+        // determines if folderId param is a number or string
+        if (!folderId) return;
 
-        const fetchData = async () => {
-            const response = await FoldersApi().getByFolderId(finalFolderId);
-            if (response && response.status === 200 && response.data.success) {
-                dispatch(setParentFolderId(response.data.folder.parentFolderId))
-                dispatch(setFolderName(response.data.folder.name))
-                setNodeData(response.data.folderNodes);
-            }
-        }
-        fetchData();
-        dispatch(setFolderId(Number(finalFolderId)))
+        if (isStringANumber(folderId)) processNumber()
+        else processString()
 
-    }, [isValid, finalFolderId])
+    }, [folderId])
 
     return (
         <div className="folder-content">
-            {!isValid ? <NotFoundPage />
+            {!nodeData ? <NotFoundPage />
                 :
                 <>
                     <FolderNavigation />
