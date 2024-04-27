@@ -1,3 +1,4 @@
+import React from "react"
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import { Dispatch } from "redux";
@@ -26,9 +27,9 @@ interface PropsI {
     nodeData: FolderNode[] | null;
 }
 
-const FolderNodes: React.FC<PropsI> = (props) => {
+const FolderNodes: React.FC<PropsI> = React.memo((props) => {
     const dispatch: Dispatch<AuthActionT | ItemActionT> = useDispatch();
-    const itemState = useSelector((state: RootState) => state.itemState);
+    const { selectedItemId } = useSelector((state: RootState) => state.itemState);
 
     const { nodeData } = props
 
@@ -73,11 +74,11 @@ const FolderNodes: React.FC<PropsI> = (props) => {
                     </>
                 )}
             </div>
-            {itemState.selectedItemId &&
+            {selectedItemId &&
                 <ItemModal />
             }
         </>
     );
-};
+});
 
 export default FolderNodes;

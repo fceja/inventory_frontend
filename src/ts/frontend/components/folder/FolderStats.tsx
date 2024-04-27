@@ -1,10 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Dispatch } from "redux";
-import { useDispatch, useSelector } from 'react-redux';
-
-import { AuthActionT } from "@store/auth/AuthActions";
-import { FolderActionT } from "@store/folder/FolderActions";
-import { RootState } from "@store/ConfigureStore";
 import FoldersApi from "@api/FoldersApi"
 
 interface statsDataI {
@@ -14,26 +8,28 @@ interface statsDataI {
     valueTotal: number | null
 }
 
-const FolderStats = () => {
-    const dispatch: Dispatch<AuthActionT | FolderActionT> = useDispatch();
-    const authState = useSelector((state: RootState) => state.authState);
-    const { folderId } = useSelector((state: RootState) => state.folderState);
+interface PropsI {
+    folderId: number
+}
+
+const FolderStats: React.FC<PropsI> = (props) => {
+    const { folderId } = props;
 
     const [statsData, setStatsData] = useState<statsDataI>(
         { folderTotal: null, itemTotal: null, quantityTotal: null, valueTotal: null }
     )
 
     useEffect(() => {
-        if (folderId === null || !(folderId >= 0)) return;
-
         const fetchData = async () => {
-            const response = await FoldersApi(dispatch, authState).getAggregatedDataByFolderId(folderId);
+            if (folderId === null || !(folderId >= 0)) return;
+
+            const response = await FoldersApi().getAggregatedDataByFolderId(folderId);
             if (response && response.status === 200 && response.data.success) {
                 setStatsData(response.data.folder)
             }
         }
-        fetchData();
-    }, [folderId]);
+        fetchData()
+    }, [folderId])
 
     return (
         <div className="folder-stats">
