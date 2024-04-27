@@ -6,7 +6,7 @@ import { Dispatch } from "redux";
 import "@scss/pages/FolderPage.scss"
 import { AuthActionT } from "@store/auth/AuthActions";
 import { PAGE_PATHS } from "@common/Constants"
-import { setFolderName, setParentFolderId, FolderActionT } from "@store/folder/FolderActions";
+import { setFolderData, FolderActionT } from "@store/folder/FolderActions";
 import FoldersApi from "@api/FoldersApi"
 import FolderNavigation from "@components/folder/FolderNavigation"
 import FolderNodes from "@components/folder/FolderNodes"
@@ -27,9 +27,12 @@ const FolderPage = () => {
 
         const response = await FoldersApi().getByFolderId(folderIdRef.current);
         if (response && response.status === 200 && response.data.success) {
-            dispatch(setParentFolderId(response.data.folder.parentFolderId))
-            dispatch(setFolderName(response.data.folder.name))
             setNodeData(response.data.folderNodes);
+            dispatch(setFolderData({
+                folderId: folderIdRef.current,
+                folderName: response.data.folder.name,
+                parentFolderId: response.data.folder.parentFolderId
+            }))
         }
     }
 
@@ -40,13 +43,9 @@ const FolderPage = () => {
         if (isStringAllZeroes(folderId)) {
             window.history.pushState({}, 'Update URL to main', PAGE_PATHS.FOLDERS.replace(':folderId', 'main'));
             folderIdRef.current = 0
-
-            fetchData()
         }
         else if (isStringANumber(folderId) && pathEndsWithString(folderId)) {
             folderIdRef.current = Number(folderId)
-
-            fetchData()
         }
     }
 
@@ -54,11 +53,7 @@ const FolderPage = () => {
         // handles operations if folderId param is a string
         if (!folderId) return;
 
-        if (folderId === 'main') {
-            folderIdRef.current = 0
-
-            fetchData()
-        }
+        if (folderId === 'main') folderIdRef.current = 0
     }
 
     useEffect(() => {
@@ -68,6 +63,8 @@ const FolderPage = () => {
         if (isStringANumber(folderId)) processNumber()
         else processString()
 
+        fetchData()
+
     }, [folderId])
 
     return (
@@ -76,7 +73,7 @@ const FolderPage = () => {
                 :
                 <>
                     <FolderNavigation />
-                    <FolderStats folderId={Number(folderIdRef.current)} />
+                    <FolderStats />
                     <FolderNodes nodeData={nodeData} />
                 </>
             }

@@ -1,4 +1,7 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+
+import { RootState } from "@store/ConfigureStore";
 import FoldersApi from "@api/FoldersApi"
 
 interface statsDataI {
@@ -8,12 +11,8 @@ interface statsDataI {
     valueTotal: number | null
 }
 
-interface PropsI {
-    folderId: number
-}
-
-const FolderStats: React.FC<PropsI> = (props) => {
-    const { folderId } = props;
+const FolderStats = React.memo(() => {
+    const { folderId } = useSelector((state: RootState) => state.folderState);
 
     const [statsData, setStatsData] = useState<statsDataI>(
         { folderTotal: null, itemTotal: null, quantityTotal: null, valueTotal: null }
@@ -21,7 +20,7 @@ const FolderStats: React.FC<PropsI> = (props) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            if (folderId === null || !(folderId >= 0)) return;
+            if (folderId === null || folderId === undefined || !(folderId >= 0)) return;
 
             const response = await FoldersApi().getAggregatedDataByFolderId(folderId);
             if (response && response.status === 200 && response.data.success) {
@@ -43,6 +42,6 @@ const FolderStats: React.FC<PropsI> = (props) => {
             }
         </div >
     )
-}
+})
 
 export default FolderStats
