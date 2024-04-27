@@ -1,23 +1,32 @@
+export const SET_FOLDER_DATA = "SET_FOLDER_DATA"
 export const SET_FOLDER_ID = "SET_FOLDER_ID"
 export const SET_FOLDER_NAME = "SET_FOLDER_NAME"
 export const SET_PARENT_FOLDER_ID = "SET_PARENT_FOLDER_ID"
 
-interface SetFolderIdAction {
-    type: typeof SET_FOLDER_ID;
-    payload: { folderId: number | null };
+interface PayloadI {
+    folderId?: number | null;
+    folderName?: string | null;
+    parentFolderId?: number | null;
 }
 
-interface SetFolderNameAction {
-    type: typeof SET_FOLDER_NAME;
-    payload: { folderName: string | null };
+interface FolderActionI {
+    type: typeof SET_FOLDER_DATA | typeof SET_FOLDER_ID | typeof SET_FOLDER_NAME | typeof SET_PARENT_FOLDER_ID;
+    payload: PayloadI;
 }
 
-interface SetParentFolderIdAction {
-    type: typeof SET_PARENT_FOLDER_ID;
-    payload: { parentFolderId: number | null };
-}
+export type FolderActionT = FolderActionI
 
-export type FolderActionT = SetFolderIdAction | SetFolderNameAction | SetParentFolderIdAction
+
+export const setFolderData = (payload: PayloadI): FolderActionT => {
+    return {
+        type: SET_FOLDER_DATA,
+        payload: {
+            folderId: payload.folderId,
+            folderName: payload.folderName,
+            parentFolderId: payload.parentFolderId
+        }
+    }
+}
 
 export const setFolderId = (folderId: number | null): FolderActionT => {
     return {
@@ -26,7 +35,7 @@ export const setFolderId = (folderId: number | null): FolderActionT => {
     }
 }
 
-export const setFolderName = (folderName: string): FolderActionT => {
+export const setFolderName = (folderName: string | null): FolderActionT => {
     return {
         type: SET_FOLDER_NAME,
         payload: { folderName: folderName }
