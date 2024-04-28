@@ -3,13 +3,17 @@ import {
     SET_FOLDER_ID,
     SET_FOLDER_NAME,
     SET_PARENT_FOLDER_ID,
+    SET_SELECTED_FOLDER_ID,
+    SET_SELECTED_FOLDER_NAME,
     FolderActionT
 } from "@store/folder/FolderActions";
 
 const initialState = {
     folderId: null,
     folderName: null,
-    parentFolderId: null
+    parentFolderId: null,
+    selectedFolderId: null,
+    selectedFolderName: null
 }
 
 const folderReducer = (state = initialState, action: FolderActionT) => {
@@ -38,6 +42,18 @@ const folderReducer = (state = initialState, action: FolderActionT) => {
             return {
                 ...state,
                 parentFolderId: action.payload.parentFolderId
+            }
+
+        case SET_SELECTED_FOLDER_ID:
+            return {
+                ...state,
+                selectedFolderId: action.payload.selectedFolderId
+            }
+
+        case SET_SELECTED_FOLDER_NAME:
+            return {
+                ...state,
+                selectedFolderName: action.payload.selectedFolderName
             }
 
         default:
