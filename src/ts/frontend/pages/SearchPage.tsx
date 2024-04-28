@@ -5,7 +5,9 @@ import { Dispatch } from "redux";
 import "@scss/pages/SearchPage.scss"
 import { RootState } from "@store/ConfigureStore";
 import { setSelectedItemId, ItemActionT } from "@store/item/ItemActions";
+import { setSelectedFolderId, setSelectedFolderName, FolderActionT } from "@store/folder/FolderActions";
 import ItemModal from "@components/modals/ItemModal"
+import FolderModal from "@components/modals/FolderModal"
 import Loading from "@common/components/Loading"
 import SearchApi from "@api/SearchApi";
 
@@ -23,7 +25,8 @@ interface ItemDataI {
 
 const SearchPage = () => {
     console.log('-- render SearchPage')
-    const dispatch: Dispatch<ItemActionT> = useDispatch();
+    const dispatch: Dispatch<FolderActionT | ItemActionT> = useDispatch();
+    const { selectedFolderId } = useSelector((state: RootState) => state.folderState);
     const { selectedItemId } = useSelector((state: RootState) => state.itemState);
 
     const [checkboxState, setCheckboxState] = useState({
@@ -65,6 +68,11 @@ const SearchPage = () => {
 
         setHandleSubmit(false)
     };
+
+    const handleFolderClick = (folderId: number, name: string) => {
+        dispatch(setSelectedFolderId(folderId))
+        dispatch(setSelectedFolderName(name))
+    }
 
     const handleItemClick = (itemId: string) => {
         dispatch(setSelectedItemId(itemId))
@@ -179,7 +187,14 @@ const SearchPage = () => {
                                 ) : (
                                     <ul>
                                         {foldersData.map((elem) => (
-                                            <li className="li-folder" key={elem.folderId}>{elem.name}</li>
+                                            <li
+                                                className="li-folder"
+                                                key={elem.folderId}
+                                                onClick={() => handleFolderClick(elem.folderId, elem.name)}
+                                            // onClick={() => handleFolderClick(elem.folderId)}
+                                            >
+                                                {elem.name}
+                                            </li>
                                         ))}
                                     </ul>
                                 )}
@@ -193,7 +208,8 @@ const SearchPage = () => {
                                 ) : (
                                     <ul>
                                         {itemsData.map((elem) => (
-                                            <li className="li-item"
+                                            <li
+                                                className="li-item"
                                                 key={`li-item-${elem.itemId}`}
                                                 onClick={() => handleItemClick(elem.itemId)}
                                             >
@@ -206,6 +222,9 @@ const SearchPage = () => {
                         )}
                         {selectedItemId &&
                             <ItemModal />
+                        }
+                        {selectedFolderId &&
+                            <FolderModal />
                         }
                     </>
                 )}

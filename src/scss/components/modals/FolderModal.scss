@@ -1,0 +1,95 @@
+@import "@scss/Global.scss";
+
+#root-folder-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(195, 195, 195, 0.141);
+    backdrop-filter: blur(5px);
+}
+
+.folder-modal {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 400px;
+    max-width: 400px;
+
+    transform: translate(-50%, -50%);
+
+    background-color: white;
+}
+
+$menu-bar-container-height: 60px;
+$menu-bar-container-width: 52px;
+
+.folder-header {
+    margin: 0 0 15px 0;
+    position: relative;
+    height: $menu-bar-container-height;
+}
+
+/* ham menu container */
+.folder-close {
+    position: absolute;
+    right: 0px;
+    max-height: $menu-bar-container-height;
+    min-height: $menu-bar-container-height;
+    max-width: $menu-bar-container-width;
+    min-width: $menu-bar-container-width;
+    margin-right: 15px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    cursor: pointer;
+}
+
+.folder-close-bar {
+    width: 100%;
+    height: 10px;
+
+    background-color: $default-light-teal;
+    border-radius: 0.5em;
+}
+
+.folder-close-bar:nth-child(1) {
+    transform: translate(0, 13px) rotate(45deg);
+}
+
+.folder-close-bar:nth-child(2) {
+    transform: translate(0, -10px) rotate(-45deg);
+}
+
+.folder-container {
+
+    margin: 0 10px 0 10px;
+}
+
+.folder-details {
+    padding: 25px;
+    border-style: dashed;
+}
+
+.folder-item-details {
+    padding: 25px;
+    border-style: dashed;
+}
+
+.folder {
+
+    &-name,
+    &-count,
+    &-items-count,
+    &-items-quantity,
+    &-total-value {
+        display: flex;
+        flex-direction: row;
+    }
+}
