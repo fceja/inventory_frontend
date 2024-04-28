@@ -1,6 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { Dispatch } from "redux";
 
 import "@scss/pages/SearchPage.scss"
+import { RootState } from "@store/ConfigureStore";
+import { setSelectedItemId, ItemActionT } from "@store/item/ItemActions";
+import ItemModal from "@components/modals/ItemModal"
 import Loading from "@common/components/Loading"
 import SearchApi from "@api/SearchApi";
 
@@ -18,7 +23,8 @@ interface ItemDataI {
 
 const SearchPage = () => {
     console.log('-- render SearchPage')
-    const lastSearchTermRef = useRef("");
+    const dispatch: Dispatch<ItemActionT> = useDispatch();
+    const { selectedItemId } = useSelector((state: RootState) => state.itemState);
 
     const [checkboxState, setCheckboxState] = useState({
         includeFolders: true,
@@ -29,6 +35,7 @@ const SearchPage = () => {
     const [isComplete, setIsComplete] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [itemsData, setItemsData] = useState<ItemDataI[] | null>(null);
+    const lastSearchTermRef = useRef("");
     const [searchInput, setSearchInput] = useState("");
 
     const memoizedState = useMemo(() => {
@@ -46,7 +53,38 @@ const SearchPage = () => {
     }, [checkboxState]);
     const { isSearchInputDisabled, showCheckboxError } = memoizedState;
 
+    const handleCheckboxChange = (name: keyof typeof checkboxState) => {
+        setCheckboxState(prevState => ({
+            ...prevState,
+            [name]: !prevState[name]
+        }))
+    }
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchInput(event.target.value);
+
+        setHandleSubmit(false)
+    };
+
+    const handleItemClick = (itemId: string) => {
+        dispatch(setSelectedItemId(itemId))
+    }
+
+    const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === "Enter") {
+            event.preventDefault();
+
+            if (searchInput && handleSubmit) {
+                if (lastSearchTermRef.current !== searchInput) {
+                    lastSearchTermRef.current = searchInput
+                    setHandleSubmit(true)
+                }
+            }
+        }
+    };
+
     useEffect(() => {
+        // handles data fetching
         if (!searchInput || !handleSubmit) return;
 
         lastSearchTermRef.current = searchInput
@@ -74,43 +112,18 @@ const SearchPage = () => {
         } catch (error) {
             console.error(error)
         } finally { setIsLoading(false) }
+
     }, [handleSubmit])
 
-
-    const handleCheckboxChange = (name: keyof typeof checkboxState) => {
-        setCheckboxState(prevState => ({
-            ...prevState,
-            [name]: !prevState[name]
-        }))
-    }
-
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchInput(event.target.value);
-
-        setHandleSubmit(false)
-    };
-
-    const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === "Enter") {
-            event.preventDefault();
-
-            if (searchInput && handleSubmit) {
-                if (lastSearchTermRef.current !== searchInput) {
-                    lastSearchTermRef.current = searchInput
-                    setHandleSubmit(true)
-                }
-            }
-        }
-    };
-
     useEffect(() => {
+        // triggers data fetch if 3 or more characters entered
         if (!searchInput) return;
 
         const timer = setTimeout(() => {
             if (searchInput.length > 2) {
                 setHandleSubmit(true)
             }
-        }, 1000);
+        }, 750);
 
         return () => clearTimeout(timer);
     }, [searchInput]);
@@ -137,7 +150,6 @@ const SearchPage = () => {
                             onChange={() => handleCheckboxChange("includeFolders")}
                             checked={checkboxState.includeFolders}
                         />
-
                     </label>
                     <label htmlFor="items" className={`${showCheckboxError && "error-underline"}`}>
                         Items
@@ -154,7 +166,6 @@ const SearchPage = () => {
             {showCheckboxError &&
                 <div className={"folder-item-error error"}>Must select at least one option.</div>
             }
-
             <div className="search-results">
                 {isLoading ? (
                     <Loading />
@@ -171,7 +182,6 @@ const SearchPage = () => {
                                             <li className="li-folder" key={elem.folderId}>{elem.name}</li>
                                         ))}
                                     </ul>
-
                                 )}
                             </div>
                         )}
@@ -183,18 +193,26 @@ const SearchPage = () => {
                                 ) : (
                                     <ul>
                                         {itemsData.map((elem) => (
-                                            <li className="li-folder" key={elem.itemId}>{elem.name}</li>
+                                            <li className="li-item"
+                                                key={`li-item-${elem.itemId}`}
+                                                onClick={() => handleItemClick(elem.itemId)}
+                                            >
+                                                {elem.name}
+                                            </li>
                                         ))}
                                     </ul>
-
                                 )}
                             </div>
                         )}
+                        {selectedItemId &&
+                            <ItemModal />
+                        }
                     </>
                 )}
             </div>
         </div>
     );
+
 }
 
 export default SearchPage;
