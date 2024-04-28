@@ -54,6 +54,7 @@
       ]
     }
   },
+  "strictMode": true,
   "include": [
     "src"
   ],

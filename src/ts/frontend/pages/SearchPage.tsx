@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import "@scss/pages/SearchPage.scss"
+import Loading from "@common/components/Loading"
 import SearchApi from "@api/SearchApi";
 
 interface FolderDataI {
@@ -16,15 +17,18 @@ interface ItemDataI {
 }
 
 const SearchPage = () => {
+    console.log('-- render SearchPage')
+    const lastSearchTermRef = useRef("");
+
     const [checkboxState, setCheckboxState] = useState({
         includeFolders: true,
         includeItems: true
     })
     const [foldersData, setFoldersData] = useState<FolderDataI[] | null>(null);
-    const handleSubmitRef = useRef(false);
-    const isLoadingRef = useRef(false)
+    const [handleSubmit, setHandleSubmit] = useState(false);
+    const [isComplete, setIsComplete] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
     const [itemsData, setItemsData] = useState<ItemDataI[] | null>(null);
-    const lastSearchTermRef = useRef("");
     const [searchInput, setSearchInput] = useState("");
 
     const memoizedState = useMemo(() => {
@@ -42,26 +46,36 @@ const SearchPage = () => {
     }, [checkboxState]);
     const { isSearchInputDisabled, showCheckboxError } = memoizedState;
 
-    const fetchData = async () => {
-        if (!searchInput || !handleSubmitRef.current) return;
+    useEffect(() => {
+        if (!searchInput || !handleSubmit) return;
+
         lastSearchTermRef.current = searchInput
 
         try {
-            const response = await SearchApi().getAutoCompleteData(searchInput, checkboxState.includeFolders, checkboxState.includeItems);
-            if (response && response.status === 200 && response.data.success) {
-                if (checkboxState.includeFolders && response.data.results.folders.length > 0) {
-                    setFoldersData(response.data.results.folders)
+            const fetchData = async () => {
+                setIsComplete(false)
+                setFoldersData(null)
+                setIsLoading(true)
+                const response = await SearchApi().getAutoCompleteData(searchInput, checkboxState.includeFolders, checkboxState.includeItems);
+                if (response && response.status === 200 && response.data.success) {
+                    if (checkboxState.includeFolders && response.data.results.folders.length > 0) {
+                        setFoldersData(response.data.results.folders)
+                    }
+
+                    if (checkboxState.includeItems && response.data.results.items.length > 0) {
+                        setItemsData(response.data.results.items)
+                    };
+
+                    setIsComplete(true)
                 }
-
-
-                if (checkboxState.includeItems && response.data.results.items.length > 0) {
-                    setItemsData(response.data.results.items)
-                };
             }
+            fetchData();
+
         } catch (error) {
             console.error(error)
-        }
-    }
+        } finally { setIsLoading(false) }
+    }, [handleSubmit])
+
 
     const handleCheckboxChange = (name: keyof typeof checkboxState) => {
         setCheckboxState(prevState => ({
@@ -73,17 +87,17 @@ const SearchPage = () => {
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchInput(event.target.value);
 
-        handleSubmitRef.current = false
+        setHandleSubmit(false)
     };
 
     const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter") {
             event.preventDefault();
 
-            if (searchInput && handleSubmitRef.current) {
+            if (searchInput && handleSubmit) {
                 if (lastSearchTermRef.current !== searchInput) {
                     lastSearchTermRef.current = searchInput
-                    fetchData();
+                    setHandleSubmit(true)
                 }
             }
         }
@@ -94,10 +108,7 @@ const SearchPage = () => {
 
         const timer = setTimeout(() => {
             if (searchInput.length > 2) {
-                handleSubmitRef.current = true
-                isLoadingRef.current = true
-                fetchData()
-                isLoadingRef.current = false
+                setHandleSubmit(true)
             }
         }, 1000);
 
@@ -143,40 +154,45 @@ const SearchPage = () => {
             {showCheckboxError &&
                 <div className={"folder-item-error error"}>Must select at least one option.</div>
             }
+
             <div className="search-results">
-                {isLoadingRef.current ? null : (
-                    checkboxState.includeFolders && handleSubmitRef.current && (
-                        <div className="folder-results">
-                            Folder results:
-                            {foldersData ? (
-                                <ul>
-                                    {foldersData.map(elem => (
-                                        <li className="li-folder" key={elem.folderId}>{elem.name}</li>
-                                    ))}
-                                </ul>
-                            ) : (
-                                <div className="empty">[None]</div>
-                            )}
-                        </div>
-                    )
+                {isLoading ? (
+                    <Loading />
+                ) : (
+                    <>
+                        {checkboxState.includeFolders && handleSubmit && isComplete && (
+                            <div className="folder-results">
+                                Folder results:
+                                {!foldersData ? (
+                                    <div className="empty">[None]</div>
+                                ) : (
+                                    <ul>
+                                        {foldersData.map((elem) => (
+                                            <li className="li-folder" key={elem.folderId}>{elem.name}</li>
+                                        ))}
+                                    </ul>
+
+                                )}
+                            </div>
+                        )}
+                        {checkboxState.includeItems && handleSubmit && isComplete && (
+                            <div className="item-results">
+                                Item results:
+                                {!itemsData ? (
+                                    <div className="empty">[None]</div>
+                                ) : (
+                                    <ul>
+                                        {itemsData.map((elem) => (
+                                            <li className="li-folder" key={elem.itemId}>{elem.name}</li>
+                                        ))}
+                                    </ul>
+
+                                )}
+                            </div>
+                        )}
+                    </>
                 )}
-                {isLoadingRef.current ? null : (
-                    checkboxState.includeItems && handleSubmitRef.current && (
-                        <div className="item-results">
-                            Item results:
-                            {itemsData ? (
-                                <ul>
-                                    {itemsData.map(elem => (
-                                        <li className="li-item" key={elem.itemId}>{elem.name}</li>
-                                    ))}
-                                </ul>
-                            ) : (
-                                <div className="empty">[None]</div>
-                            )}
-                        </div>
-                    )
-                )}
-            </div >
+            </div>
         </div>
     );
 }
