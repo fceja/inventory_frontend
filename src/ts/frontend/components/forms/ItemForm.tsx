@@ -32,17 +32,17 @@ const ItemForm = () => {
     };
 
     return (
-        <form id="item-form" onSubmit={handleSubmit}>
-            <label className="item-name" htmlFor="item-name-input">Enter Item Name</label>
+        <form id="add-item-form" onSubmit={handleSubmit}>
+            <label className="add-item-name" htmlFor="item-name-input">Enter Item Name</label>
             <input
                 type="string"
-                className="item-name-input"
-                id="item-name-input"
+                className="add-item-name-input"
+                id="add-item-name-input"
                 onChange={handleChange}
                 required
             />
-            <div className="items-top">
-                <div className="quantity-container">
+            <div className="add-items-top">
+                <div className="add-items-quantity-container">
                     <label className="quantity-label" htmlFor="quantity">quantity</label>
                     <input
                         type="number"
@@ -52,7 +52,7 @@ const ItemForm = () => {
                         required
                     />
                 </div>
-                <div className="min-level-container">
+                <div className="add-items-min-level-container">
                     <label className="min-level" htmlFor="min-level">min level</label>
                     <input
                         type="number"
@@ -62,8 +62,8 @@ const ItemForm = () => {
                     />
                 </div>
             </div>
-            <div className="items-bot">
-                <div className="price-container">
+            <div className="add-items-bot">
+                <div className="add-items-price-container">
                     <label className="price" htmlFor="price">price</label>
                     <input
                         type="number"
@@ -72,7 +72,7 @@ const ItemForm = () => {
                         onChange={handleChange}
                     />
                 </div>
-                <div className="total-value-container">
+                <div className="add-items-total-value-container">
                     <label className="total-value" htmlFor="total-value">total value</label>
                     <input
                         type="number"
@@ -82,7 +82,7 @@ const ItemForm = () => {
                     />
                 </div>
             </div>
-            <div className="btn-container">
+            <div className="add-items-btn-container">
                 <button type="submit">Submit</button>
             </div>
         </form>

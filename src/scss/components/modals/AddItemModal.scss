@@ -1,0 +1,101 @@
+@import "@scss/Global.scss";
+
+
+$menu-bar-container-height: 60px;
+$menu-bar-container-width: 52px;
+
+.add-item-header {
+    margin: 0 0 15px 0;
+    position: relative;
+    height: $menu-bar-container-height;
+}
+
+.add-item-close {
+    position: absolute;
+    right: 0px;
+    max-height: $menu-bar-container-height;
+    min-height: $menu-bar-container-height;
+    max-width: $menu-bar-container-width;
+    min-width: $menu-bar-container-width;
+    margin-right: 15px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    cursor: pointer;
+}
+
+.add-item-close-bar {
+    width: 100%;
+    height: 10px;
+
+    background-color: $default-light-teal;
+    border-radius: 0.5em;
+}
+
+.add-item-close-bar:nth-child(1) {
+    transform: translate(0, 13px) rotate(45deg);
+}
+
+.add-item-close-bar:nth-child(2) {
+    transform: translate(0, -10px) rotate(-45deg);
+}
+
+// image container
+.add-item-upload-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    height: 200px;
+}
+
+// item details container
+#add-item-form {
+    margin-top: 50px;
+}
+
+.parent-folder {
+    margin-left: 10px;
+    margin-bottom: 20px;
+}
+
+.add-item-name-input,
+.add-item-name {
+    margin-left: 10px;
+}
+
+.form-add-item-details {
+    width: 100%;
+}
+
+.add-items-top,
+.add-items-bot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+}
+
+.add-items-quantity-container,
+.add-items-min-level-container,
+.add-items-price-container,
+.add-items-total-value-container {
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.add-items-btn-container {
+    width: 100%;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
