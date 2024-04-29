@@ -1,16 +1,20 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
+import store from "@store/ConfigureStore"
 import { cancelLogoutTimeout, resetLogoutTimer } from "@utils/store/LogoutUtils"
 
-export const useLogoutTimeout = (isAuthd: boolean) => {
+export const useLogoutTimer = () => {
     const dispatch = useDispatch();
 
     const logoutTimeoutHandler = () => {
         resetLogoutTimer(dispatch);
     }
 
+    const { isAuthd } = store.getState().authState
+
     useEffect(() => {
+
         if (!isAuthd) {
             cancelLogoutTimeout()
             return;

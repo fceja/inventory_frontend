@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@store/ConfigureStore";
 import Footer from "@components/layout/Footer";
 import LoginModal from "@components/modals/LoginModal";
-import { useLogoutTimeout } from "@hooks/LogoutTimeout.hook"
+import { useLogoutTimer } from "@hooks/LogoutTimeout.hook"
 import NavBar from "@components/layout/NavBar";
 
 interface LayoutProps {
@@ -11,13 +11,13 @@ interface LayoutProps {
 }
 
 const Layout = ({ children }: LayoutProps) => {
-  const isAuthd = useSelector((state: RootState) => state.authState.isAuthd);
+  const { isLoginModalOpen } = useSelector((state: RootState) => state.modalState);
 
-  useLogoutTimeout(isAuthd)
+  useLogoutTimer()
 
   return (
     <>
-      {!isAuthd ? <LoginModal /> :
+      {isLoginModalOpen ? <LoginModal /> :
         <div className="page-layout">
           <NavBar />
           {children}

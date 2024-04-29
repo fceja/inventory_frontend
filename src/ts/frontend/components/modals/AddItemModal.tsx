@@ -1,26 +1,19 @@
 import "@scss/components/modals/AddItemModal.scss"
-import Modal from "@components/modals/Modal";
 import ItemForm from "@components/forms/ItemForm"
+import Modal from "@components/modals/Modal";
+import { setIsItemModalOpen } from "@store/modal/ModalActions";
 
-const ItemModal = () => {
-    const handleClick = () => {
-        console.log('todo - handleClose')
-    }
+const AddItemModal = () => {
     return (
-        <Modal className="item-modal" isOpen={true}>
-            <div className="add-item-header">
-                <div
-                    onClick={handleClick}
-                    className="add-item-close"
-                >
-                    <div className="add-item-close-bar"></div>
-                    <div className="add-item-close-bar"></div>
-                </div>
-            </div>
+        <Modal
+            className="item-modal"
+            dispatchCallBack={() => setIsItemModalOpen(false)}
+            hasHeader={true}
+        >
             <div className="add-item-upload-image shadow">Item image container.</div>
             <ItemForm />
         </Modal>
     );
 };
 
-export default ItemModal;
+export default AddItemModal;

@@ -1,30 +1,32 @@
 import { useEffect, useRef, useState } from "react"
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
 import { Dispatch } from "redux";
 
 import "@scss/pages/FolderPage.scss"
 import AddItemModal from "@components/modals/AddItemModal"
 import { AuthActionT } from "@store/auth/AuthActions";
+import { RootState } from "@store/ConfigureStore";
 import { PAGE_PATHS } from "@common/Constants"
 import { setFolderData, FolderActionT } from "@store/folder/FolderActions";
 import FoldersApi from "@api/FoldersApi"
 import FolderNavigation from "@components/folder/FolderNavigation"
 import FolderNodes from "@components/folder/FolderNodes"
 import FolderStats from "@components/folder/FolderStats"
+import { setIsItemModalOpen, ModalActionT } from "@store/modal/ModalActions";
 import NotFoundPage from "@pages/NotFoundPage";
 import { isStringAllZeroes, isStringANumber, pathEndsWithString } from "@utils/string/StringUtils"
 
 const FolderPage = () => {
-    const dispatch: Dispatch<AuthActionT | FolderActionT> = useDispatch();
+    const { folderId } = useParams();
+
+    const { isItemModalOpen } = useSelector((state: RootState) => state.modalState);
+    const dispatch: Dispatch<AuthActionT | FolderActionT | ModalActionT> = useDispatch();
 
     const folderIdRef = useRef<number | null>(null);
     const [nodeData, setNodeData] = useState(null);
     const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
-    const [isAddItemModalOpen, setIAddItemModalOpen] = useState(false);
     const [makeActive, setMakeActive] = useState(false);
-
-    let { folderId } = useParams();
 
     const fetchData = async () => {
         if (folderIdRef.current === null || !(folderIdRef.current >= 0)) return;
@@ -107,7 +109,7 @@ const FolderPage = () => {
         }
         else if (type === "item") {
             console.log('TODO - adding item')
-            setIAddItemModalOpen(true)
+            dispatch(setIsItemModalOpen(true))
 
         } else if (type === "cancel") {
         } else throw new Error('Invalid type.')
@@ -134,7 +136,7 @@ const FolderPage = () => {
                     <button onClick={() => handleBtnClicks('cancel')}>Cancel</button>
                 </div>
             }
-            {isAddItemModalOpen && <AddItemModal />}
+            {isItemModalOpen && <AddItemModal />}
             <div className='btn-add' onClick={handleAddBtnClick}>This is other div</div>
         </>
     )
