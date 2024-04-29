@@ -1,13 +1,13 @@
 import "@scss/components/modals/AddItemModal.scss"
 import ItemForm from "@components/forms/ItemForm"
 import Modal from "@components/modals/Modal";
-import { setIsItemModalOpen } from "@store/modal/ModalActions";
+import { setIsAddItemModalOpen } from "@store/modal/ModalActions";
 
 const AddItemModal = () => {
     return (
         <Modal
             className="add-item-modal"
-            dispatchCallBack={() => setIsItemModalOpen(false)}
+            dispatchCallBack={() => setIsAddItemModalOpen(false)}
             hasHeader={true}
         >
             <div className="add-item-upload-image shadow">Item image container.</div>

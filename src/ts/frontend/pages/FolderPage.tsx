@@ -13,14 +13,14 @@ import FoldersApi from "@api/FoldersApi"
 import FolderNavigation from "@components/folder/FolderNavigation"
 import FolderNodes from "@components/folder/FolderNodes"
 import FolderStats from "@components/folder/FolderStats"
-import { setIsItemModalOpen, ModalActionT } from "@store/modal/ModalActions";
+import { setIsAddItemModalOpen, ModalActionT } from "@store/modal/ModalActions";
 import NotFoundPage from "@pages/NotFoundPage";
 import { isStringAllZeroes, isStringANumber, pathEndsWithString } from "@utils/string/StringUtils"
 
 const FolderPage = () => {
     const { folderId } = useParams();
 
-    const { isItemModalOpen } = useSelector((state: RootState) => state.modalState);
+    const { isAddItemModalOpen } = useSelector((state: RootState) => state.modalState);
     const dispatch: Dispatch<AuthActionT | FolderActionT | ModalActionT> = useDispatch();
 
     const folderIdRef = useRef<number | null>(null);
@@ -109,7 +109,7 @@ const FolderPage = () => {
         }
         else if (type === "item") {
             console.log('TODO - adding item')
-            dispatch(setIsItemModalOpen(true))
+            dispatch(setIsAddItemModalOpen(true))
 
         } else if (type === "cancel") {
         } else throw new Error('Invalid type.')
@@ -136,7 +136,7 @@ const FolderPage = () => {
                     <button onClick={() => handleBtnClicks('cancel')}>Cancel</button>
                 </div>
             }
-            {isItemModalOpen && <AddItemModal />}
+            {isAddItemModalOpen && <AddItemModal />}
             <div className='btn-add' onClick={handleAddBtnClick}>This is other div</div>
         </>
     )
