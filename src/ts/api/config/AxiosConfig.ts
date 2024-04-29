@@ -1,7 +1,8 @@
 import axios from "axios";
 
 import { setAuthd, setAuthToken } from "@store/auth/AuthActions";
-import store from "@store/ConfigureStore"
+import store from "@store/ConfigureStore";
+import { setIsLoginModalOpen } from "@store/modal/ModalActions";
 
 const useApiClient = () => {
   const apiClient = axios.create({
@@ -34,6 +35,7 @@ const useApiClient = () => {
       if (token) {
         store.dispatch(setAuthd(token))
         store.dispatch(setAuthToken(token));
+        store.dispatch(setIsLoginModalOpen(false))
       }
       return response;
     },
