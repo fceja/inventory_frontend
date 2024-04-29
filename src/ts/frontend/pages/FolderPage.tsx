@@ -19,6 +19,8 @@ const FolderPage = () => {
 
     const folderIdRef = useRef<number | null>(null);
     const [nodeData, setNodeData] = useState(null);
+    const [isAddBtnClicked, setIsAddBtnClicked] = useState(false);
+    const [makeActive, setMakeActive] = useState(false);
 
     let { folderId } = useParams();
 
@@ -34,6 +36,14 @@ const FolderPage = () => {
                 parentFolderId: response.data.folder.parentFolderId
             }))
         }
+    }
+
+    const handleAddBtnClick = () => {
+        setIsAddBtnClicked(true);
+    };
+
+    const handleBtnClose = () => {
+        setMakeActive(false);
     }
 
     const processNumber = () => {
@@ -57,6 +67,28 @@ const FolderPage = () => {
     }
 
     useEffect(() => {
+        const btnsDiv = document.querySelector('.btns-container');
+        if (!btnsDiv) return;
+
+        if (makeActive) {
+            btnsDiv.classList.add('active');
+        }
+
+        else {
+            btnsDiv.classList.remove('active');
+            setTimeout(() => {
+                setIsAddBtnClicked(false);
+            }, 500)
+        }
+    }, [makeActive])
+
+    useEffect(() => {
+        if (isAddBtnClicked) {
+            setMakeActive(true)
+        }
+    }, [isAddBtnClicked])
+
+    useEffect(() => {
         // determines if folderId param is a number or string
         if (!folderId) return;
 
@@ -67,17 +99,43 @@ const FolderPage = () => {
 
     }, [folderId])
 
+    const handleBtnClicks = (type: string) => {
+        if (type === "folder") {
+            console.log('adding folder')
+        }
+        else if (type === "item") {
+            console.log('adding item')
+
+        }
+        else if (type === "cancel") {
+            console.log('canceling')
+        }
+        else throw new Error('Invalid type.')
+
+        handleBtnClose()
+    }
+
     return (
-        <div className="folder-content">
-            {!nodeData ? <NotFoundPage />
-                :
-                <>
-                    <FolderNavigation />
-                    <FolderStats />
-                    <FolderNodes nodeData={nodeData} />
-                </>
+        <>
+            <div className="folder-content">
+                {!nodeData ? <NotFoundPage />
+                    :
+                    <>
+                        <FolderNavigation />
+                        <FolderStats />
+                        <FolderNodes nodeData={nodeData} />
+                    </>
+                }
+            </div>
+            {isAddBtnClicked &&
+                <div className="btns-container">
+                    <button onClick={() => handleBtnClicks('folder')}>Add Folder</button>
+                    <button onClick={() => handleBtnClicks('item')}>Add Item</button>
+                    <button onClick={() => handleBtnClicks('cancel')}>Cancel</button>
+                </div>
             }
-        </div>
+            <div className='btn-add' onClick={handleAddBtnClick}>This is other div</div>
+        </>
     )
 }
 
