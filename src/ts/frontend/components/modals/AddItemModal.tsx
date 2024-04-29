@@ -6,7 +6,7 @@ import { setIsItemModalOpen } from "@store/modal/ModalActions";
 const AddItemModal = () => {
     return (
         <Modal
-            className="item-modal"
+            className="add-item-modal"
             dispatchCallBack={() => setIsItemModalOpen(false)}
             hasHeader={true}
         >

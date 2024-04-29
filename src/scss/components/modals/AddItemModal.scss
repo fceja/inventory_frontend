@@ -1,5 +1,19 @@
 @import "@scss/Global.scss";
 
+.add-item-modal {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    min-width: 400px;
+    max-width: 400px;
+
+    transform: translate(-50%, -50%);
+
+    background-color: white;
+}
+
 
 $menu-bar-container-height: 60px;
 $menu-bar-container-width: 52px;
