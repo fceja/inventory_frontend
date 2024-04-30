@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react"
-// import { useSelector } from 'react-redux';
-import { useDispatch, useSelector } from 'react-redux';
-import { Dispatch } from 'redux';
+import { useSelector } from 'react-redux';
 
 import { RootState } from "@store/ConfigureStore";
-import { setSelectedFolderId, setSelectedFolderName, FolderActionT } from "@store/folder/FolderActions";
 import FoldersApi from "@api/FoldersApi"
 
 interface statsDataI {
@@ -15,17 +12,11 @@ interface statsDataI {
 }
 
 const Folder = () => {
-    const dispatch: Dispatch<FolderActionT> = useDispatch();
     const { selectedFolderId, selectedFolderName } = useSelector((state: RootState) => state.folderState);
 
     const [statsData, setStatsData] = useState<statsDataI>(
         { folderTotal: null, itemTotal: null, quantityTotal: null, valueTotal: null }
     )
-
-    const handleClose = () => {
-        dispatch(setSelectedFolderId(null))
-        dispatch(setSelectedFolderName(null))
-    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -41,15 +32,6 @@ const Folder = () => {
 
     return (
         <div className="folder-container">
-            <div className="folder-header">
-                <div
-                    onClick={handleClose}
-                    className="folder-close"
-                >
-                    <div className="folder-close-bar"></div>
-                    <div className="folder-close-bar"></div>
-                </div>
-            </div>
             <span>Folder Info</span>
             <div className="folder-details">
                 {statsData &&

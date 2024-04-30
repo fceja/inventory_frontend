@@ -4,11 +4,12 @@ import { Dispatch } from "redux";
 
 import "@scss/pages/SearchPage.scss"
 import { RootState } from "@store/ConfigureStore";
-import { setSelectedItemId, ItemActionT } from "@store/item/ItemActions";
 import { setSelectedFolderId, setSelectedFolderName, FolderActionT } from "@store/folder/FolderActions";
-import ItemModal from "@components/modals/ItemModal"
 import FolderModal from "@components/modals/FolderModal"
+import { setSelectedItemId, ItemActionT } from "@store/item/ItemActions";
+import ItemModal from "@components/modals/ItemModal"
 import Loading from "@common/components/Loading"
+import { setIsFolderModalOpen, setIsItemModalOpen, ModalActionT } from "@store/modal/ModalActions";
 import SearchApi from "@api/SearchApi";
 
 interface FolderDataI {
@@ -24,10 +25,8 @@ interface ItemDataI {
 }
 
 const SearchPage = () => {
-    console.log('-- render SearchPage')
-    const dispatch: Dispatch<FolderActionT | ItemActionT> = useDispatch();
-    const { selectedFolderId } = useSelector((state: RootState) => state.folderState);
-    const { selectedItemId } = useSelector((state: RootState) => state.itemState);
+    const dispatch: Dispatch<FolderActionT | ItemActionT | ModalActionT> = useDispatch();
+    const { isFolderModalOpen, isItemModalOpen } = useSelector((state: RootState) => state.modalState);
 
     const [checkboxState, setCheckboxState] = useState({
         includeFolders: true,
@@ -72,10 +71,12 @@ const SearchPage = () => {
     const handleFolderClick = (folderId: number, name: string) => {
         dispatch(setSelectedFolderId(folderId))
         dispatch(setSelectedFolderName(name))
+        dispatch(setIsFolderModalOpen(true))
     }
 
     const handleItemClick = (itemId: string) => {
         dispatch(setSelectedItemId(itemId))
+        dispatch(setIsItemModalOpen(true))
     }
 
     const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -191,7 +192,6 @@ const SearchPage = () => {
                                                 className="li-folder"
                                                 key={elem.folderId}
                                                 onClick={() => handleFolderClick(elem.folderId, elem.name)}
-                                            // onClick={() => handleFolderClick(elem.folderId)}
                                             >
                                                 {elem.name}
                                             </li>
@@ -220,10 +220,10 @@ const SearchPage = () => {
                                 )}
                             </div>
                         )}
-                        {selectedItemId &&
+                        {isItemModalOpen &&
                             <ItemModal />
                         }
-                        {selectedFolderId &&
+                        {isFolderModalOpen &&
                             <FolderModal />
                         }
                     </>

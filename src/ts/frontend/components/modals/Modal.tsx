@@ -8,11 +8,10 @@ import { ModalActionT } from "@store/modal/ModalActions";
 
 const Modal: React.FC<{
   className: string;
-  isOpen?: boolean; // TODO - refactor out
   children: any;
   dispatchCallBack: () => ModalActionT
   hasHeader?: boolean;
-}> = ({ className, isOpen, children, dispatchCallBack, hasHeader = false }) => {
+}> = ({ className, children, dispatchCallBack, hasHeader = false }) => {
   const dispatch: Dispatch<ModalActionT> = useDispatch();
 
   const [modalRootContainer, setModalRootContainer] = useState<null | HTMLDivElement>(null);

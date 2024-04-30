@@ -7,6 +7,7 @@ import ProductsApi from "@api/ProductsApi";
 const ItemForm = () => {
     const dispatch = useDispatch();
     const authState = useSelector((state: RootState) => state.authState);
+    const { folderId } = useSelector((state: RootState) => state.folderState);
 
     const [formData, setFormData] = useState({
         name: "",

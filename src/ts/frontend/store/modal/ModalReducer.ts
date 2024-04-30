@@ -1,6 +1,7 @@
 import {
     SET_IS_ADD_ITEM_MODAL_OPEN,
     SET_IS_ITEM_MODAL_OPEN,
+    SET_IS_FOLDER_MODAL_OPEN,
     SET_IS_LOGIN_MODAL_OPEN,
     ModalActionT
 } from "@store/modal/ModalActions"
@@ -8,6 +9,7 @@ import {
 const initialState = {
     isAddItemModalOpen: false,
     isItemModalOpen: false,
+    isFolderModalOpen: false,
     isLoginModalOpen: true
 }
 
@@ -17,6 +19,12 @@ const modalReducer = (state = initialState, action: ModalActionT) => {
             return {
                 ...state,
                 isAddItemModalOpen: action.payload.isAddItemModalOpen
+            }
+
+        case SET_IS_FOLDER_MODAL_OPEN:
+            return {
+                ...state,
+                isFolderModalOpen: action.payload.isFolderModalOpen
             }
 
         case SET_IS_ITEM_MODAL_OPEN:
