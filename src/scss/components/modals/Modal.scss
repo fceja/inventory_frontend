@@ -4,19 +4,20 @@ $menu-bar-container-height: 60px;
 $menu-bar-container-width: 52px;
 
 .modal-header {
-    margin: 0 0 15px 0;
+    padding: 20px 0 20px 0;
     position: relative;
     height: $menu-bar-container-height;
+
+    display: flex;
 }
 
 .modal-close {
     position: absolute;
-    right: 0px;
+    right: 15px;
     max-height: $menu-bar-container-height;
     min-height: $menu-bar-container-height;
     max-width: $menu-bar-container-width;
     min-width: $menu-bar-container-width;
-    margin-right: 15px;
 
     display: flex;
     flex-direction: column;
@@ -39,4 +40,16 @@ $menu-bar-container-width: 52px;
 
 .modal-close-bar:nth-child(2) {
     transform: translate(0, -10px) rotate(-45deg);
+}
+
+.header-options {
+    height: inherit;
+    position: relative;
+
+    svg {
+        height: inherit;
+        position: absolute;
+        left: 15px;
+
+    }
 }

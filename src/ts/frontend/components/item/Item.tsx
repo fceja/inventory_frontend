@@ -22,7 +22,7 @@ const Item = () => {
         const fetchData = async () => {
             if (!selectedItemId) return;
 
-            const response = await ItemsApi().getItemById(selectedItemId);
+            const response = await ItemsApi().getItemByItemId(selectedItemId);
             if (response && response.status === 200 && response.data.success)
                 setItemData(response.data.item)
 
@@ -52,9 +52,6 @@ const Item = () => {
                             <span>Price: {`$${itemData.price}`}</span>
                             <span>Total Value: {`$${itemData.quantity * itemData.price}`}</span>
                         </div>
-                    </div>
-                    <div className="btn-edit">
-                        <button>Edit</button>
                     </div>
                 </>
             }

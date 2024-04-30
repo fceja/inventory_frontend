@@ -129,15 +129,20 @@ $menu-bar-container-width: 52px;
     }
 }
 
-.btn-edit {
-    // margin: 10px;
-    margin: 10px 0 10px 0;
-    width: 100%;
+.header-item-menu-options {
+    background-color: silver;
+    position: absolute;
+    top: 75px;
+    left: 15px;
+    width: 140px;
 
-    @include flex-center;
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
 
-    button {
-        width: 150px;
-
+        li {
+            padding: 15px 0 15px 25px;
+        }
     }
 }

@@ -19,7 +19,7 @@ const ItemPage = () => {
         const fetchData = async () => {
             if (itemId === null || itemId === undefined) return;
 
-            const response = await ItemsApi().getItemById(itemId);
+            const response = await ItemsApi().getItemByItemId(itemId);
             if (response && response.status === 200 && response.data.success) setItemData(response.data.item)
         }
         fetchData();

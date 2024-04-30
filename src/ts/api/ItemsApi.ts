@@ -35,7 +35,7 @@ const ItemsApi = () => {
     };
 
     // READ operations
-    const getItemById = async (itemId: string, cancel = false) => {
+    const getItemByItemId = async (itemId: string, cancel = false) => {
         const cancelSignal =
             cancel && cancelApiObject
                 ? cancelApiObject.get.handleRequestCancellation().signal
@@ -49,7 +49,7 @@ const ItemsApi = () => {
         })
     };
 
-    return { createItem, getItemById }
+    return { createItem, getItemByItemId }
 }
 
 export default ItemsApi;
