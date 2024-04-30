@@ -1,11 +1,41 @@
 import useApiClient from "@api/config/AxiosConfig";
 import { defineCancelApiObject } from "@api/utils/AxiosUtils";
 
+export interface ItemsModelI {
+    createdAt?: Date;
+    cost?: number | null;
+    itemId?: number;
+    minLevel?: number | null;
+    name?: string;
+    nodeType: string;
+    parentFolderId?: number | null;
+    price?: number | null;
+    quantity?: number | null;
+    updatedAt?: Date;
+    value?: number | null;
+}
+
 const ItemsApi = () => {
     const apiClient = useApiClient();
     const cancelApiObject = defineCancelApiObject(ItemsApi)
 
-    const getById = async (itemId: string, cancel = false) => {
+    // CREATE operations
+    const createItem = async (itemData: ItemsModelI, cancel = false) => {
+        const cancelSignal =
+            cancel && cancelApiObject
+                ? cancelApiObject.create.handleRequestCancellation().signal
+                : undefined;
+
+        return await apiClient.request({
+            url: "/items",
+            method: "POST",
+            data: itemData,
+            signal: cancelSignal,
+        });
+    };
+
+    // READ operations
+    const getItemById = async (itemId: string, cancel = false) => {
         const cancelSignal =
             cancel && cancelApiObject
                 ? cancelApiObject.get.handleRequestCancellation().signal
@@ -19,8 +49,7 @@ const ItemsApi = () => {
         })
     };
 
-
-    return { getById }
+    return { createItem, getItemById }
 }
 
 export default ItemsApi;

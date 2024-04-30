@@ -1,34 +1,47 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { RootState } from "@store/ConfigureStore";
-import ProductsApi from "@api/ProductsApi";
+import ItemsApi, { ItemsModelI } from "@api/ItemsApi";
+
+const DEFAULT_NODE_TYPE = 'item'
+
+const convertToIntIfNumber = (name: string, value: string) => {
+    if (["quantity", "price", "cost", "minLevel"].includes(name)) {
+        return parseInt(value, 10);
+    }
+    return value;
+};
 
 const ItemForm = () => {
-    const dispatch = useDispatch();
-    const authState = useSelector((state: RootState) => state.authState);
     const { folderId } = useSelector((state: RootState) => state.folderState);
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<ItemsModelI>({
+        cost: null,
+        minLevel: null,
         name: "",
+        nodeType: DEFAULT_NODE_TYPE,
+        parentFolderId: folderId,
         quantity: 0,
+        price: null,
     });
 
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
-        setFormData((prevState) => ({
+
+        setFormData(prevState => ({
             ...prevState,
-            [name]: name === "quantity" ? parseInt(value, 10) : value,
+            [name]: convertToIntIfNumber(name, value)
         }));
     };
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        const response = await ProductsApi(dispatch, authState).create(formData);
+        const response = await ItemsApi().createItem(formData);
         if (response && response.status === 200 && response.data.success) {
-            console.log("Product created.");
+            console.log("Item created.");
         }
     };
 
@@ -37,6 +50,7 @@ const ItemForm = () => {
             <label className="add-item-name" htmlFor="item-name-input">Enter Item Name</label>
             <input
                 type="string"
+                name="name"
                 className="add-item-name-input"
                 id="add-item-name-input"
                 onChange={handleChange}
@@ -49,6 +63,7 @@ const ItemForm = () => {
                         type="number"
                         min="0"
                         id="quantity"
+                        name="quantity"
                         onChange={handleChange}
                         required
                     />
@@ -59,6 +74,7 @@ const ItemForm = () => {
                         type="number"
                         min="0"
                         id="min-level"
+                        name="minLevel"
                         onChange={handleChange}
                     />
                 </div>
@@ -70,15 +86,17 @@ const ItemForm = () => {
                         type="number"
                         min="0"
                         id="price"
+                        name="price"
                         onChange={handleChange}
                     />
                 </div>
                 <div className="add-items-total-value-container">
-                    <label className="total-value" htmlFor="total-value">total value</label>
+                    <label className="cost" htmlFor="cost">cost</label>
                     <input
                         type="number"
                         min="0"
-                        id="total-value"
+                        id="cost"
+                        name="cost"
                         onChange={handleChange}
                     />
                 </div>

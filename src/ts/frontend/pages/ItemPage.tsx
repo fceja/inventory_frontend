@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
-import { Dispatch } from 'redux';
 
 import { PAGE_PATHS } from "@common/Constants"
-import { AuthActionT } from "@store/auth/AuthActions";
-import { RootState } from "@store/ConfigureStore";
 import ItemsApi from "@api/ItemsApi"
 
 interface ItemDataI {
@@ -17,15 +13,13 @@ const ItemPage = () => {
     const [itemName, setItemName] = useState<string>('Item not found')
     const [folderPath, setFolderPath] = useState<string>(PAGE_PATHS.FOLDERS.replace(":folderId", 'main'))
     const [itemData, setItemData] = useState<ItemDataI | null>(null)
-    const dispatch: Dispatch<AuthActionT> = useDispatch();
-    const authState = useSelector((state: RootState) => state.authState);
     let { itemId } = useParams();
 
     useEffect(() => {
         const fetchData = async () => {
             if (itemId === null || itemId === undefined) return;
 
-            const response = await ItemsApi(dispatch, authState).getById(itemId);
+            const response = await ItemsApi().getItemById(itemId);
             if (response && response.status === 200 && response.data.success) setItemData(response.data.item)
         }
         fetchData();

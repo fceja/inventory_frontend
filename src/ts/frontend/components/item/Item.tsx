@@ -22,7 +22,7 @@ const Item = () => {
         const fetchData = async () => {
             if (!selectedItemId) return;
 
-            const response = await ItemsApi().getById(selectedItemId);
+            const response = await ItemsApi().getItemById(selectedItemId);
             if (response && response.status === 200 && response.data.success)
                 setItemData(response.data.item)
 
