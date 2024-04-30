@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 import { Dispatch } from "redux";
 
 import { AuthActionT } from "@store/auth/AuthActions";
+import { setIsItemModalOpen, ModalActionT } from "@store/modal/ModalActions";
 import { RootState } from "@store/ConfigureStore";
 import { PAGE_PATHS } from "@common/Constants"
 import { setSelectedItemId, ItemActionT } from "@store/item/ItemActions";
 import ItemModal from "@components/modals/ItemModal"
+
 
 interface SubFolderI {
     folderId: number,
@@ -28,13 +30,15 @@ interface PropsI {
 }
 
 const FolderNodes: React.FC<PropsI> = React.memo((props) => {
-    const dispatch: Dispatch<AuthActionT | ItemActionT> = useDispatch();
-    const { selectedItemId } = useSelector((state: RootState) => state.itemState);
+
+    const dispatch: Dispatch<AuthActionT | ItemActionT | ModalActionT> = useDispatch();
+    const { isItemModalOpen } = useSelector((state: RootState) => state.modalState);
 
     const { nodeData } = props
 
     const handleItemClick = (itemId: string) => {
         dispatch(setSelectedItemId(itemId))
+        dispatch(setIsItemModalOpen(true))
     }
 
     const renderNode = (node: FolderNode, index: number) => {
@@ -74,7 +78,7 @@ const FolderNodes: React.FC<PropsI> = React.memo((props) => {
                     </>
                 )}
             </div>
-            {selectedItemId &&
+            {isItemModalOpen &&
                 <ItemModal />
             }
         </>

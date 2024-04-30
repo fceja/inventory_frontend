@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { Dispatch } from 'redux';
+import { useSelector } from 'react-redux';
 
-import { AuthActionT } from "@store/auth/AuthActions";
 import { RootState } from "@store/ConfigureStore";
-import { setSelectedItemId, ItemActionT } from "@store/item/ItemActions";
 import ItemsApi from "@api/ItemsApi"
 import NotFoundPage from "@pages/NotFoundPage";
 
@@ -17,16 +14,15 @@ interface ItemDataI {
 }
 
 const Item = () => {
+    const { selectedItemId } = useSelector((state: RootState) => state.itemState);
+
     const [itemData, setItemData] = useState<ItemDataI | null>(null)
-    const dispatch: Dispatch<AuthActionT | ItemActionT> = useDispatch();
-    const authState = useSelector((state: RootState) => state.authState);
-    const itemState = useSelector((state: RootState) => state.itemState);
 
     useEffect(() => {
         const fetchData = async () => {
-            if (!itemState.selectedItemId) return;
+            if (!selectedItemId) return;
 
-            const response = await ItemsApi(dispatch, authState).getById(itemState.selectedItemId);
+            const response = await ItemsApi().getById(selectedItemId);
             if (response && response.status === 200 && response.data.success)
                 setItemData(response.data.item)
 
@@ -35,23 +31,10 @@ const Item = () => {
 
     }, [])
 
-    const handleCloseItem = () => {
-        dispatch(setSelectedItemId(null))
-    }
-
     return (
         <>
             {!itemData ? <NotFoundPage /> :
                 <>
-                    <div className="item-header">
-                        <div
-                            onClick={handleCloseItem}
-                            className="item-close"
-                        >
-                            <div className="item-close-bar"></div>
-                            <div className="item-close-bar"></div>
-                        </div>
-                    </div>
                     <div className="images">
                         <span className="item-image">Image</span>
                         <span className="item-qrcode">Qr code</span>
