@@ -10,7 +10,7 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-const Layout = ({ children }: LayoutProps) => {
+const PageLayout = ({ children }: LayoutProps) => {
   const { isLoginModalOpen } = useSelector((state: RootState) => state.modalState);
 
   useLogoutTimer()
@@ -28,4 +28,4 @@ const Layout = ({ children }: LayoutProps) => {
   )
 }
 
-export default Layout;
+export default PageLayout;

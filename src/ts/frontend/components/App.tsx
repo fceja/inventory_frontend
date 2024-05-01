@@ -3,9 +3,9 @@ import { Route, Routes } from "react-router-dom";
 import "@scss/components/App.scss";
 import { PAGE_PATHS } from "@common/Constants"
 import Dashboard from "@pages/DashboardPage";
-import FolderPage from "@pages/FolderPage";
+import FolderContentPage from "@pages/FolderContentPage";
 import ItemPage from "@pages/ItemPage";
-import Layout from "@pages/Layout";
+import PageLayout from "@pages/PageLayout";
 import NotFoundPage from "@pages/NotFoundPage";
 import SearchPage from "@pages/SearchPage";
 import UpdatePage from "@pages/UpdatePage";
@@ -16,55 +16,55 @@ const App = () => {
       <Route
         path={PAGE_PATHS.DASHBOARD}
         element={
-          <Layout>
+          <PageLayout>
             <Dashboard />
-          </Layout>
+          </PageLayout>
         }
       ></Route>
       <Route
         path={PAGE_PATHS.FOLDERS}
         element={
-          <Layout>
-            <FolderPage />
-          </Layout>
+          <PageLayout>
+            <FolderContentPage />
+          </PageLayout>
         }
       ></Route>
       <Route
         path={PAGE_PATHS.ITEMS}
         element={
-          <Layout>
+          <PageLayout>
             <ItemPage />
-          </Layout>
+          </PageLayout>
         }
       ></Route>
       <Route
         path={PAGE_PATHS.SEARCH}
         element={
-          <Layout>
+          <PageLayout>
             <SearchPage />
-          </Layout>
+          </PageLayout>
         }
       ></Route>
       <Route
         path={PAGE_PATHS.UPDATE}
         element={
-          <Layout>
+          <PageLayout>
             <UpdatePage />
-          </Layout>
+          </PageLayout>
         }
       ></Route>
       <Route
         path={PAGE_PATHS.NOT_FOUND}
         element={
-          <Layout>
+          <PageLayout>
             <NotFoundPage />
-          </Layout>
+          </PageLayout>
         }
       ></Route>
       <Route path="*" element={
-        <Layout>
+        <PageLayout>
           <NotFoundPage />
-        </Layout>} />
+        </PageLayout>} />
     </Routes >
   );
 };

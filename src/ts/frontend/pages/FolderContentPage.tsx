@@ -17,7 +17,7 @@ import { setIsAddItemModalOpen, ModalActionT } from "@store/modal/ModalActions";
 import NotFoundPage from "@pages/NotFoundPage";
 import { isStringAllZeroes, isStringANumber, pathEndsWithString } from "@utils/string/StringUtils"
 
-const FolderPage = () => {
+const FolderContentPage = () => {
     const { folderId } = useParams();
 
     const { isAddItemModalOpen } = useSelector((state: RootState) => state.modalState);
@@ -142,4 +142,4 @@ const FolderPage = () => {
     )
 }
 
-export default FolderPage
+export default FolderContentPage
