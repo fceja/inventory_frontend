@@ -10,7 +10,6 @@ import { PAGE_PATHS } from "@common/Constants"
 import { setSelectedItemId, ItemActionT } from "@store/item/ItemActions";
 import ItemModal from "@components/modals/ItemModal"
 
-
 interface SubFolderI {
     folderId: number,
     name: string,
@@ -26,11 +25,10 @@ interface ItemI {
 type FolderNode = SubFolderI | ItemI;
 
 interface PropsI {
-    nodeData: FolderNode[] | null;
+    nodeData: { folder: any | null, folderNodes: any[] | null };
 }
 
 const FolderNodes: React.FC<PropsI> = React.memo((props) => {
-
     const dispatch: Dispatch<AuthActionT | ItemActionT | ModalActionT> = useDispatch();
     const { isItemModalOpen } = useSelector((state: RootState) => state.modalState);
 
@@ -68,9 +66,9 @@ const FolderNodes: React.FC<PropsI> = React.memo((props) => {
     return (
         <>
             <div className="folder-nodes">
-                {nodeData && nodeData.length > 0 ? (
+                {nodeData && nodeData.folderNodes && nodeData.folderNodes.length > 0 ? (
                     <>
-                        {nodeData.map((node: FolderNode, index: number) => renderNode(node, index))}
+                        {nodeData.folderNodes.map((node: FolderNode, index: number) => renderNode(node, index))}
                     </>
                 ) : (
                     <>
@@ -83,6 +81,6 @@ const FolderNodes: React.FC<PropsI> = React.memo((props) => {
             }
         </>
     );
-});
+})
 
 export default FolderNodes;
