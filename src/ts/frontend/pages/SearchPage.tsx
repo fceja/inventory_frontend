@@ -6,16 +6,16 @@ import SearchFetchData from "@components/search/SearchFetchData"
 import SearchResultsList from "@components/search/SearchResultsList"
 
 const SearchPage = () => {
-    const [searchResults, setSearchResults] =
-        useState<{
-            foldersData: FolderModelI[] | null,
-            itemsData: ItemModelI[] | null
-        }>(
-            { foldersData: null, itemsData: null }
-        );
+    const [searchResults, setSearchResults] = useState<{
+        foldersData: FolderModelI[] | null,
+        itemsData: ItemModelI[] | null
+    }>({
+        foldersData: null,
+        itemsData: null
+    });
 
-    const handleDataReceived = (data: { folders: FolderModelI[], items: ItemModelI[] }) => {
-        setSearchResults({ foldersData: data.folders, itemsData: data.items });
+    const handleDataReceived = ({ folders, items }: { folders: FolderModelI[], items: ItemModelI[] }) => {
+        setSearchResults({ foldersData: folders, itemsData: items });
     };
 
     return (
