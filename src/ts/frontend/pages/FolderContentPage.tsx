@@ -1,10 +1,10 @@
 import { useState } from "react"
 
-import "@scss/pages/FolderPage.scss"
+import "@scss/pages/FolderContentPage.scss"
 import FolderAddNodes from "@components/folder/FolderAddNodes"
 import FolderContentFetchData from "@components/folder/FolderContentFetchData"
 import FolderNavigation from "@components/folder/FolderNavigation"
-import FolderNodes from "@components/folder/FolderNodes"
+import FolderContentNodes from "@components/folder/FolderContentNodes"
 import FolderStats from "@components/folder/FolderStats"
 
 const FolderContentPage = () => {
@@ -21,11 +21,11 @@ const FolderContentPage = () => {
     };
 
     return (
-        <div className="folder-page">
+        <div className="folder-content-page">
             <FolderContentFetchData onDataReceived={handleDataReceived} />
             <FolderNavigation />
             <FolderStats />
-            <FolderNodes nodeData={folderContentResults} />
+            <FolderContentNodes nodeData={folderContentResults} />
             <FolderAddNodes />
         </div>
     )

@@ -13,7 +13,7 @@ interface PropsI {
     };
 }
 
-const FolderNodes: React.FC<PropsI> = React.memo((props) => {
+const FolderContentNodes: React.FC<PropsI> = React.memo((props) => {
     const { nodeData } = props
 
     return (
@@ -45,4 +45,4 @@ const FolderNodes: React.FC<PropsI> = React.memo((props) => {
     );
 })
 
-export default FolderNodes;
+export default FolderContentNodes;
