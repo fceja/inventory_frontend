@@ -34,6 +34,21 @@ const ItemsApi = () => {
         });
     };
 
+    // DELETE operations
+    const deleteItemByItemId = async (itemId: number, cancel = false) => {
+        const cancelSignal =
+            cancel && cancelApiObject
+                ? cancelApiObject.create.handleRequestCancellation().signal
+                : undefined;
+
+        return await apiClient.request({
+            url: `/items/${itemId}`,
+            method: "DELETE",
+            data: itemId,
+            signal: cancelSignal,
+        });
+    };
+
     // READ operations
     const getItemByItemId = async (itemId: string, cancel = false) => {
         const cancelSignal =
@@ -49,7 +64,7 @@ const ItemsApi = () => {
         })
     };
 
-    return { createItem, getItemByItemId }
+    return { createItem, deleteItemByItemId, getItemByItemId }
 }
 
 export default ItemsApi;
