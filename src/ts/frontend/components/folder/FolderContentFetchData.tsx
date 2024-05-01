@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react"
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { useParams } from "react-router-dom";
 import { Dispatch } from "redux";
@@ -14,6 +15,7 @@ interface Props {
 
 const FolderContentFetchData: React.FC<Props> = ({ onDataReceived }) => {
     const dispatch: Dispatch<FolderActionT> = useDispatch();
+    const navigate = useNavigate();
 
     const { folderId } = useParams();
     const folderIdRef = useRef<number | null>(null);
@@ -21,14 +23,22 @@ const FolderContentFetchData: React.FC<Props> = ({ onDataReceived }) => {
     const fetchData = async () => {
         if (folderIdRef.current === null || !(folderIdRef.current >= 0)) return;
 
-        const response = await FoldersApi().getByFolderId(folderIdRef.current);
-        if (response && response.status === 200 && response.data.success) {
-            onDataReceived(response.data)
-            dispatch(setFolderData({
-                folderId: folderIdRef.current,
-                folderName: response.data.folder.name,
-                parentFolderId: response.data.folder.parentFolderId
-            }))
+        try {
+            const response = await FoldersApi().getByFolderId(folderIdRef.current);
+            if (response && response.status === 200 && response.data.success) {
+                onDataReceived(response.data)
+                dispatch(setFolderData({
+                    folderId: folderIdRef.current,
+                    folderName: response.data.folder.name,
+                    parentFolderId: response.data.folder.parentFolderId
+                }))
+
+            }
+            else {
+                navigate("/not-found");
+            }
+        } catch (error) {
+            console.error(error)
         }
     }
 
@@ -64,6 +74,6 @@ const FolderContentFetchData: React.FC<Props> = ({ onDataReceived }) => {
 
     }, [folderId])
 
-    return (<></>)
+    return null;
 }
 export default FolderContentFetchData
