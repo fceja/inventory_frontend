@@ -4,6 +4,12 @@ export interface FolderModelI {
     nodeType: string;
 }
 
+export interface SubFolderModelI {
+    folderId: number,
+    name: string,
+    nodeType: string;
+}
+
 export interface ItemModelI {
     itemId: string,
     name: string,
