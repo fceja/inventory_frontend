@@ -44,7 +44,6 @@ const ItemModal = () => {
     return (() => {
       dispatch(setSelectedItemId(null))
     })
-
   }, [])
 
   return (

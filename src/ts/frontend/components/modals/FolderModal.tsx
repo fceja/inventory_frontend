@@ -6,10 +6,16 @@ import Folder from "@components/folder/Folder"
 import { setSelectedFolderId, setSelectedFolderName, FolderActionT } from "@store/folder/FolderActions";
 import "@scss/components/modals/FolderModal.scss"
 import Modal from "@components/modals/Modal";
-import { setIsFolderModalOpen } from "@store/modal/ModalActions";
+import { setIsFolderModalOpen, ModalActionT } from "@store/modal/ModalActions";
 
+/* Note: some classNames' use scss styling from Modal.scss */
 const FolderModal = () => {
-    const dispatch: Dispatch<FolderActionT> = useDispatch();
+    const dispatch: Dispatch<FolderActionT | ModalActionT> = useDispatch();
+
+    const handleCloseClick = () => {
+        dispatch(setIsFolderModalOpen(false))
+
+    }
 
     useEffect(() => {
         return (() => {
@@ -21,9 +27,16 @@ const FolderModal = () => {
     return (
         <Modal
             className="folder-modal"
-            dispatchCallBack={() => setIsFolderModalOpen(false)}
-            hasHeader={true}
         >
+            <div className="modal-header">
+                <div
+                    className="modal-close"
+                    onClick={() => handleCloseClick()}
+                >
+                    <div className="modal-close-bar"></div>
+                    <div className="modal-close-bar"></div>
+                </div>
+            </div>
             <Folder />
         </Modal>
     );
