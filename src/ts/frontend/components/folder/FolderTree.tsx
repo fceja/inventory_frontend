@@ -7,45 +7,37 @@ interface PropsI {
 }
 
 const FolderTree: React.FC<PropsI> = (props) => {
+    const { folders } = props;
 
-    const { folders } = props
+    // validate root folder values
+    const rootFolder = folders.find(folder => folder.parentFolderId === null);
+    if (!rootFolder || rootFolder.level !== 0) {
+        console.error('Root folder not found or contains invalid values for folder tree.');
+        return null;
+    }
 
     const renderFolders = () => {
-        const result = [];
-        const stack: { folder: FolderModelI, level: number }[] = [];
+        const traverseFolders = (folder: FolderModelI, level: string) => {
+            const childFolders = folders.filter(child => child.parentFolderId === folder.folderId);
 
-        // verify first folder index contains expected root values
-        const rootFolder = folders[0]
-        if (rootFolder.parentFolderId !== null || rootFolder.level !== 1) {
-            console.error('Root contains invalid values for folder tree.');
-            return null;
-        }
+            return (
+                <div key={folder.folderId} data-level={level} style={{ marginLeft: 20 }}>
+                    {folder.name}
+                    {childFolders.map((child, index) => (
+                        // pass new bullet level to sub folder
+                        <React.Fragment key={index}>
+                            {traverseFolders(child, `${level}.${index}`)}
+                        </React.Fragment>
+                    ))}
+                </div>
+            );
+        };
 
-        // push root folder onto the stack
-        stack.push({ folder: rootFolder, level: 0 });
-
-        // iterate over folders until all sub directors are added
-        while (stack.length > 0) {
-            const item = stack.pop();
-            if (item) {
-                const { folder, level } = item;
-
-                // add sub folder to results
-                result.push(<div key={folder.folderId} style={{ marginLeft: level * 20 }}>{folder.name}</div>);
-
-                // add sub folder onto stack to iterate over
-                const childFolders = folders.filter(child => child.parentFolderId === folder.folderId);
-                for (let i = childFolders.length - 1; i >= 0; i--) {
-                    stack.push({ folder: childFolders[i], level: level + 1 });
-                }
-            } else break
-        }
-
-        return result;
+        // start rendering from the root folder
+        return traverseFolders(rootFolder, "0");
     };
 
-    return <div>{renderFolders()}</div>;
+    return <div className="folder-tree">{renderFolders()}</div>;
 };
-
 
 export default FolderTree;
