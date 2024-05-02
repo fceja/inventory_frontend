@@ -1,7 +1,10 @@
 export interface FolderModelI {
     folderId: number,
     name: string,
-    nodeType: string;
+    nodeType?: string;
+    parentFolderId: number | null;
+    level: number;
+
 }
 
 export interface SubFolderModelI {

@@ -9,6 +9,7 @@ import FolderNavigation from "@components/folder/FolderNavigation"
 import FolderContentNodes from "@components/folder/FolderContentNodes"
 import ItemModal from "@components/modals/ItemModal"
 import FolderStats from "@components/folder/FolderStats"
+import FolderTree from "@components/folder/FolderTree"
 
 const FolderContentPage = () => {
     const { isItemModalOpen } = useSelector((state: RootState) => state.modalState);
