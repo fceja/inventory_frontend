@@ -51,7 +51,7 @@ const SearchResultsList: React.FC<Props> = ({ searchResults }) => {
                     <div className="folder-results">
                         Folder results:
                         {folderResultsEmpty ? (
-                            <div className="empty">[None]</div>
+                            <div className="empty-search">[None]</div>
                         ) : (
                             <ul>
                                 {searchResults.foldersData.map((elem) => (
@@ -69,7 +69,7 @@ const SearchResultsList: React.FC<Props> = ({ searchResults }) => {
                     <div className="item-results">
                         Item results:
                         {itemResultsEmpty ? (
-                            <div className="empty">[None]</div>
+                            <div className="empty-search">[None]</div>
                         ) : (
                             <ul>
                                 {searchResults.itemsData.map((elem) => (
