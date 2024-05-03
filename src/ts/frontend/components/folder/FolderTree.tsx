@@ -15,8 +15,8 @@ const FolderTree: React.FC<PropsI> = (props) => {
 
     let cachedComponents: HTMLElement[];
 
-    // creates a map with parentFolderIds' as keys,
-    // and values witch array containing child folders
+    // creates a map with parentFolderIds' as keys
+    // values are an array containing child folders
     const parentChildMap: Map<number, FolderModelI[]> = new Map<number, FolderModelI[]>();
     for (const folder of folders) {
         if (folder.parentFolderId === null && folder.level === 0) {
@@ -40,51 +40,21 @@ const FolderTree: React.FC<PropsI> = (props) => {
         } else throw new Error('Logic error.')
     }
 
-    const generateInitialComponents = (parentFolder: FolderModelI, children: Object[] | undefined) => {
-        const childComponents = children?.map((child: any) => {
-            return <div
-                key={`sub-folder-${child.folderId}`}
-                className={"collapsed"}
-                id={child.folderId}
-                data-parent-id={child.parentFolderId}
-                onClick={(event) => handleClick(event)}
-                style={{ marginLeft: child.level * 20 }}
-            >
-                <span>
-
-                    {child.name}
-                </span>
-            </div>
-
-        })
-
-        setTreeComponents(
-            <div
-                className="expanded"
-                id={String(parentFolder.folderId)}
-            >
-                <span
-                    onClick={(event) => handleClick(event)}
-                >
-                    {parentFolder.name}
-                </span>
-                {childComponents}
-            </div>
-        )
-    };
-
     const appendGeneratedComponents = (parentFolder: FolderModelI, children: FolderModelI[] | undefined) => {
         const parentDiv = document.getElementById(`${parentFolder.folderId}`)
 
         const childComponents = children?.map((child: FolderModelI) => {
+            let className = ""
+            parentChildMap.has(child.folderId) ? className = "collapsed" : className = "leaf"
+
+
             const div = document.createElement('div');
-            div.className = 'collapsed';
+            div.className = className;
             div.id = String(child.folderId);
             div.setAttribute('data-parent-id', `${child.parentFolderId}`);
             div.style.marginLeft = `${child.level * 20}px`;
 
             const span = document.createElement('span');
-
             span.onclick = (event) => handleClick(event as unknown as React.MouseEvent<HTMLDivElement | HTMLSpanElement, MouseEvent>);
             span.textContent = child.name;
 
@@ -100,12 +70,51 @@ const FolderTree: React.FC<PropsI> = (props) => {
         }
     };
 
+    const generateRootComponents = (parentFolder: FolderModelI, children: Object[] | undefined) => {
+        const childComponents = children?.map((child: any) => {
+            let className = ""
+            parentChildMap.has(child.folderId) ? className = "collapsed" : className = "leaf"
+
+            return <div
+                key={`sub-folder-${child.folderId}`}
+                className={className}
+                id={child.folderId}
+                data-parent-id={child.parentFolderId}
+                style={{ marginLeft: child.level * 20 }}
+            >
+                <span
+                    onClick={(event) => handleClick(event)}
+                >
+                    {child.name}
+                </span>
+            </div>
+
+        })
+
+        setTreeComponents(
+            <div
+                className="root expanded"
+                id={String(parentFolder.folderId)}
+            >
+                <span onClick={(event) => handleClick(event)}>
+                    {parentFolder.name}
+                </span>
+                {childComponents}
+            </div>
+        )
+    };
+
+
     const handleClick = (event: React.MouseEvent<HTMLSpanElement | HTMLDivElement, MouseEvent>) => {
         const parent = (event.target as HTMLElement).parentElement;
 
         if (!parent) return
 
-        if (parent.className === 'expanded') {
+        if (parent.className === 'leaf') {
+            return console.warn('Debug - Inside 0 Child folders do not exist')
+
+        }
+        else if (parent.className === 'expanded') {
             // add child nodes to cachedComponents
             // then, remove child nodes from parentNode
             cachedComponents = Array.from(parent.childNodes)
@@ -138,8 +147,7 @@ const FolderTree: React.FC<PropsI> = (props) => {
                 if (!parentFolder) throw new Error('TODO? - folder do not exist')
 
                 const childFolders = parentChildMap.get(Number(parent.id))
-
-                if (!childFolders) return console.warn('Debug - Child folders do not exist')
+                if (!childFolders) return console.warn('Debug -  inside 3 Child folders do not exist')
 
                 let missing = false
                 for (const child of childFolders) {
@@ -154,10 +162,7 @@ const FolderTree: React.FC<PropsI> = (props) => {
                 parent.className = 'expanded'
 
             }
-
-
-        } else throw new Error('Logic error.1')
-
+        } else throw new Error('Logic error.')
     };
 
     useEffect(() => {
@@ -168,10 +173,9 @@ const FolderTree: React.FC<PropsI> = (props) => {
 
             const childFolders = parentChildMap.get(0)
 
-            generateInitialComponents(rootFolder, childFolders)
+            generateRootComponents(rootFolder, childFolders)
         } else throw new Error('Logic error.')
     }, [])
-
 
     return (
         <>
