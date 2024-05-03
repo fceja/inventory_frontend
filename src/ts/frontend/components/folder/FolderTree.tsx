@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { FolderModelI } from "@common/Models"
 
@@ -9,74 +9,120 @@ interface PropsI {
 }
 
 const FolderTree: React.FC<PropsI> = (props) => {
-    const { folders, collapseMode, collapseId } = props;
+    const { collapseMode, folders } = props;
 
-    const [collapsedFolders, setCollapsedFolders] = useState<string[]>([]);
+    const [components, setComponents] = useState<JSX.Element | null>(null)
 
+    let cachedComponents: HTMLElement[];
 
-    // validate root folder values
-    const rootFolder = folders.find(folder => folder.parentFolderId === null);
-    if (!rootFolder || rootFolder.level !== 0) {
-        console.error('Root folder not found or contains invalid values for folder tree.');
-        return null;
-    }
-
-
-    const toggleCollapse = (folderId: string) => {
-        setCollapsedFolders((prevCollapsedFolders) =>
-            prevCollapsedFolders.includes(folderId)
-                ? prevCollapsedFolders.filter((id) => id !== folderId)
-                : [...prevCollapsedFolders, folderId]
-        );
-    };
-
-    const isCollapsed = (folderId: string) => {
-        switch (collapseMode) {
-            case 'rootOnly':
-                return folderId !== String(rootFolder.folderId);
-            case 'all':
-                return false;
-            case 'upToId':
-                return collapseId && folderId !== collapseId;
-
-            default:
-                throw new Error('Logic error.')
+    // creates a map with parentFolderIds' as keys,
+    // and values witch array containing child folders
+    const parentChildMap: Map<number, Object[]> = new Map<number, Object[]>();
+    for (const folder of folders) {
+        if (folder.parentFolderId === null && folder.level === 0) {
+            parentChildMap.set(folder.folderId, [])
+            continue
         }
+        else if (folder.parentFolderId !== null && folder.parentFolderId >= 0) {
+            if (!parentChildMap.has(folder.parentFolderId)) {
+                parentChildMap.set(folder.parentFolderId, [])
+            }
+
+            parentChildMap.get(folder.parentFolderId)?.push(
+                {
+                    folderId: folder.folderId,
+                    name: folder.name,
+                    parentFolderId: folder.parentFolderId,
+                    level: folder.level
+                }
+            )
+
+        } else throw new Error('Logic error.')
     }
 
-    const renderFolders = () => {
-        const traverseFolders = (folder: FolderModelI, level: string) => {
-            const childFolders = folders.filter(child => child.parentFolderId === folder.folderId);
+    const generateComponents = (parentFolder: FolderModelI, children: Object[] | undefined) => {
+        const childComponents = children?.map((child: any) => {
+            return <div
+                key={`sub-folder-${child.folderId}`}
+                id={child.folderId}
+                style={{ marginLeft: child.level * 20 }}
+            >
+                {child.name}
+            </div>
 
-            return (
-                <div
-                    key={`folder-${folder.folderId}`}
-                    data-level={level}
-                    style={{ marginLeft: 20 }}>
+        })
 
-                    <div
-                        onClick={() => toggleCollapse(String(folder.folderId))}
-                    >
-                        {folder.name} {childFolders.length > 0 && `(${collapsedFolders.includes(String(folder.folderId)) ? '+' : '-'})`}
-                    </div>
-
-                    {
-                        !collapsedFolders.includes(String(folder.folderId)) &&
-                        childFolders.map((child, index) => (
-                            <React.Fragment
-                                key={index}
-                            >{traverseFolders(child, `${level}.${index}`)}</React.Fragment>
-                        ))
-                    }
-                </div>
-            );
-
-        };
-
-        return traverseFolders(rootFolder, "0");
+        setComponents(
+            <div
+                className="expanded"
+                id={String(parentFolder.folderId)}
+            >
+                <span
+                    onClick={(event) => handleClick(event)}
+                >
+                    {parentFolder.name}
+                </span>
+                {childComponents}
+            </div>
+        )
     };
 
-    return <div className="folder-tree">{renderFolders()}</div>;
+    const handleClick = (event: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+        const parent = (event.target as HTMLElement).parentElement;
+
+        if (!parent) return
+
+        if (parent.className === 'expanded') {
+            // add child nodes to cachedComponents
+            // then, remove child nodes from parentNode
+            cachedComponents = Array.from(parent.childNodes)
+                .filter((child) => child.nodeType === Node.ELEMENT_NODE &&
+                    (child as HTMLElement).tagName === 'DIV') as HTMLElement[];
+
+            Array.from(parent.childNodes).forEach(child => {
+                if (child.nodeType === Node.ELEMENT_NODE && (child as HTMLElement).tagName === 'DIV') {
+                    parent.removeChild(child);
+                }
+            });
+
+            parent.className = 'collapsed'
+
+        } else if (parent.className === 'collapsed') {
+            // append cachedComponents to parentNode
+            // then, clear cachedComponents
+            cachedComponents.forEach(component =>
+                parent.appendChild(component)
+            )
+
+            cachedComponents = []
+            parent.className = 'expanded'
+
+        } else throw new Error('Logic error.')
+
+    };
+
+    useEffect(() => {
+        if (collapseMode === 'rootOnly') {
+            const rootFolder = folders[0];
+            if (rootFolder.parentFolderId !== null || rootFolder.level !== 0)
+                throw new Error('Root folder not found.')
+
+            const childFolders = parentChildMap.get(0)
+
+            generateComponents(rootFolder, childFolders)
+        } else throw new Error('Logic error.')
+    }, [])
+
+
+    return (
+        <>
+            <div className="folder-tree">
+                {components &&
+                    components}
+            </div >
+        </>
+    )
+
 };
 
 export default FolderTree;
