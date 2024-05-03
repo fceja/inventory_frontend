@@ -40,13 +40,23 @@ const FolderTree: React.FC<PropsI> = (props) => {
         } else throw new Error('Logic error.')
     }
 
+    const appendCachedComponent = (parentNode: HTMLElement) => {
+        cachedComponents.forEach(component => {
+            const cachedComponentParentId = component.getAttribute('data-parent-id')
+
+            if (parentNode?.id === cachedComponentParentId) {
+                parentNode.appendChild(component)
+                cachedComponents = cachedComponents.filter((cachedComponent) => cachedComponent.id !== component.id);
+            }
+            else throw new Error('Expected to match cached component parent id.')
+        })
+    }
+
     const appendGeneratedComponents = (parentFolder: FolderModelI, children: FolderModelI[] | undefined) => {
         const parentDiv = document.getElementById(`${parentFolder.folderId}`)
 
         const childComponents = children?.map((child: FolderModelI) => {
-            let className = ""
-            parentChildMap.has(child.folderId) ? className = "collapsed" : className = "leaf"
-
+            const className = isLeafOrHasSubFolders(child)
 
             const div = document.createElement('div');
             div.className = className;
@@ -70,30 +80,48 @@ const FolderTree: React.FC<PropsI> = (props) => {
         }
     };
 
+    const generateComponent = (parentNode: HTMLElement) => {
+        const parentFolder = (folders.filter((folder) => String(folder.folderId) === parentNode.id))[0]
+        if (!parentFolder) throw new Error('TODO? - folder do not exist')
+
+        const childFolders = parentChildMap.get(Number(parentNode.id))
+        if (!childFolders) return console.warn('Debug -  inside 3 Child folders do not exist')
+
+        let missing = false
+        for (const child of childFolders) {
+            const div = document.getElementById(String(child.folderId))
+            if (!div) {
+                missing = true
+                break
+            }
+        }
+
+        if (missing) appendGeneratedComponents(parentFolder, childFolders)
+        else throw new Error('Expected missing to be true.')
+    }
+
     const generateRootComponents = (parentFolder: FolderModelI, children: Object[] | undefined) => {
         const childComponents = children?.map((child: any) => {
-            let className = ""
-            parentChildMap.has(child.folderId) ? className = "collapsed" : className = "leaf"
+            const className = isLeafOrHasSubFolders(child)
 
-            return <div
-                key={`sub-folder-${child.folderId}`}
-                className={className}
-                id={child.folderId}
-                data-parent-id={child.parentFolderId}
-                style={{ marginLeft: child.level * 20 }}
-            >
-                <span
-                    onClick={(event) => handleClick(event)}
+            return (
+                <div
+                    key={`sub-folder-${child.folderId}`}
+                    className={className}
+                    id={child.folderId}
+                    data-parent-id={child.parentFolderId}
+                    style={{ marginLeft: child.level * 20 }}
                 >
-                    {child.name}
-                </span>
-            </div>
-
+                    <span onClick={(event) => handleClick(event)}>
+                        {child.name}
+                    </span>
+                </div>
+            )
         })
 
         setTreeComponents(
             <div
-                className="root expanded"
+                className="expanded"
                 id={String(parentFolder.folderId)}
             >
                 <span onClick={(event) => handleClick(event)}>
@@ -104,74 +132,65 @@ const FolderTree: React.FC<PropsI> = (props) => {
         )
     };
 
+    const isLeafOrHasSubFolders = (child: FolderModelI) => {
+        return parentChildMap.has(child.folderId) ? "collapsed" : "leaf"
+    }
+
+    const processCollapsedParentNode = (parentNode: HTMLElement) => {
+        // retrieve from component from cache, or create
+        const cachedComponentsExist = cachedComponents && cachedComponents.length > 0
+        cachedComponentsExist ? appendCachedComponent(parentNode) : generateComponent(parentNode)
+
+        // update to expanded
+        parentNode.className = 'expanded'
+    }
+
+    const processExapandedParentNode = (parentNode: HTMLElement) => {
+        // caches existing child nodes under parent
+        cachedComponents = Array.from(parentNode.childNodes)
+            .filter((child) => child.nodeType === Node.ELEMENT_NODE &&
+                (child as HTMLElement).tagName === 'DIV') as HTMLElement[];
+
+        // removes child nodes from parent
+        Array.from(parentNode.childNodes).forEach(child => {
+            if (child.nodeType === Node.ELEMENT_NODE && (child as HTMLElement).tagName === 'DIV') {
+                parentNode.removeChild(child);
+            }
+        });
+
+        // update to collapse
+        parentNode.className = 'collapsed'
+    }
 
     const handleClick = (event: React.MouseEvent<HTMLSpanElement | HTMLDivElement, MouseEvent>) => {
-        const parent = (event.target as HTMLElement).parentElement;
+        const parentNode = (event.target as HTMLElement).parentElement;
 
-        if (!parent) return
+        if (!parentNode) throw new Error('Error retrieving parent node.')
 
-        if (parent.className === 'leaf') {
-            return console.warn('Debug - Inside 0 Child folders do not exist')
+        if (parentNode.className === 'leaf') {
+
+            return console.warn('Leaf node - child folders do not exist')
+        }
+        else if (parentNode.className === 'expanded') {
+            processExapandedParentNode(parentNode)
 
         }
-        else if (parent.className === 'expanded') {
-            // add child nodes to cachedComponents
-            // then, remove child nodes from parentNode
-            cachedComponents = Array.from(parent.childNodes)
-                .filter((child) => child.nodeType === Node.ELEMENT_NODE &&
-                    (child as HTMLElement).tagName === 'DIV') as HTMLElement[];
+        else if (parentNode.className === 'collapsed') {
+            processCollapsedParentNode(parentNode)
 
-            Array.from(parent.childNodes).forEach(child => {
-                if (child.nodeType === Node.ELEMENT_NODE && (child as HTMLElement).tagName === 'DIV') {
-                    parent.removeChild(child);
-                }
-            });
-
-            parent.className = 'collapsed'
-
-        } else if (parent.className === 'collapsed') {
-            if (cachedComponents && cachedComponents.length > 0) {
-                cachedComponents.forEach(component => {
-                    const componentParentId = component.getAttribute('data-parent-id')
-
-                    if (parent?.id === componentParentId) {
-                        parent.appendChild(component)
-                        cachedComponents = cachedComponents.filter((cachedComponent) => cachedComponent.id !== component.id);
-                        parent.className = 'expanded'
-                    }
-
-                })
-
-            } else {
-                const parentFolder = (folders.filter((folder) => String(folder.folderId) === parent.id))[0]
-                if (!parentFolder) throw new Error('TODO? - folder do not exist')
-
-                const childFolders = parentChildMap.get(Number(parent.id))
-                if (!childFolders) return console.warn('Debug -  inside 3 Child folders do not exist')
-
-                let missing = false
-                for (const child of childFolders) {
-                    const div = document.getElementById(String(child.folderId))
-                    if (!div) {
-                        missing = true
-                        break
-                    }
-                }
-
-                if (missing) appendGeneratedComponents(parentFolder, childFolders)
-                parent.className = 'expanded'
-
-            }
-        } else throw new Error('Logic error.')
+        }
+        else throw new Error('Logic error.')
     };
 
     useEffect(() => {
         if (collapseMode === 'rootOnly') {
-            const rootFolder = folders[0];
-            if (rootFolder.parentFolderId !== null || rootFolder.level !== 0)
+
+            const rootFolderId = 0
+            const rootFolder = folders.filter((folder) => folder.folderId === rootFolderId)[0];
+            if (!rootFolder || rootFolder.parentFolderId !== null || rootFolder.level !== 0)
                 throw new Error('Root folder not found.')
 
-            const childFolders = parentChildMap.get(0)
+            const childFolders = parentChildMap.get(rootFolderId)
 
             generateRootComponents(rootFolder, childFolders)
         } else throw new Error('Logic error.')
