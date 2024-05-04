@@ -40,16 +40,30 @@ const FolderTree: React.FC<PropsI> = (props) => {
         } else throw new Error('Logic error.')
     }
 
-    const appendCachedComponent = (parentNode: HTMLElement) => {
-        cachedComponents.forEach(component => {
-            const cachedComponentParentId = component.getAttribute('data-parent-id')
+    const doesComponentExistInCache = (parentNode: HTMLElement) => {
+        if (!cachedComponents) return false;
 
+        for (const component of cachedComponents) {
+            const cachedComponentParentId = component.getAttribute('data-parent-id')
             if (parentNode?.id === cachedComponentParentId) {
                 parentNode.appendChild(component)
                 cachedComponents = cachedComponents.filter((cachedComponent) => cachedComponent.id !== component.id);
+                return true
             }
-            else throw new Error('Expected to match cached component parent id.')
-        })
+        }
+
+        return false
+
+    }
+
+    const appendCachedComponent = (parentNode: HTMLElement) => {
+        const cachedComponent = cachedComponents.find(component => parentNode.id === component.getAttribute('data-parent-id'));
+        if (cachedComponent) {
+            parentNode.appendChild(cachedComponent);
+            cachedComponents = cachedComponents.filter(cached => cached.id !== cachedComponent.id);
+        }
+        else throw new Error('Expected to find cachedComponent.');
+
     }
 
     const appendGeneratedComponents = (parentFolder: FolderModelI, children: FolderModelI[] | undefined) => {
@@ -137,15 +151,17 @@ const FolderTree: React.FC<PropsI> = (props) => {
     }
 
     const processCollapsedParentNode = (parentNode: HTMLElement) => {
-        // retrieve from component from cache, or create
-        const cachedComponentsExist = cachedComponents && cachedComponents.length > 0
-        cachedComponentsExist ? appendCachedComponent(parentNode) : generateComponent(parentNode)
+        // if exists, retrieve from component from cache
+        // otherwise create
+        const exists = doesComponentExistInCache(parentNode)
+        exists ? appendCachedComponent(parentNode) : generateComponent(parentNode)
 
         // update to expanded
         parentNode.className = 'expanded'
     }
 
     const processExapandedParentNode = (parentNode: HTMLElement) => {
+        // remove nodes and place into cache
         // caches existing child nodes under parent
         cachedComponents = Array.from(parentNode.childNodes)
             .filter((child) => child.nodeType === Node.ELEMENT_NODE &&
