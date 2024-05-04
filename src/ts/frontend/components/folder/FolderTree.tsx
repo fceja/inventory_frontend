@@ -46,8 +46,6 @@ const FolderTree: React.FC<PropsI> = (props) => {
         for (const component of cachedComponents) {
             const cachedComponentParentId = component.getAttribute('data-parent-id')
             if (parentNode?.id === cachedComponentParentId) {
-                parentNode.appendChild(component)
-                cachedComponents = cachedComponents.filter((cachedComponent) => cachedComponent.id !== component.id);
                 return true
             }
         }
@@ -57,13 +55,9 @@ const FolderTree: React.FC<PropsI> = (props) => {
     }
 
     const appendCachedComponent = (parentNode: HTMLElement) => {
-        const cachedComponent = cachedComponents.find(component => parentNode.id === component.getAttribute('data-parent-id'));
-        if (cachedComponent) {
-            parentNode.appendChild(cachedComponent);
-            cachedComponents = cachedComponents.filter(cached => cached.id !== cachedComponent.id);
+        for (const component of cachedComponents) {
+            parentNode.appendChild(component);
         }
-        else throw new Error('Expected to find cachedComponent.');
-
     }
 
     const appendGeneratedComponents = (parentFolder: FolderModelI, children: FolderModelI[] | undefined) => {
@@ -163,6 +157,7 @@ const FolderTree: React.FC<PropsI> = (props) => {
     const processExapandedParentNode = (parentNode: HTMLElement) => {
         // remove nodes and place into cache
         // caches existing child nodes under parent
+
         cachedComponents = Array.from(parentNode.childNodes)
             .filter((child) => child.nodeType === Node.ELEMENT_NODE &&
                 (child as HTMLElement).tagName === 'DIV') as HTMLElement[];
