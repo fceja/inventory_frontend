@@ -67,18 +67,36 @@ const FolderTree: React.FC<PropsI> = (props) => {
         const childComponents = children?.map((child: FolderModelI) => {
             const className = isLeafOrHasSubFolders(child)
 
+            let chev: string | null = null
+            if (className === 'leaf') {
+                chev = "-"
+            }
+            else if (className === 'collapsed') {
+                chev = "^"
+            }
+            else if (className === 'expanded') {
+                chev = "v"
+            }
+
             const div = document.createElement('div');
             div.className = className;
             div.id = String(child.folderId);
             div.setAttribute('data-parent-id', `${child.parentFolderId}`);
             div.setAttribute('data-level', `${parentDiv?.getAttribute('data-level')}.${childLevel}`);
-            div.style.marginLeft = `${child.level * 20}px`;
+            div.style.marginLeft = `${20}px`;
 
 
-            const span = document.createElement('span');
+            let span = null;
+            span = document.createElement('span');
+            span.className = "chev"
+            span.onclick = (event) => handleClick(event as unknown as React.MouseEvent<HTMLDivElement | HTMLSpanElement, MouseEvent>);
+            span.textContent = `[ ${chev} ] `
+            div.appendChild(span);
+
+            span = document.createElement('span');
+            span.className = "folder-row-name"
             span.onclick = (event) => handleClick(event as unknown as React.MouseEvent<HTMLDivElement | HTMLSpanElement, MouseEvent>);
             span.textContent = child.name;
-
             div.appendChild(span);
 
             childLevel++
@@ -118,6 +136,7 @@ const FolderTree: React.FC<PropsI> = (props) => {
         let childLevel = 0
         const childComponents = children?.map((child: any) => {
             const className = isLeafOrHasSubFolders(child)
+            const chev = className === "collapsed" ? "^" : "v"
 
             const div = <div
                 key={`sub-folder-${child.folderId}`}
@@ -127,10 +146,13 @@ const FolderTree: React.FC<PropsI> = (props) => {
                 data-level={`${rootLevel}.${childLevel}`}
                 style={{ marginLeft: child.level * 20 }}
             >
-                <span onClick={(event) => handleClick(event)}>
+                <span className="chev" onClick={(event) => handleClick(event)}>[ {chev} ] </span>
+                <span
+                    className="folder-row-name"
+                    onClick={(event) => handleClick(event)}>
                     {child.name}
                 </span>
-            </div>
+            </div >
 
             childLevel++
 
@@ -143,7 +165,10 @@ const FolderTree: React.FC<PropsI> = (props) => {
                 id={String(parentFolder.folderId)}
                 data-level="0"
             >
-                <span onClick={(event) => handleClick(event)}>
+                <span className="chev" onClick={(event) => handleClick(event)}>[ v ] </span>
+                <span
+                    className="folder-row-name"
+                    onClick={(event) => handleClick(event)}>
                     {parentFolder.name}
                 </span>
                 {childComponents}
@@ -158,6 +183,16 @@ const FolderTree: React.FC<PropsI> = (props) => {
     const processCollapsedToExpand = (parentNode: HTMLElement) => {
         // if exists, retrieve component from cache
         // otherwise create
+        let chevSpan: HTMLElement | null = null;
+        for (const node of parentNode.childNodes) {
+            if (node.nodeType === Node.ELEMENT_NODE && (node as HTMLElement).classList.contains('chev')) {
+                chevSpan = node as HTMLElement;
+                break;
+            }
+        }
+        if (chevSpan) chevSpan.textContent = "[ v ] "
+
+
         const exists = doesComponentExistInCache(parentNode)
         exists ? appendCachedComponent(parentNode) : generateComponent(parentNode)
 
@@ -168,6 +203,15 @@ const FolderTree: React.FC<PropsI> = (props) => {
     const processExapandedToCollapse = (parentNode: HTMLElement) => {
         // remove div nodes and place into cache
         // caches existing child nodes under parent
+        let chevSpan: HTMLElement | null = null;
+        for (const node of parentNode.childNodes) {
+            if (node.nodeType === Node.ELEMENT_NODE && (node as HTMLElement).classList.contains('chev')) {
+                chevSpan = node as HTMLElement;
+                break;
+            }
+        }
+        if (chevSpan) chevSpan.textContent = "[ ^ ] "
+
         cachedComponents = Array.from(parentNode.childNodes)
             .filter((child) => child.nodeType === Node.ELEMENT_NODE &&
                 (child as HTMLElement).tagName === 'DIV') as HTMLElement[];
@@ -192,11 +236,11 @@ const FolderTree: React.FC<PropsI> = (props) => {
 
             return console.warn('Leaf node - child folders do not exist')
         }
-        else if (parentNode.className === 'expanded') {
+        else if (parentNode.className.includes('expanded')) {
             processExapandedToCollapse(parentNode)
 
         }
-        else if (parentNode.className === 'collapsed') {
+        else if (parentNode.className.includes('collapsed')) {
             processCollapsedToExpand(parentNode)
 
         }
