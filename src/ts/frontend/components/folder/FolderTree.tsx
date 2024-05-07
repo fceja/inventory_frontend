@@ -4,16 +4,16 @@ import { FolderModelI } from "@common/Models"
 
 interface PropsI {
     folders: FolderModelI[];
-    collapseMode: 'rootOnly'
-    collapseId?: string
+    upToFolderId: number
 }
 
 const FolderTree: React.FC<PropsI> = (props) => {
-    const { collapseMode, folders } = props;
+    const { folders, upToFolderId } = props;
 
     const [treeComponents, setTreeComponents] = useState<JSX.Element | null>(null)
 
     let cachedComponents: HTMLElement[];
+    let subFolders: number[]
 
     // creates a map with parentFolderIds' as keys
     // values are an array containing child folders
@@ -45,6 +45,7 @@ const FolderTree: React.FC<PropsI> = (props) => {
 
         for (const component of cachedComponents) {
             const cachedComponentParentId = component.getAttribute('data-parent-id')
+
             if (parentNode?.id === cachedComponentParentId) {
                 return true
             }
@@ -67,15 +68,11 @@ const FolderTree: React.FC<PropsI> = (props) => {
         const childComponents = children?.map((child: FolderModelI) => {
             const className = isLeafOrHasSubFolders(child)
 
-            let chev: string | null = null
-            if (className === 'leaf') {
+            let chev
+            if (className === "leaf") {
                 chev = "-"
-            }
-            else if (className === 'collapsed') {
-                chev = "^"
-            }
-            else if (className === 'expanded') {
-                chev = "v"
+            } else {
+                chev = className === "collapsed" ? "^" : "v"
             }
 
             const div = document.createElement('div');
@@ -131,51 +128,6 @@ const FolderTree: React.FC<PropsI> = (props) => {
         else throw new Error('Expected missing to be true.')
     }
 
-    const generateRootComponents = (parentFolder: FolderModelI, children: Object[] | undefined) => {
-        let rootLevel = 0
-        let childLevel = 0
-        const childComponents = children?.map((child: any) => {
-            const className = isLeafOrHasSubFolders(child)
-            const chev = className === "collapsed" ? "^" : "v"
-
-            const div = <div
-                key={`sub-folder-${child.folderId}`}
-                className={className}
-                id={child.folderId}
-                data-parent-id={child.parentFolderId}
-                data-level={`${rootLevel}.${childLevel}`}
-                style={{ marginLeft: child.level * 20 }}
-            >
-                <span className="chev" onClick={(event) => handleClick(event)}>[ {chev} ] </span>
-                <span
-                    className="folder-row-name"
-                    onClick={(event) => handleClick(event)}>
-                    {child.name}
-                </span>
-            </div >
-
-            childLevel++
-
-            return div
-        })
-
-        setTreeComponents(
-            <div
-                className="expanded"
-                id={String(parentFolder.folderId)}
-                data-level="0"
-            >
-                <span className="chev" onClick={(event) => handleClick(event)}>[ v ] </span>
-                <span
-                    className="folder-row-name"
-                    onClick={(event) => handleClick(event)}>
-                    {parentFolder.name}
-                </span>
-                {childComponents}
-            </div>
-        )
-    };
-
     const isLeafOrHasSubFolders = (child: FolderModelI) => {
         return parentChildMap.has(child.folderId) ? "collapsed" : "leaf"
     }
@@ -194,6 +146,7 @@ const FolderTree: React.FC<PropsI> = (props) => {
 
 
         const exists = doesComponentExistInCache(parentNode)
+
         exists ? appendCachedComponent(parentNode) : generateComponent(parentNode)
 
         // update to expanded
@@ -247,18 +200,210 @@ const FolderTree: React.FC<PropsI> = (props) => {
         else throw new Error('Logic error.')
     };
 
+    function findFolderPath(folderId: number): number[] {
+        const path: number[] = [];
+        let currentFolderId: number | null = folderId;
+
+        // Add the root folder ID to the path
+        if (folderId === 0) return [0]
+
+        const found = folders.find(folder => folder.folderId === folderId);
+        if (!found) return [0]
+
+        while (currentFolderId !== null) {
+            path.unshift(currentFolderId);
+            const currentFolder = folders.find(folder => folder.folderId === currentFolderId);
+            currentFolderId = currentFolder?.parentFolderId || null;
+        }
+        path.unshift(0);
+
+        return path;
+    }
+
+    function findAllSubfolders(folderId: number): number[] {
+        const subfolders: number[] = [];
+        const stack: number[] = [folderId];
+
+        while (stack.length > 0) {
+            const currentFolderId = stack.pop()!;
+            const children = parentChildMap.get(currentFolderId) || [];
+
+            for (const child of children) {
+                subfolders.push(child.folderId);
+                stack.push(child.folderId);
+            }
+        }
+
+        return subfolders;
+    }
+
+    let treeComps: JSX.Element | null = null
+    const generateTreeUptoId = (pathFolders: number[]) => {
+        let i = pathFolders.length - 1
+
+        if (i === 0) {
+            const curFolderId = pathFolders[i]
+            const curFolder = folders[curFolderId]
+
+            treeComps = <div
+                className="collapsed"
+                id={String(curFolderId)}
+                data-level="TODO"
+                data-parent-id="null"
+            >
+                <span className="chev" onClick={(event) => handleClick(event)}>[ ^ ] </span>
+                <span
+                    className="folder-row-name"
+                    onClick={(event) => handleClick(event)}>
+                    {curFolder.name}
+                </span>
+
+            </div>
+        }
+
+        while (i > 0) {
+            // Note: path give parent id in prev index
+            const parentFolderId = pathFolders[i - 1]
+            const parentFolder = folders[parentFolderId]
+
+            const parentFolderChildren = parentChildMap.get(parentFolderId)
+
+            let childLevel = 0
+
+            const childComponents = parentFolderChildren?.map((child: any) => {
+                const className = isLeafOrHasSubFolders(child)
+
+                let chev
+                if (className === "leaf") {
+                    chev = "-"
+                } else {
+                    chev = className === "collapsed" ? "^" : "v"
+
+                }
+
+                const div = <div
+                    key={`sub-folder-${child.folderId}`}
+                    className={className}
+                    id={child.folderId}
+                    data-parent-id={child.parentFolderId}
+                    data-level={`${parentFolder.level}.${childLevel}`}
+                    style={{ marginLeft: child.level * 20 }}
+                >
+                    <span className="chev" onClick={(event) => handleClick(event)}>[ {chev} ] </span>
+                    <span
+                        className="folder-row-name"
+                        onClick={(event) => handleClick(event)}>
+                        {child.name}
+                    </span>
+                </div >
+
+                childLevel++
+
+                return div
+            })
+
+            if (!treeComps) {
+                treeComps = <div
+                    className="expanded"
+                    id={String(parentFolderId)}
+                    data-level="TODO"
+                    style={{ marginLeft: parentFolder.level * 20 }}
+                    data-parent-id={`${parentFolder.parentFolderId}`}
+                >
+                    <span className="chev" onClick={(event) => handleClick(event)}>[ v ] </span>
+                    <span
+                        className="folder-row-name"
+                        onClick={(event) => handleClick(event)}>
+                        {parentFolder.name}
+                    </span>
+                    {childComponents}
+
+                </div>
+
+            }
+
+            else {
+                const secondComps = parentFolderChildren?.map((child) => {
+                    if (`${child.folderId}` === treeComps?.props.id) {
+                        console.log('entered here')
+                        return treeComps
+                    } else {
+                        const className = isLeafOrHasSubFolders(child)
+
+                        let chev
+                        if (className === "leaf") {
+                            chev = "-"
+                        } else {
+                            chev = className === "collapsed" ? "^" : "v"
+
+                        }
+
+                        const div = <div
+                            key={`sub-folder-${child.folderId}`}
+                            className={className}
+                            id={`${child.folderId}`}
+                            data-parent-id={child.parentFolderId}
+                            data-level={`${parentFolder.level}.${childLevel}`}
+                            style={{ marginLeft: child.level * 20 }}
+                        >
+                            <span className="chev" onClick={(event) => handleClick(event)}>[ {chev} ] </span>
+                            <span
+                                className="folder-row-name"
+                                onClick={(event) => handleClick(event)}>
+                                {child.name}
+                            </span>
+                        </div >
+
+                        return div
+                    }
+                })
+
+                treeComps = <div
+                    key={`built-tree-${parentFolderId}`}
+                    className="expanded"
+                    id={String(parentFolderId)}
+                    data-level="TODO"
+                    data-parent-id={`todo 2`}
+                >
+                    <span className="chev" onClick={(event) => handleClick(event)}>[ v ] </span>
+                    <span
+                        className="folder-row-name"
+                        onClick={(event) => handleClick(event)}>
+                        {parentFolder.name}
+                    </span>
+                    {secondComps?.map((component, index) => ( // Use map to iterate over secondComps
+                        <React.Fragment key={`second-comp-${index}`}> {/* Use fragment to avoid extra wrapper */}
+                            {component}
+                        </React.Fragment>
+                    ))}
+                </div>
+            }
+
+            i--
+        }
+
+        setTreeComponents(treeComps)
+
+    }
+
     useEffect(() => {
-        if (collapseMode === 'rootOnly') {
+        const rootFolderId = 0
+        const rootFolder = folders.filter((folder) => folder.folderId === rootFolderId)[0];
 
-            const rootFolderId = 0
-            const rootFolder = folders.filter((folder) => folder.folderId === rootFolderId)[0];
-            if (!rootFolder || rootFolder.parentFolderId !== null || rootFolder.level !== 0)
-                throw new Error('Root folder not found.')
+        if (!rootFolder || rootFolder.parentFolderId !== null || rootFolder.level !== 0)
+            throw new Error('Root folder not found.')
 
-            const childFolders = parentChildMap.get(rootFolderId)
 
-            generateRootComponents(rootFolder, childFolders)
-        } else throw new Error('Logic error.')
+        const path = findFolderPath(upToFolderId);
+        console.log(`path`)
+        console.log(path)
+
+        subFolders = findAllSubfolders(upToFolderId);
+        console.log(`subFolders`)
+        console.log(subFolders)
+
+        generateTreeUptoId(path)
+
     }, [])
 
     return (
