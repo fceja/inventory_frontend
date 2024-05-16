@@ -25,29 +25,29 @@ const LoginForm = () => {
   };
 
   return (
-    <form className="login-form" onSubmit={handleSubmit}>
-      <label htmlFor="email">Email</label>
-      <input
-        id="email"
-        type="email"
-        name="email"
-        value={formData.email}
-        onChange={handleChange}
-        autoComplete="email"
-        required
-      ></input>
-      <label htmlFor="password">Password</label>
-      <input
-        id="password"
-        type="password"
-        name="password"
-        value={formData.password}
-        onChange={handleChange}
-        autoComplete="current-password"
-        required
-      ></input>
-      <button type="submit">Login</button>
-    </form>
+      <form className="login-form" onSubmit={handleSubmit}>
+        <label htmlFor="email">Email</label>
+        <input
+          id="email"
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          autoComplete="email"
+          required
+        ></input>
+        <label htmlFor="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          autoComplete="current-password"
+          required
+        ></input>
+        <button type="submit">Login</button>
+      </form>
   );
 };
 
