@@ -38,6 +38,7 @@ const FolderContentPage = () => {
                 isItemModalOpen &&
                 <ItemModal />
             }
+            {/* <FolderTree /> */}
         </>
     )
 }
