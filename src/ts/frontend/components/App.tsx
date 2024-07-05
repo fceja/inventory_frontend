@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import "@scss/components/App.scss";
 import { PAGE_PATHS } from "@common/Constants"
 import Dashboard from "@pages/DashboardPage";
-import FolderContentPage from "@pages/FolderContentPage";
+import MainFoldersPage from "@pages/MainFoldersPage";
 import ItemPage from "@pages/ItemPage";
 import PageLayout from "@pages/PageLayout";
 import NotFoundPage from "@pages/NotFoundPage";
@@ -25,7 +25,7 @@ const App = () => {
         path={PAGE_PATHS.FOLDERS}
         element={
           <PageLayout>
-            <FolderContentPage />
+            <MainFoldersPage />
           </PageLayout>
         }
       ></Route>

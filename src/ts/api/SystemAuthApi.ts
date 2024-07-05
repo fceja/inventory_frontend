@@ -1,7 +1,4 @@
-import { Dispatch } from "redux";
-
 import useApiClient from "@api/config/AxiosConfig";
-import { AuthActionT } from "@store/auth/AuthActions";
 import { defineCancelApiObject } from "@api/utils/AxiosUtils";
 
 interface SystemUserI {
@@ -9,8 +6,8 @@ interface SystemUserI {
   password: string;
 }
 
-const SystemAuthApi = (dispatch: Dispatch<AuthActionT>) => {
-  const apiClient = useApiClient(dispatch);
+const SystemAuthApi = () => {
+  const apiClient = useApiClient();
   const cancelApiObject = defineCancelApiObject(SystemAuthApi);
 
   const systemLogin = async (systemUser: SystemUserI, cancel = false) => {
