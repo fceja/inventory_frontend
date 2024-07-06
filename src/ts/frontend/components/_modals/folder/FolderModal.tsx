@@ -2,10 +2,10 @@ import { useEffect } from "react"
 import { useDispatch } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import Folder from "@components/folder/Folder"
+import Folder from "@components/_modals/folder/FolderModalNode"
 import { setSelectedFolderId, setSelectedFolderName, FolderActionT } from "@store/folder/FolderActions";
-import "@scss/components/modals/FolderModal.scss"
-import Modal from "@components/modals/Modal";
+import "@scss/components/_modals/FolderModal.scss"
+import Modal from "@components/_modals/_Modal";
 import { setIsFolderModalOpen, ModalActionT } from "@store/modal/ModalActions";
 
 /* Note: some classNames' use scss styling from Modal.scss */

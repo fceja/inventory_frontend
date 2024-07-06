@@ -2,10 +2,10 @@ import { Route, Routes } from "react-router-dom";
 
 import "@scss/components/App.scss";
 import { PAGE_PATHS } from "@common/Constants"
-import Dashboard from "@pages/DashboardPage";
+import DashboardPage from "@pages/DashboardPage";
 import MainFoldersPage from "@pages/MainFoldersPage";
 import ItemPage from "@pages/ItemPage";
-import PageLayout from "@pages/PageLayout";
+import PageLayout from "@pages/_PageLayout";
 import NotFoundPage from "@pages/NotFoundPage";
 import SearchPage from "@pages/SearchPage";
 import UpdatePage from "@pages/UpdatePage";
@@ -17,7 +17,7 @@ const App = () => {
         path={PAGE_PATHS.DASHBOARD}
         element={
           <PageLayout>
-            <Dashboard />
+            <DashboardPage />
           </PageLayout>
         }
       ></Route>

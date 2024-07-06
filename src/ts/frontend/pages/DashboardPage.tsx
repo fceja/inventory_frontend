@@ -1,7 +1,7 @@
 import "@scss/pages/DashboardPage.scss";
 
-const Dashboard = () => {
+const DashboardPage = () => {
   return <div className="homepage-container">This is Dashboard.</div>;
 };
 
-export default Dashboard;
+export default DashboardPage;

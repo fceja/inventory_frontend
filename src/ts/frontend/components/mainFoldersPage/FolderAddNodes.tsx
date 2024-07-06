@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from "redux";
 
 import { RootState } from "@store/ConfigureStore";
-import AddItemModal from "@components/modals/AddItemModal"
+import AddItemModal from "@components/_modals/AddItemModal"
 
 import { FolderActionT } from "@store/folder/FolderActions";
 import { setIsAddItemModalOpen, ModalActionT } from "@store/modal/ModalActions";
