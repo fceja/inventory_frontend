@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
-import "@scss/components/modals/Modal.scss"
+import "@scss/components/_modals/Modal.scss"
 
 const Modal: React.FC<{
   className: string;

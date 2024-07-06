@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
 
 import { RootState } from "@store/ConfigureStore";
-import Footer from "@components/layout/Footer";
-import LoginModal from "@components/modals/LoginModal";
+import Footer from "@components/_pageLayout/footer/_Footer";
+import LoginModal from "@components/_modals/LoginModal";
 import { useLogoutTimer } from "@hooks/LogoutTimeout.hook"
-import NavBar from "@components/layout/NavBar";
+import Nav from "@components/_pageLayout/nav/_Nav";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -19,7 +19,7 @@ const PageLayout = ({ children }: LayoutProps) => {
     <>
       {isLoginModalOpen ? <LoginModal /> :
         <div className="page-layout">
-          <NavBar />
+          <Nav />
           {children}
           <Footer />
         </div>

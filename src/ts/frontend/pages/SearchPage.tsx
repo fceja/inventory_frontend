@@ -2,8 +2,8 @@ import { useState } from "react";
 
 import "@scss/pages/SearchPage.scss"
 import { FolderModelI, ItemModelI } from "@common/Models"
-import SearchFetchData from "@components/search/SearchFetchData"
-import SearchResultsList from "@components/search/SearchResultsList"
+import SearchFetchData from "@components/searchPage/SearchFetchData"
+import SearchResultsList from "@components/searchPage/SearchResultsList"
 
 const SearchPage = () => {
     const [searchResults, setSearchResults] = useState<{

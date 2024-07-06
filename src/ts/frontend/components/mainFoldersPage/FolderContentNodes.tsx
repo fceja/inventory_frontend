@@ -6,10 +6,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { PAGE_PATHS } from "@common/Constants"
 import { setFolderData, FolderActionT } from "@store/folder/FolderActions";
 import FoldersApi from "@api/FoldersApi"
-import ItemNode from "@components/item/ItemNode"
+import ItemNode from "@components/mainFoldersPage/ItemNode"
 import { FolderModelI, ItemModelI, SubFolderModelI } from "@common/Models"
 import { isStringAllZeroes, isStringANumber, pathEndsWithString } from "@utils/string/StringUtils"
-import SubFolderNode from "@components/subFolder/SubFolderNode"
+import SubFolderNode from "@components/mainFoldersPage/SubFolderNode"
 
 type FolderNode = SubFolderModelI | ItemModelI;
 

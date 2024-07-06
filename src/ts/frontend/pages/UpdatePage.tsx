@@ -1,5 +1,5 @@
 import "@scss/pages/UpdatePage.scss";
-import ItemForm from "@components/forms/ItemForm"
+import ItemForm from "@components/_forms/ItemForm"
 
 const UpdatePage = () => {
   return (

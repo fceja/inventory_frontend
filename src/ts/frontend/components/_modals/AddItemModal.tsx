@@ -1,9 +1,9 @@
 import { useDispatch } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import "@scss/components/modals/AddItemModal.scss"
-import ItemForm from "@components/forms/ItemForm"
-import Modal from "@components/modals/Modal";
+import "@scss/components/_modals/AddItemModal.scss"
+import ItemForm from "@components/_forms/ItemForm"
+import Modal from "@components/_modals/_Modal";
 import { setIsAddItemModalOpen, ModalActionT } from "@store/modal/ModalActions";
 
 /* Note: some classNames' use scss styling from Modal.scss */

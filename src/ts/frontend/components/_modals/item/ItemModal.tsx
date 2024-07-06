@@ -2,12 +2,12 @@ import { useEffect, useState } from "react"
 import { Dispatch } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
 
-import "@scss/components/modals/ItemModal.scss"
+import "@scss/components/_modals/ItemModal.scss"
 import { RootState } from "@store/ConfigureStore";
-import Item from "@components/item/Item"
+import Item from "@components/_modals/item/ItemModalNode"
 import { setSelectedItemId, ItemActionT } from "@store/item/ItemActions";
 import ItemsApi from "@api/ItemsApi"
-import Modal from "@components/modals/Modal";
+import Modal from "@components/_modals/_Modal";
 import { setIsItemModalOpen, ModalActionT } from "@store/modal/ModalActions";
 
 /* Note: some classNames' use scss styling from Modal.scss */

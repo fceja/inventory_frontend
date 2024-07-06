@@ -4,9 +4,9 @@ import { Dispatch } from "redux";
 
 import { RootState } from "@store/ConfigureStore";
 import { setSelectedFolderId, setSelectedFolderName, FolderActionT } from "@store/folder/FolderActions";
-import FolderModal from "@components/modals/FolderModal"
+import FolderModal from "@components/_modals/folder/FolderModal"
 import { setSelectedItemId, ItemActionT } from "@store/item/ItemActions";
-import ItemModal from "@components/modals/ItemModal"
+import ItemModal from "@components/_modals/item/ItemModal"
 import { setIsFolderModalOpen, setIsItemModalOpen, ModalActionT } from "@store/modal/ModalActions";
 import { FolderModelI, ItemModelI } from "@common/Models"
 
