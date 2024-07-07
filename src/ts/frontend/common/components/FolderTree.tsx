@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 
+import "@scss/components/mainFolderPage/FolderTree.scss"
 import { FolderModelI } from "@common/Models"
 
 interface PropsI {
