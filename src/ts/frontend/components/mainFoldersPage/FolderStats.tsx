@@ -31,16 +31,16 @@ const FolderStats = React.memo(() => {
     }, [folderId])
 
     return (
-        <div className="folder-stats">
+        <>
             {statsData &&
-                <>
+                <div className="folder-stats">
                     <label className="folder-stats-count">Folder Total: {statsData.folderTotal}</label>
                     <label className="folder-stats-items-count">Item Total: {statsData.itemTotal}</label>
                     <label className="folder-stats-items-quantity">Quantity Total: {statsData.quantityTotal}</label>
                     <label className="folder-stats-total-value">Value Total: ${statsData.valueTotal}</label>
-                </>
+                </div >
             }
-        </div >
+        </>
     )
 })
 

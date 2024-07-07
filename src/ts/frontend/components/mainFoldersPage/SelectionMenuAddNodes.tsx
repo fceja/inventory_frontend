@@ -8,7 +8,7 @@ import { RootState } from "@store/ConfigureStore";
 import { FolderActionT } from "@store/folder/FolderActions";
 import { setIsAddItemModalOpen, ModalActionT } from "@store/modal/ModalActions";
 
-const SELECTION_CLASS_NAME = 'add-folder-item-selection'
+const SELECTION_DIV_CLASS_NAME = 'add-folder-item-selection'
 
 const SelectionMenuAddNodes = () => {
     const dispatch: Dispatch<FolderActionT | ModalActionT> = useDispatch();
@@ -17,7 +17,7 @@ const SelectionMenuAddNodes = () => {
     const [isSelectionMenuVisible, setIsSelectionMenuVisible] = useState(false);
 
     useEffect(() => {
-        const selectionDiv = document.querySelector(`.${SELECTION_CLASS_NAME}`);
+        const selectionDiv = document.querySelector(`.${SELECTION_DIV_CLASS_NAME}`);
         if (!selectionDiv) return;
 
         if (isSelectionMenuVisible) {
@@ -63,7 +63,7 @@ const SelectionMenuAddNodes = () => {
                 Add button
             </div>
             {isAddNodeBtnClicked &&
-                <div className={SELECTION_CLASS_NAME}>
+                <div className={SELECTION_DIV_CLASS_NAME}>
                     <button onClick={() => handleSelectionBtnClicks('folder')}>Add Folder</button>
                     <button onClick={() => handleSelectionBtnClicks('item')}>Add Item</button>
                     <button onClick={() => handleSelectionBtnClicks('cancel')}>Cancel</button>
