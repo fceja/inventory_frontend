@@ -1,0 +1,38 @@
+.add-node-btn-overlay {
+    position: fixed;
+    bottom: 50px;
+    right: 20px;
+    height: 75px;
+    width: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-style: dashed;
+}
+
+.add-folder-item-selection {
+    height: 200px;
+    width: 100%;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    bottom: -200px;
+    z-index: 1;
+    transition: bottom 0.5s ease;
+    background-color: rgb(227, 227, 227);
+
+    button {
+        margin: 10px 15px 0 15px;
+        padding: 10px;
+    }
+}
+
+.add-folder-item-selection.animate {
+    bottom: 0;
+}
+
+.add-folder-item-selection:not(.animate) {
+    bottom: -200px;
+}
