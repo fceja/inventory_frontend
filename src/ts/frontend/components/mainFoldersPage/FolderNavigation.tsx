@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import "@scss/components/mainFolderPage/FolderHierarchyNav.scss"
 import { RootState } from "@store/ConfigureStore";
-import FolderHierarchy from "@components/mainFoldersPage/FolderHierarchy"
+import FolderTreeButton from "@components/mainFoldersPage/FolderTreeButton"
 import FolderLevelUp from "@components/mainFoldersPage/FolderLevelUp"
 
 const FolderNavigation = React.memo(() => {
@@ -11,7 +11,7 @@ const FolderNavigation = React.memo(() => {
 
     return (
         <nav className="folder-hierarchy-nav">
-            < FolderHierarchy />
+            < FolderTreeButton />
             <span> {folderName} </span>
             <FolderLevelUp />
         </nav >

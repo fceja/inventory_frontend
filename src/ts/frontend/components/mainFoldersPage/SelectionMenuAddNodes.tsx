@@ -10,7 +10,7 @@ import { setIsAddItemModalOpen, ModalActionT } from "@store/modal/ModalActions";
 
 const SELECTION_CLASS_NAME = 'add-folder-item-selection'
 
-const FolderAddNodes = () => {
+const SelectionMenuAddNodes = () => {
     const dispatch: Dispatch<FolderActionT | ModalActionT> = useDispatch();
     const { isAddItemModalOpen } = useSelector((state: RootState) => state.modalState);
     const [isAddNodeBtnClicked, setIsAddNodeBtnClicked] = useState(false);
@@ -73,4 +73,4 @@ const FolderAddNodes = () => {
         </>
     )
 }
-export default FolderAddNodes
+export default SelectionMenuAddNodes
