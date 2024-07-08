@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 
+import "@scss/components/_modals/ItemModalNode.scss"
 import { RootState } from "@store/ConfigureStore";
 import ItemsApi from "@api/ItemsApi"
 import NotFoundPage from "@pages/NotFoundPage";
@@ -35,7 +36,7 @@ const Item = () => {
         <>
             {!itemData ? <NotFoundPage /> :
                 <>
-                    <div className="images">
+                    <div className="item-images-qr">
                         <span className="item-image">Image</span>
                         <span className="item-qrcode">Qr code</span>
                     </div>

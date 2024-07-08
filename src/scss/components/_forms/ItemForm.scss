@@ -1,0 +1,36 @@
+#add-item-form {
+    margin-top: 50px;
+}
+
+.add-item-name-input,
+.add-item-name {
+    margin-left: 10px;
+}
+
+.add-items-top,
+.add-items-bot {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+}
+
+.add-items-quantity-container,
+.add-items-min-level-container,
+.add-items-price-container,
+.add-items-total-value-container {
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.add-items-btn-container {
+    width: 100%;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

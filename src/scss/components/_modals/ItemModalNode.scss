@@ -1,0 +1,63 @@
+@import "@scss/Global.scss";
+
+.item-images-qr {
+    margin: 0 15px 0 15px;
+    padding: 10px 10px 10px 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-style: dashed;
+}
+
+.item {
+
+    &-image,
+    &-qrcode {
+        width: 125px;
+        height: 125px;
+
+        @include flex-center;
+
+        border-style: dashed;
+    }
+
+    &-description {
+        padding: 15px;
+    }
+
+    &-details {
+        height: 50px;
+        padding: 10px;
+
+        border-style: dashed;
+    }
+
+    &-quantity {
+        height: 50px;
+        padding: 10px;
+
+        display: flex;
+        align-items: center;
+
+        border-style: dashed;
+
+        span {
+            width: 50%;
+        }
+    }
+
+    &-price {
+        height: 50px;
+        padding: 10px;
+
+        display: flex;
+        align-items: center;
+
+        border-style: dashed;
+
+        span {
+            width: 50%;
+        }
+    }
+}

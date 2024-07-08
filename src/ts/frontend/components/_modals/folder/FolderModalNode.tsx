@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useSelector } from 'react-redux';
 
+import "@scss/components/_modals/FolderModalNode.scss"
 import { RootState } from "@store/ConfigureStore";
 import FoldersApi from "@api/FoldersApi"
 

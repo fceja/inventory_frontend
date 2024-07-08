@@ -1,3 +1,4 @@
+import "@scss/components/_modals/FolderTreeModal.scss"
 import Modal from "@components/_modals/_Modal"
 import FolderTree from "@common/components/FolderTree"
 

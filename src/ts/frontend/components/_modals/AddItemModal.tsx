@@ -6,7 +6,6 @@ import ItemForm from "@components/_forms/ItemForm"
 import Modal from "@components/_modals/_Modal";
 import { setIsAddItemModalOpen, ModalActionT } from "@store/modal/ModalActions";
 
-/* Note: some classNames' use scss styling from Modal.scss */
 const AddItemModal = () => {
     const dispatch: Dispatch<ModalActionT> = useDispatch();
 
@@ -15,19 +14,17 @@ const AddItemModal = () => {
     };
 
     return (
-        <Modal
-            className="add-item-modal"
-        >
-            <div className="modal-header">
+        <Modal className="add-item-modal">
+            <div className="add-item-modal-header">
                 <div
-                    className="modal-close"
+                    className="add-item-modal-close"
                     onClick={() => handleCloseClick()}
                 >
-                    <div className="modal-close-bar"></div>
-                    <div className="modal-close-bar"></div>
+                    <div className="add-item-modal-close-bar"></div>
+                    <div className="add-item-modal-close-bar"></div>
                 </div>
             </div>
-            <div className="add-item-upload-image shadow">Item image container.</div>
+            <div className="add-item-modal-upload-image shadow">Item image container.</div>
             <ItemForm />
         </Modal>
     );
