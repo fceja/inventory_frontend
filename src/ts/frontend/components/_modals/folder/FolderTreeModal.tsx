@@ -23,7 +23,7 @@ const FOLDERS = [
     },
     {
         "folderId": 3,
-        "name": "Folder 3 - Merch ",
+        "name": "Folder 3 - Merchandise ",
         "parentFolderId": 1,
         "level": 2
     },
