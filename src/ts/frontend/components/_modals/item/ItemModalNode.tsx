@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 
-import "@scss/components/_modals/ItemModalNode.scss"
+import "@scss/components/_modals/ItemNodeModal.scss"
 import { RootState } from "@store/ConfigureStore";
 import ItemsApi from "@api/ItemsApi"
 import NotFoundPage from "@pages/NotFoundPage";
@@ -14,7 +14,7 @@ interface ItemDataI {
     price: number
 }
 
-const Item = () => {
+const ItemNodeModal = () => {
     const { selectedItemId } = useSelector((state: RootState) => state.itemState);
 
     const [itemData, setItemData] = useState<ItemDataI | null>(null)
@@ -60,4 +60,4 @@ const Item = () => {
     )
 }
 
-export default Item
+export default ItemNodeModal

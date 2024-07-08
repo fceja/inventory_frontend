@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import "@scss/components/_modals/ItemModal.scss"
 import { RootState } from "@store/ConfigureStore";
-import Item from "@components/_modals/item/ItemModalNode"
+import ItemNodeModal from "@components/_modals/item/ItemModalNode"
 import { setSelectedItemId, ItemActionT } from "@store/item/ItemActions";
 import ItemsApi from "@api/ItemsApi"
 import Modal from "@components/_modals/_Modal";
@@ -80,7 +80,7 @@ const ItemModal = () => {
           </div>
         </div>
       </>
-      <Item />
+      <ItemNodeModal />
       {isConfirmDeleteOpen &&
         <div className="item-modal-confirm-delete">
           Are you sure you want to delete this item? <br />

@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import "@scss/components/_modals/FolderModal.scss"
-import Folder from "@components/_modals/folder/FolderModalNode"
+import FolderNodeModal from "@components/_modals/folder/FolderNodeModal"
 import { setSelectedFolderId, setSelectedFolderName, FolderActionT } from "@store/folder/FolderActions";
 import Modal from "@components/_modals/_Modal";
 import { setIsFolderModalOpen, ModalActionT } from "@store/modal/ModalActions";
@@ -31,7 +31,7 @@ const FolderModal = () => {
                     <div className="folder-modal-close-bar"></div>
                 </div>
             </div >
-            <Folder />
+            <FolderNodeModal />
         </Modal >
     );
 };
