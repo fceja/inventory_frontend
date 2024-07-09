@@ -3,12 +3,12 @@ import React, { useEffect, useState } from "react";
 import "@scss/components/mainFolderPage/FolderTree.scss"
 import { FolderModelI } from "@common/Models"
 
+const DEFAULT_ROOT_FOLDER_ID = 0
+
 interface PropsI {
     folders: FolderModelI[];
-    upToFolderId: number
+    upToFolderId: number | null | undefined
 }
-
-const DEFAULT_ROOT_FOLDER_ID = 0
 
 const FolderTree: React.FC<PropsI> = (props) => {
     let cachedComponents: HTMLElement[];
@@ -16,7 +16,10 @@ const FolderTree: React.FC<PropsI> = (props) => {
     const [finalFolderTree, setFinalFolderTree] = useState<JSX.Element | null>(null)
     const parentChildMap: Map<number, FolderModelI[]> = new Map<number, FolderModelI[]>();
 
-    const { folders, upToFolderId } = props;
+    const { folders } = props;
+    let { upToFolderId } = props;
+
+    if (!upToFolderId) { upToFolderId = 0 }
 
     useEffect(() => {
         /* retrieve root folder */
@@ -25,7 +28,7 @@ const FolderTree: React.FC<PropsI> = (props) => {
             throw new Error('Root folder not found.')
 
         /* create map of parentFolderIds and its child folders */
-        generateParentChildMap()
+        if (!parentChildMap.size) { generateParentChildMap() }
 
         /* get path of folderIds from root folder to target folderId*/
         const pathFolderIdsFromRootToTarget = findPathOfFolderIdsFromRootToTargetFolder(upToFolderId);
@@ -130,7 +133,6 @@ const FolderTree: React.FC<PropsI> = (props) => {
     const appendCachedComponent = (parentNode: HTMLElement) => {
         for (const component of cachedComponents) { parentNode.appendChild(component) }
     }
-
 
     const appendGeneratedComponents = (parentFolder: FolderModelI, children: FolderModelI[] | undefined) => {
         const parentDiv = document.getElementById(`${parentFolder.folderId}`)
@@ -247,9 +249,9 @@ const FolderTree: React.FC<PropsI> = (props) => {
             parentFolderChildren?.map((child: any) => {
                 const className = isLeafOrHasSubFolders(child)
 
-                let chev
-                if (className === "leaf") { chev = "-" }
-                else { chev = className === "collapsed" ? "^" : "v" }
+                let chevron
+                if (className === "leaf") { chevron = "-" }
+                else { chevron = className === "collapsed" ? "^" : "v" }
 
                 const div = <div
                     key={`sub-folder-${child.folderId}`}
@@ -259,7 +261,7 @@ const FolderTree: React.FC<PropsI> = (props) => {
                     data-level={`${parentFolder.level}.${childLevel}`}
                     style={{ marginLeft: child.level * 20 }}
                 >
-                    <span className="chev" onClick={(event) => handleClick(event)}>[ {chev} ] </span>
+                    <span className="chev" onClick={(event) => handleClick(event)}>[ {chevron} ] </span>
                     <span className="folder-row-name" onClick={(event) => handleClick(event)}>
                         {child.name}
                     </span>
@@ -337,11 +339,7 @@ const FolderTree: React.FC<PropsI> = (props) => {
 
     return (
         <>
-            {finalFolderTree &&
-                <div className="folder-tree">
-                    finalFolderTree
-                </div >
-            }
+            {finalFolderTree && <div className="folder-tree">{finalFolderTree}</div >}
         </>
     )
 

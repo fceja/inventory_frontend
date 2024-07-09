@@ -1,4 +1,7 @@
+import { useSelector } from 'react-redux';
+
 import "@scss/components/_modals/FolderTreeModal.scss"
+import { RootState } from "@store/ConfigureStore";
 import Modal from "@components/_modals/_Modal"
 import FolderTree from "@common/components/FolderTree"
 
@@ -48,9 +51,11 @@ const FOLDERS = [
 ]
 
 const FolderTreeModal = () => {
+    const { folderId } = useSelector((state: RootState) => state.folderState);
+
     return (
         <Modal className="folder-tree-modal">
-            <FolderTree folders={FOLDERS} upToFolderId={0} />
+            <FolderTree folders={FOLDERS} upToFolderId={folderId} />
         </Modal>
     )
 }
