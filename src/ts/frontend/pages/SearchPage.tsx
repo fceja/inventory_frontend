@@ -19,10 +19,10 @@ const SearchPage = () => {
     };
 
     return (
-        <div className="search-page">
+        <main className="search-page">
             <SearchFetchData onDataReceived={handleDataReceived} />
             <SearchResultsList searchResults={searchResults} />
-        </div>
+        </main>
     );
 
 }

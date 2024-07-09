@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Dispatch } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -10,7 +10,6 @@ import ItemsApi from "@api/ItemsApi"
 import Modal from "@components/_modals/_Modal";
 import { setIsItemModalOpen, ModalActionT } from "@store/modal/ModalActions";
 
-/* Note: some classNames' use scss styling from Modal.scss */
 const ItemModal = () => {
   const dispatch: Dispatch<ItemActionT | ModalActionT> = useDispatch();
   const { selectedItemId } = useSelector((state: RootState) => state.itemState);
@@ -29,6 +28,7 @@ const ItemModal = () => {
 
   const handleCloseClick = () => {
     dispatch(setIsItemModalOpen(false))
+    dispatch(setSelectedItemId(null))
   };
 
   const handleConfirmDeleteClick = () => {
@@ -39,12 +39,6 @@ const ItemModal = () => {
   const handleHeaderOptionsClick = () => {
     isOptionsMenuOpen ? setIsOptionsMenuOpen(false) : setIsOptionsMenuOpen(true)
   }
-
-  useEffect(() => {
-    return (() => {
-      dispatch(setSelectedItemId(null))
-    })
-  }, [])
 
   return (
     <Modal className="item-modal">

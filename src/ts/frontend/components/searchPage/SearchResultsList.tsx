@@ -10,16 +10,20 @@ import ItemModal from "@components/_modals/item/ItemModal"
 import { setIsFolderModalOpen, setIsItemModalOpen, ModalActionT } from "@store/modal/ModalActions";
 import { FolderModelI, ItemModelI } from "@common/Models"
 
-interface Props {
-    searchResults: { foldersData: FolderModelI[] | null, itemsData: ItemModelI[] | null }
+interface PropsI {
+    searchResults: {
+        foldersData: FolderModelI[] | null,
+        itemsData: ItemModelI[] | null
+    }
 }
 
-const SearchResultsList: React.FC<Props> = ({ searchResults }) => {
+const SearchResultsList = (props: PropsI) => {
     const dispatch: Dispatch<FolderActionT | ItemActionT | ModalActionT> = useDispatch();
+    const { isFolderModalOpen, isItemModalOpen } = useSelector((state: RootState) => state.modalState);
+    const { searchResults } = props
 
     const [folderResultsEmpty, setFolderResultsEmpty] = useState(true)
     const [itemResultsEmpty, setItemResultsEmpty] = useState(true)
-
 
     useEffect(() => {
         searchResults.foldersData && searchResults.foldersData.length > 0 ?
@@ -30,8 +34,6 @@ const SearchResultsList: React.FC<Props> = ({ searchResults }) => {
             setItemResultsEmpty(false) : setItemResultsEmpty(true)
 
     }, [searchResults])
-
-    const { isFolderModalOpen, isItemModalOpen } = useSelector((state: RootState) => state.modalState);
 
     const handleFolderClick = (folderId: number, name: string) => {
         dispatch(setSelectedFolderId(folderId))
