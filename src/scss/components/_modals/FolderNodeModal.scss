@@ -1,0 +1,26 @@
+.folder-container {
+
+    margin: 0 10px 0 10px;
+}
+
+.folder-details {
+    padding: 25px;
+    border-style: dashed;
+}
+
+.folder-item-details {
+    padding: 25px;
+    border-style: dashed;
+}
+
+.folder {
+
+    &-name,
+    &-count,
+    &-items-count,
+    &-items-quantity,
+    &-total-value {
+        display: flex;
+        flex-direction: row;
+    }
+}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useSelector } from 'react-redux';
 
+import "@scss/components/_modals/FolderNodeModal.scss"
 import { RootState } from "@store/ConfigureStore";
 import FoldersApi from "@api/FoldersApi"
 
@@ -11,7 +12,7 @@ interface statsDataI {
     valueTotal: number | null
 }
 
-const Folder = () => {
+const FolderNodeModal = () => {
     const { selectedFolderId, selectedFolderName } = useSelector((state: RootState) => state.folderState);
 
     const [statsData, setStatsData] = useState<statsDataI>(
@@ -57,4 +58,4 @@ const Folder = () => {
         </div>
     )
 }
-export default Folder
+export default FolderNodeModal

@@ -21,21 +21,32 @@ interface NodeDataI {
 const FolderContentNodes = () => {
     const dispatch: Dispatch<FolderActionT> = useDispatch();
     const navigate = useNavigate();
-    const { folderId } = useParams();
-
     const [nodeData, setNodeData] = useState<NodeDataI | null>(null);
     const folderIdRef = useRef<number | null>(null);
+    const { folderId } = useParams();
 
+    /**
+     * parses folderId param from url
+     * if folderId param is 'main':
+     *  - we use zero as folderId. (root folder)
+     * if folderId param is a number:
+     *  - if folderId is zero, we push 'main' to url path.
+     *  - if folderId param not zero, we keep url path as is.
+     *
+     * Note - the idea is for folderId url param to support both strings and numbers
+     *  - if number, we are using the true folderId of folder to return contents
+     *  - if string, we are using he folder name to return folder contents (future support)
+     */
     useEffect(() => {
         if (!folderId) return;
 
-        // determines if folderId param is a number or string
-        if (isStringANumber(folderId)) processNumber()
-        else processString()
+        if (isStringANumber(folderId)) processFolderIdNumber()
+        else processFolderIdString()
 
         fetchData()
 
     }, [folderId])
+
 
     const fetchData = async () => {
         if (folderIdRef.current === null || !(folderIdRef.current >= 0)) return;
@@ -59,8 +70,8 @@ const FolderContentNodes = () => {
         }
     }
 
-    const processNumber = () => {
-        // handles operations if folderId param is a number
+    /* handles operations if folderId param is a number */
+    const processFolderIdNumber = () => {
         if (!folderId) return;
 
         if (isStringAllZeroes(folderId)) {
@@ -72,17 +83,20 @@ const FolderContentNodes = () => {
         }
     }
 
-    const processString = () => {
-        // handles operations if folderId param is a string
+    /* handles operations if folderId param is a string */
+    const processFolderIdString = () => {
         if (!folderId) return;
 
-        if (folderId === 'main') folderIdRef.current = 0
+        if (folderId === 'main') {
+            folderIdRef.current = 0
+
+        } else throw new Error('Invalid folderId url param.')
     }
 
     return (
-        <div className="folder-nodes">
+        <>
             {nodeData && nodeData.folderNodes && nodeData.folderNodes.length > 0 ? (
-                <>
+                <div className="folder-nodes">
                     {nodeData.folderNodes.map((node: FolderNode, index: number) => {
                         if (node.nodeType === "folder") {
                             const subFolderNode = node as SubFolderModelI
@@ -96,11 +110,11 @@ const FolderContentNodes = () => {
 
                         } else throw new Error('Invalid node type.')
                     })}
-                </>
+                </div>
             ) : (
                 <div className="folder-empty">[Folder empty]</div>
             )}
-        </div>
+        </>
     );
 }
 

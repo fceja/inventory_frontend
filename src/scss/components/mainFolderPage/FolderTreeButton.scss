@@ -1,0 +1,13 @@
+.folder-tree-btn {
+    box-sizing: border-box;
+    width: 100px;
+    height: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-style: dashed;
+
+    svg {
+        height: 25px;
+    }
+}

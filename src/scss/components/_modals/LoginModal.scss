@@ -1,35 +1,8 @@
-@import "@scss/Global.scss";
-
-.login {
-    &-modal {
-        background-color: white;
-
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        justify-content: space-evenly;
-
-        position: fixed;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-
-        margin-left: auto;
-        margin-right: auto;
-
-        height: 300px;
-        width: 75vw;
-    }
-
-    &-form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-
-        label,
-        button {
-            margin-top: 10px;
-        }
-    }
+#login-modal {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 300px;
+    width: 300px;
 }

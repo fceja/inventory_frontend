@@ -1,5 +1,5 @@
-import LoginForm from "@components/_forms/LoginForm";
 import "@scss/components/_modals/LoginModal.scss"
+import LoginForm from "@components/_forms/LoginForm";
 import Modal from "@components/_modals/_Modal";
 
 const LoginModal = () => {

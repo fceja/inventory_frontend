@@ -1,38 +1,7 @@
 @import "@scss/Global.scss";
 
-.folder-content-page {
+.main-folders-page {
     padding: 0 10px 0 10px;
-}
-
-.folder-nav {
-    height: 60px;
-    margin: 15px 0 0 0;
-
-    @include flex-center;
-    justify-content: space-between;
-
-    text-align: center;
-
-    &-heirarchy,
-    &-level-up {
-        width: 100px;
-        height: inherit;
-        box-sizing: border-box;
-
-        @include flex-center;
-
-        border-style: dashed;
-
-        text-align: center;
-
-        svg {
-            height: 25px;
-        }
-    }
-
-    .disabled {
-        opacity: 30%;
-    }
 }
 
 .folder-stats {

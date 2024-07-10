@@ -1,6 +1,7 @@
 export const SET_IS_ADD_ITEM_MODAL_OPEN = "SET_IS_ADD_ITEM_MODAL_OPEN"
 export const SET_IS_ITEM_MODAL_OPEN = "SET_IS_ITEM_MODAL_OPEN"
 export const SET_IS_FOLDER_MODAL_OPEN = "SET_IS_FOLDER_MODAL_OPEN"
+export const SET_IS_FOLDER_TREE_MODAL_OPEN = "SET_IS_FOLDER_TREE_OPEN"
 export const SET_IS_LOGIN_MODAL_OPEN = "SET_IS_LOGIN_MODAL_OPEN"
 
 interface SetIsAddItemModalOpenAction {
@@ -18,12 +19,22 @@ interface SetIsFolderModalOpenAction {
     payload: { isFolderModalOpen: boolean }
 }
 
+interface SetIsFolderTreeModalOpenAction {
+    type: typeof SET_IS_FOLDER_TREE_MODAL_OPEN;
+    payload: { isFolderTreeModalOpen: boolean }
+}
+
 interface SetIsLoginModalOpenAction {
     type: typeof SET_IS_LOGIN_MODAL_OPEN;
     payload: { isLoginModalOpen: boolean }
 }
 
-export type ModalActionT = SetIsAddItemModalOpenAction | SetIsItemModalOpenAction | SetIsFolderModalOpenAction | SetIsLoginModalOpenAction
+export type ModalActionT =
+    SetIsAddItemModalOpenAction
+    | SetIsItemModalOpenAction
+    | SetIsFolderModalOpenAction
+    | SetIsFolderTreeModalOpenAction
+    | SetIsLoginModalOpenAction
 
 export const setIsAddItemModalOpen = (open: boolean): ModalActionT => {
     return {
@@ -43,6 +54,13 @@ export const setIsFolderModalOpen = (open: boolean): ModalActionT => {
     return {
         type: SET_IS_FOLDER_MODAL_OPEN,
         payload: { isFolderModalOpen: open }
+    }
+}
+
+export const setIsFolderTreeModalOpen = (open: boolean): ModalActionT => {
+    return {
+        type: SET_IS_FOLDER_TREE_MODAL_OPEN,
+        payload: { isFolderTreeModalOpen: open }
     }
 }
 

@@ -3,23 +3,25 @@ import { createPortal } from "react-dom";
 
 import "@scss/components/_modals/Modal.scss"
 
-const Modal: React.FC<{
-  className: string;
-  children: any;
-  headerOptions?: JSX.Element;
-}> = ({ className, children }) => {
+interface ModalI {
+  className: string
+  children: any
+}
+
+const Modal = (props: ModalI) => {
   const [modalRootContainer, setModalRootContainer] = useState<null | HTMLDivElement>(null);
+  const { className, children } = props
 
   const addRootDivToHtmlBody = () => {
     const div = document.createElement("div");
-    div.id = `root-${className}`;
+    div.id = `root-modal`;
     document.body.appendChild(div);
 
     setModalRootContainer(div)
   }
 
   const removeRootDivFromHtmlBody = () => {
-    const div = document.getElementById(`root-${className}`);
+    const div = document.getElementById(`root-modal`);
     if (div && div.parentNode) {
       div.parentNode.removeChild(div);
     }
@@ -37,7 +39,7 @@ const Modal: React.FC<{
 
   return createPortal(
     <>
-      <div className={`${className} shadow`}>
+      <div id={`${className}`} className={`modal shadow`}>
         {children}
       </div>
     </>,

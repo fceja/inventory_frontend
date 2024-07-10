@@ -1,16 +1,15 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Dispatch } from 'redux';
 import { useDispatch, useSelector } from 'react-redux';
 
 import "@scss/components/_modals/ItemModal.scss"
 import { RootState } from "@store/ConfigureStore";
-import Item from "@components/_modals/item/ItemModalNode"
+import ItemNodeModal from "@components/_modals/item/ItemModalNode"
 import { setSelectedItemId, ItemActionT } from "@store/item/ItemActions";
 import ItemsApi from "@api/ItemsApi"
 import Modal from "@components/_modals/_Modal";
 import { setIsItemModalOpen, ModalActionT } from "@store/modal/ModalActions";
 
-/* Note: some classNames' use scss styling from Modal.scss */
 const ItemModal = () => {
   const dispatch: Dispatch<ItemActionT | ModalActionT> = useDispatch();
   const { selectedItemId } = useSelector((state: RootState) => state.itemState);
@@ -29,6 +28,7 @@ const ItemModal = () => {
 
   const handleCloseClick = () => {
     dispatch(setIsItemModalOpen(false))
+    dispatch(setSelectedItemId(null))
   };
 
   const handleConfirmDeleteClick = () => {
@@ -40,20 +40,12 @@ const ItemModal = () => {
     isOptionsMenuOpen ? setIsOptionsMenuOpen(false) : setIsOptionsMenuOpen(true)
   }
 
-  useEffect(() => {
-    return (() => {
-      dispatch(setSelectedItemId(null))
-    })
-  }, [])
-
   return (
-    <Modal
-      className="item-modal"
-    >
+    <Modal className="item-modal">
       <>
-        <div className="modal-header">
+        <div className="item-modal-header">
           <div
-            className="modal-header-options"
+            className="item-modal-header-options"
           >
             {/**<!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->*/}
             <svg
@@ -74,17 +66,17 @@ const ItemModal = () => {
             }
           </div>
           <div
-            className="modal-close"
+            className="item-modal-close"
             onClick={() => handleCloseClick()}
           >
-            <div className="modal-close-bar"></div>
-            <div className="modal-close-bar"></div>
+            <div className="item-modal-close-bar"></div>
+            <div className="item-modal-close-bar"></div>
           </div>
         </div>
       </>
-      <Item />
+      <ItemNodeModal />
       {isConfirmDeleteOpen &&
-        <div className="confirm-delete">
+        <div className="item-modal-confirm-delete">
           Are you sure you want to delete this item? <br />
           <div className="confirm-btns">
             <button onClick={handleConfirmDeleteClick}>Yes</button>

@@ -10,28 +10,29 @@ import ItemModal from "@components/_modals/item/ItemModal"
 import { setIsFolderModalOpen, setIsItemModalOpen, ModalActionT } from "@store/modal/ModalActions";
 import { FolderModelI, ItemModelI } from "@common/Models"
 
-interface Props {
-    searchResults: { foldersData: FolderModelI[] | null, itemsData: ItemModelI[] | null }
+interface PropsI {
+    searchResults: {
+        folders: FolderModelI[] | null,
+        items: ItemModelI[] | null
+    }
 }
 
-const SearchResultsList: React.FC<Props> = ({ searchResults }) => {
+const ListSearchResults = (props: PropsI) => {
+    const { searchResults } = props
     const dispatch: Dispatch<FolderActionT | ItemActionT | ModalActionT> = useDispatch();
-
+    const { isFolderModalOpen, isItemModalOpen } = useSelector((state: RootState) => state.modalState);
     const [folderResultsEmpty, setFolderResultsEmpty] = useState(true)
     const [itemResultsEmpty, setItemResultsEmpty] = useState(true)
 
-
     useEffect(() => {
-        searchResults.foldersData && searchResults.foldersData.length > 0 ?
+        searchResults.folders && searchResults.folders.length > 0 ?
             setFolderResultsEmpty(false) : setFolderResultsEmpty(true)
 
 
-        searchResults.itemsData && searchResults.itemsData.length > 0 ?
+        searchResults.items && searchResults.items.length > 0 ?
             setItemResultsEmpty(false) : setItemResultsEmpty(true)
 
     }, [searchResults])
-
-    const { isFolderModalOpen, isItemModalOpen } = useSelector((state: RootState) => state.modalState);
 
     const handleFolderClick = (folderId: number, name: string) => {
         dispatch(setSelectedFolderId(folderId))
@@ -46,7 +47,7 @@ const SearchResultsList: React.FC<Props> = ({ searchResults }) => {
 
     return (
         <div className="search-results-list">
-            {searchResults.foldersData !== null && searchResults.itemsData !== null &&
+            {searchResults.folders !== null && searchResults.items !== null &&
                 <>
                     <div className="folder-results">
                         Folder results:
@@ -54,7 +55,7 @@ const SearchResultsList: React.FC<Props> = ({ searchResults }) => {
                             <div className="empty-search">[None]</div>
                         ) : (
                             <ul>
-                                {searchResults.foldersData.map((elem) => (
+                                {searchResults.folders.map((elem) => (
                                     <li
                                         className="li-folder"
                                         key={`li-folder-${elem.folderId}`}
@@ -72,7 +73,7 @@ const SearchResultsList: React.FC<Props> = ({ searchResults }) => {
                             <div className="empty-search">[None]</div>
                         ) : (
                             <ul>
-                                {searchResults.itemsData.map((elem) => (
+                                {searchResults.items.map((elem) => (
                                     <li
                                         className="li-item"
                                         key={`li-item-${elem.itemId}`}
@@ -95,4 +96,4 @@ const SearchResultsList: React.FC<Props> = ({ searchResults }) => {
         </div>
     )
 }
-export default SearchResultsList
+export default ListSearchResults

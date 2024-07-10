@@ -2,20 +2,16 @@ import { useEffect } from "react"
 import { useDispatch } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import Folder from "@components/_modals/folder/FolderModalNode"
-import { setSelectedFolderId, setSelectedFolderName, FolderActionT } from "@store/folder/FolderActions";
 import "@scss/components/_modals/FolderModal.scss"
+import FolderNodeModal from "@components/_modals/folder/FolderNodeModal"
+import { setSelectedFolderId, setSelectedFolderName, FolderActionT } from "@store/folder/FolderActions";
 import Modal from "@components/_modals/_Modal";
 import { setIsFolderModalOpen, ModalActionT } from "@store/modal/ModalActions";
 
-/* Note: some classNames' use scss styling from Modal.scss */
 const FolderModal = () => {
     const dispatch: Dispatch<FolderActionT | ModalActionT> = useDispatch();
 
-    const handleCloseClick = () => {
-        dispatch(setIsFolderModalOpen(false))
-
-    }
+    const handleCloseClick = () => dispatch(setIsFolderModalOpen(false))
 
     useEffect(() => {
         return (() => {
@@ -25,20 +21,18 @@ const FolderModal = () => {
     }, [])
 
     return (
-        <Modal
-            className="folder-modal"
-        >
-            <div className="modal-header">
+        <Modal className="folder-modal">
+            <div className="folder-modal-header" >
                 <div
-                    className="modal-close"
+                    className="folder-modal-close"
                     onClick={() => handleCloseClick()}
                 >
-                    <div className="modal-close-bar"></div>
-                    <div className="modal-close-bar"></div>
+                    <div className="folder-modal-close-bar"></div>
+                    <div className="folder-modal-close-bar"></div>
                 </div>
-            </div>
-            <Folder />
-        </Modal>
+            </div >
+            <FolderNodeModal />
+        </Modal >
     );
 };
 
