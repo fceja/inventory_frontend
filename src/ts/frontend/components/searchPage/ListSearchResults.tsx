@@ -12,25 +12,24 @@ import { FolderModelI, ItemModelI } from "@common/Models"
 
 interface PropsI {
     searchResults: {
-        foldersData: FolderModelI[] | null,
-        itemsData: ItemModelI[] | null
+        folders: FolderModelI[] | null,
+        items: ItemModelI[] | null
     }
 }
 
-const SearchResultsList = (props: PropsI) => {
+const ListSearchResults = (props: PropsI) => {
+    const { searchResults } = props
     const dispatch: Dispatch<FolderActionT | ItemActionT | ModalActionT> = useDispatch();
     const { isFolderModalOpen, isItemModalOpen } = useSelector((state: RootState) => state.modalState);
-    const { searchResults } = props
-
     const [folderResultsEmpty, setFolderResultsEmpty] = useState(true)
     const [itemResultsEmpty, setItemResultsEmpty] = useState(true)
 
     useEffect(() => {
-        searchResults.foldersData && searchResults.foldersData.length > 0 ?
+        searchResults.folders && searchResults.folders.length > 0 ?
             setFolderResultsEmpty(false) : setFolderResultsEmpty(true)
 
 
-        searchResults.itemsData && searchResults.itemsData.length > 0 ?
+        searchResults.items && searchResults.items.length > 0 ?
             setItemResultsEmpty(false) : setItemResultsEmpty(true)
 
     }, [searchResults])
@@ -48,7 +47,7 @@ const SearchResultsList = (props: PropsI) => {
 
     return (
         <div className="search-results-list">
-            {searchResults.foldersData !== null && searchResults.itemsData !== null &&
+            {searchResults.folders !== null && searchResults.items !== null &&
                 <>
                     <div className="folder-results">
                         Folder results:
@@ -56,7 +55,7 @@ const SearchResultsList = (props: PropsI) => {
                             <div className="empty-search">[None]</div>
                         ) : (
                             <ul>
-                                {searchResults.foldersData.map((elem) => (
+                                {searchResults.folders.map((elem) => (
                                     <li
                                         className="li-folder"
                                         key={`li-folder-${elem.folderId}`}
@@ -74,7 +73,7 @@ const SearchResultsList = (props: PropsI) => {
                             <div className="empty-search">[None]</div>
                         ) : (
                             <ul>
-                                {searchResults.itemsData.map((elem) => (
+                                {searchResults.items.map((elem) => (
                                     <li
                                         className="li-item"
                                         key={`li-item-${elem.itemId}`}
@@ -97,4 +96,4 @@ const SearchResultsList = (props: PropsI) => {
         </div>
     )
 }
-export default SearchResultsList
+export default ListSearchResults

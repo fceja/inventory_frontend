@@ -1,32 +1,44 @@
 import { useEffect, useRef, useState } from "react";
 
-import { FolderModelI, ItemModelI } from "@common/Models"
-import SearchApi from "@api/SearchApi";
-
-interface Props {
-    onDataReceived: (data: { folders: FolderModelI[], items: ItemModelI[] }) => void;
+interface SearchFormI {
+    onSearch: (data: any) => void
 }
 
-const SearchFetchData: React.FC<Props> = ({ onDataReceived }) => {
-    const [checkboxState, setCheckboxState] = useState({
-        includeFolders: true,
-        includeItems: true
-    })
+const SearchForm = (props: SearchFormI) => {
+    const { onSearch } = props
     const [handleSubmit, setHandleSubmit] = useState(false);
-    const isSearchInputDisabled = !checkboxState.includeFolders && !checkboxState.includeItems;
     const lastSearchTermRef = useRef("");
-    const [searchTerm, setSearchInput] = useState("");
+    const [searchQuery, setSearchQuery] = useState({
+        query: "",
+        includeFolders: true,
+        includeItems: true,
+    });
+    const isSearchInputDisabled = !searchQuery.includeFolders && !searchQuery.includeItems;
     const showCheckboxError = isSearchInputDisabled;
 
-    const handleCheckboxChange = (name: keyof typeof checkboxState) => {
-        setCheckboxState(prevState => ({
+    useEffect(() => {
+        if (!searchQuery) return;
+
+        const timer = setTimeout(() => {
+            if (searchQuery.query.length > 2) { onSearch(searchQuery) }
+        }, 750);
+
+        return () => clearTimeout(timer);
+
+    }, [searchQuery]);
+
+    const handleCheckboxChange = (name: keyof typeof searchQuery) => {
+        setSearchQuery(prevState => ({
             ...prevState,
             [name]: !prevState[name]
-        }))
+        }));
     }
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchInput(event.target.value);
+        setSearchQuery(prevState => ({
+            ...prevState,
+            query: event.target.value
+        }));
 
         setHandleSubmit(false)
     };
@@ -35,51 +47,21 @@ const SearchFetchData: React.FC<Props> = ({ onDataReceived }) => {
         if (event.key === "Enter") {
             event.preventDefault();
 
-            if (searchTerm && handleSubmit) {
-                if (lastSearchTermRef.current !== searchTerm) {
-                    lastSearchTermRef.current = searchTerm
+            if (searchQuery && handleSubmit) {
+                if (lastSearchTermRef.current !== searchQuery.query) {
+                    lastSearchTermRef.current = searchQuery.query
                     setHandleSubmit(true)
                 }
             }
         }
     };
 
-    useEffect(() => {
-        if (!searchTerm || !handleSubmit) return;
-        lastSearchTermRef.current = searchTerm;
-
-        try {
-            const fetchData = async () => {
-                const response = await SearchApi().getAutoCompleteData(searchTerm, checkboxState.includeFolders, checkboxState.includeItems);
-                if (response && response.status === 200 && response.data.success) {
-                    onDataReceived(response.data.results)
-                }
-            }
-            fetchData();
-        } catch (error) { console.error(error) }
-        finally { setHandleSubmit(false) }
-
-    }, [searchTerm, handleSubmit])
-
-    useEffect(() => {
-        if (!searchTerm) return;
-
-        const timer = setTimeout(() => {
-            if (searchTerm.length > 2) {
-                setHandleSubmit(true)
-            }
-        }, 750);
-
-        return () => clearTimeout(timer);
-    }, [searchTerm]);
-
-
     return (
         <>
             <form onSubmit={(event) => event.preventDefault()}>
                 <input
                     type="search"
-                    value={searchTerm}
+                    value={searchQuery.query}
                     id={"search-input"}
                     placeholder="Search..."
                     onChange={(event) => handleInputChange(event)}
@@ -94,7 +76,7 @@ const SearchFetchData: React.FC<Props> = ({ onDataReceived }) => {
                             id="foldersCheckbox"
                             name="includeFolders"
                             onChange={() => handleCheckboxChange("includeFolders")}
-                            checked={checkboxState.includeFolders}
+                            checked={searchQuery.includeFolders}
                         />
                     </label>
                     <label htmlFor="items" className={`${showCheckboxError && "error-underline"}`}>
@@ -104,7 +86,7 @@ const SearchFetchData: React.FC<Props> = ({ onDataReceived }) => {
                             id="itemsCheckbox"
                             name="includeItems"
                             onChange={() => handleCheckboxChange("includeItems")}
-                            checked={checkboxState.includeItems}
+                            checked={searchQuery.includeItems}
                         />
                     </label>
                 </div>
@@ -116,4 +98,4 @@ const SearchFetchData: React.FC<Props> = ({ onDataReceived }) => {
     )
 }
 
-export default SearchFetchData
+export default SearchForm
