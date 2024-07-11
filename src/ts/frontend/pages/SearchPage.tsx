@@ -2,19 +2,15 @@ import { useEffect, useState } from "react";
 
 import "@scss/pages/SearchPage.scss"
 import SearchApi from "@api/SearchApi";
-import SearchForm from "@components/searchPage/SearchForm"
+import SearchForm, { FormDataT } from "@components/searchPage/SearchForm"
 import ListSearchResults from "@components/searchPage/ListSearchResults"
-
-interface queryDataT {
-    query: string
-    includeFolders: boolean
-    includeItems: boolean
-}
 
 const SearchPage = () => {
     const [responseData, setResponseData] = useState(null)
-    const [queryParams, setQueryParams] = useState<queryDataT>({
-        query: "", includeFolders: true, includeItems: true
+    const [queryParams, setQueryParams] = useState<FormDataT>({
+        query: "",
+        includeFolders: true,
+        includeItems: true
     })
 
     useEffect(() => {
@@ -34,11 +30,13 @@ const SearchPage = () => {
 
     }, [queryParams.query])
 
-    const handleFormData = (searchQueryParams: any) => { setQueryParams(searchQueryParams) }
+    const handleFormData = (searchQueryParams: FormDataT) => {
+        setQueryParams(searchQueryParams)
+    }
 
     return (
         <main className="search-page">
-            <SearchForm onSearch={handleFormData} />
+            <SearchForm onFormSubmit={handleFormData} />
             {responseData && <ListSearchResults searchResults={responseData} />}
         </main>
     );

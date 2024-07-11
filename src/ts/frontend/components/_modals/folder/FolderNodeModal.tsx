@@ -14,10 +14,12 @@ interface statsDataI {
 
 const FolderNodeModal = () => {
     const { selectedFolderId, selectedFolderName } = useSelector((state: RootState) => state.folderState);
-
-    const [statsData, setStatsData] = useState<statsDataI>(
-        { folderTotal: null, itemTotal: null, quantityTotal: null, valueTotal: null }
-    )
+    const [statsData, setStatsData] = useState<statsDataI>({
+        folderTotal: null,
+        itemTotal: null,
+        quantityTotal: null,
+        valueTotal: null
+    })
 
     useEffect(() => {
         const fetchData = async () => {

@@ -7,10 +7,8 @@ const SearchApi = () => {
     let cancelTokenSource: CancelTokenSource | null = null;
 
     const getAutoCompleteData = async (searchTerm: string, includeFolders: boolean, includeItems: boolean) => {
-        // cancel previous request if exists
-        if (cancelTokenSource) {
-            cancelTokenSource.cancel();
-        }
+        // cancel previous request if it exists
+        if (cancelTokenSource) { cancelTokenSource.cancel() }
 
         // create cancel token for the current request
         cancelTokenSource = axios.CancelToken.source();

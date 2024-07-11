@@ -16,7 +16,6 @@ interface ItemDataI {
 
 const ItemNodeModal = () => {
     const { selectedItemId } = useSelector((state: RootState) => state.itemState);
-
     const [itemData, setItemData] = useState<ItemDataI | null>(null)
 
     useEffect(() => {
