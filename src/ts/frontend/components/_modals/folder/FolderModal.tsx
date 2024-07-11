@@ -1,4 +1,3 @@
-import { useEffect } from "react"
 import { useDispatch } from 'react-redux';
 import { Dispatch } from 'redux';
 
@@ -11,14 +10,11 @@ import { setIsFolderModalOpen, ModalActionT } from "@store/modal/ModalActions";
 const FolderModal = () => {
     const dispatch: Dispatch<FolderActionT | ModalActionT> = useDispatch();
 
-    const handleCloseClick = () => dispatch(setIsFolderModalOpen(false))
-
-    useEffect(() => {
-        return (() => {
-            dispatch(setSelectedFolderId(null))
-            dispatch(setSelectedFolderName(null))
-        })
-    }, [])
+    const handleCloseClick = () => {
+        dispatch(setIsFolderModalOpen(false))
+        dispatch(setSelectedFolderId(null))
+        dispatch(setSelectedFolderName(null))
+    }
 
     return (
         <Modal className="folder-modal">
