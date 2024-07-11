@@ -1,41 +1,47 @@
 import { useEffect, useRef, useState } from "react";
 
+export type FormDataT = {
+    query: string
+    includeFolders: boolean
+    includeItems: boolean
+}
+
 interface SearchFormI {
-    onSearch: (data: any) => void
+    onFormSubmit: (formData: FormDataT) => void
 }
 
 const SearchForm = (props: SearchFormI) => {
-    const { onSearch } = props
-    const [handleSubmit, setHandleSubmit] = useState(false);
-    const lastSearchTermRef = useRef("");
-    const [searchQuery, setSearchQuery] = useState({
+    const { onFormSubmit } = props
+    const [formData, setFormData] = useState({
         query: "",
         includeFolders: true,
         includeItems: true,
     });
-    const isSearchInputDisabled = !searchQuery.includeFolders && !searchQuery.includeItems;
+    const [handleSubmit, setHandleSubmit] = useState(false);
+    const lastSearchQueryRef = useRef("");
+    const isSearchInputDisabled = !formData.includeFolders && !formData.includeItems;
     const showCheckboxError = isSearchInputDisabled;
 
     useEffect(() => {
-        if (!searchQuery) return;
+        if (!formData) return;
 
         const timer = setTimeout(() => {
-            if (searchQuery.query.length > 2) { onSearch(searchQuery) }
+            if (formData.query.length > 2) { onFormSubmit(formData) }
         }, 750);
 
         return () => clearTimeout(timer);
 
-    }, [searchQuery]);
+    }, [formData]);
 
-    const handleCheckboxChange = (name: keyof typeof searchQuery) => {
-        setSearchQuery(prevState => ({
+    const handleCheckboxChange = (name: keyof typeof formData) => {
+        setFormData(prevState => ({
             ...prevState,
             [name]: !prevState[name]
         }));
     }
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchQuery(prevState => ({
+        setFormData(prevState => ({
             ...prevState,
             query: event.target.value
         }));
@@ -47,9 +53,9 @@ const SearchForm = (props: SearchFormI) => {
         if (event.key === "Enter") {
             event.preventDefault();
 
-            if (searchQuery && handleSubmit) {
-                if (lastSearchTermRef.current !== searchQuery.query) {
-                    lastSearchTermRef.current = searchQuery.query
+            if (formData && handleSubmit) {
+                if (lastSearchQueryRef.current !== formData.query) {
+                    lastSearchQueryRef.current = formData.query
                     setHandleSubmit(true)
                 }
             }
@@ -61,7 +67,7 @@ const SearchForm = (props: SearchFormI) => {
             <form onSubmit={(event) => event.preventDefault()}>
                 <input
                     type="search"
-                    value={searchQuery.query}
+                    value={formData.query}
                     id={"search-input"}
                     placeholder="Search..."
                     onChange={(event) => handleInputChange(event)}
@@ -76,7 +82,7 @@ const SearchForm = (props: SearchFormI) => {
                             id="foldersCheckbox"
                             name="includeFolders"
                             onChange={() => handleCheckboxChange("includeFolders")}
-                            checked={searchQuery.includeFolders}
+                            checked={formData.includeFolders}
                         />
                     </label>
                     <label htmlFor="items" className={`${showCheckboxError && "error-underline"}`}>
@@ -86,7 +92,7 @@ const SearchForm = (props: SearchFormI) => {
                             id="itemsCheckbox"
                             name="includeItems"
                             onChange={() => handleCheckboxChange("includeItems")}
-                            checked={searchQuery.includeItems}
+                            checked={formData.includeItems}
                         />
                     </label>
                 </div>
