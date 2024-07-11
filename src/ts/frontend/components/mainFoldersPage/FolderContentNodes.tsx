@@ -23,25 +23,15 @@ const FolderContentNodes = () => {
     const navigate = useNavigate();
     const [nodeData, setNodeData] = useState<NodeDataI | null>(null);
     const folderIdRef = useRef<number | null>(null);
-    const { folderId } = useParams();
+    let { folderId } = useParams();
 
-    /**
-     * parses folderId param from url
-     * if folderId param is 'main':
-     *  - we use zero as folderId. (root folder)
-     * if folderId param is a number:
-     *  - if folderId is zero, we push 'main' to url path.
-     *  - if folderId param not zero, we keep url path as is.
-     *
-     * Note - the idea is for folderId url param to support both strings and numbers
-     *  - if number, we are using the true folderId of folder to return contents
-     *  - if string, we are using he folder name to return folder contents (future support)
-     */
     useEffect(() => {
-        if (!folderId) return;
+        /* if folderId param is not provided, folderId defaults to zero (root folder) */
+        if (!folderId || folderId === ":folderId") { folderId = '0' };
 
-        if (isStringANumber(folderId)) processFolderIdNumber()
-        else processFolderIdString()
+        /* note - idea is to support both number and string folderId url param. */
+        if (isStringANumber(folderId)) { processFolderIdNumber() }
+        else { processFolderIdString() }
 
         fetchData()
 
@@ -70,10 +60,14 @@ const FolderContentNodes = () => {
         }
     }
 
-    /* handles operations if folderId param is a number */
+    /* handles operations if folderId url param is a number */
     const processFolderIdNumber = () => {
         if (!folderId) return;
 
+        /**
+         * if folderId url param is zero, replace displayed browser url with 'main' instead
+         * if folderId url param is non-zero, keep displayed browser url as is
+         */
         if (isStringAllZeroes(folderId)) {
             window.history.pushState({}, 'Update URL to main', PAGE_PATHS.FOLDERS.replace(':folderId', 'main'));
             folderIdRef.current = 0
@@ -83,10 +77,11 @@ const FolderContentNodes = () => {
         }
     }
 
-    /* handles operations if folderId param is a string */
+    /* handles operations if folderId url param is a string */
     const processFolderIdString = () => {
         if (!folderId) return;
 
+        /* only 'main' as string url param currently supported. */
         if (folderId === 'main') {
             folderIdRef.current = 0
 

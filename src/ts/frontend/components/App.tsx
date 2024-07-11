@@ -1,18 +1,17 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import "@scss/components/App.scss";
 import { PAGE_PATHS } from "@common/Constants"
 import DashboardPage from "@pages/DashboardPage";
 import MainFoldersPage from "@pages/MainFoldersPage";
-import ItemPage from "@pages/ItemPage";
 import PageLayout from "@pages/_PageLayout";
 import NotFoundPage from "@pages/NotFoundPage";
 import SearchPage from "@pages/SearchPage";
-import UpdatePage from "@pages/UpdatePage";
 
 const App = () => {
   return (
     <Routes>
+      <Route path="/*" element={<Navigate to={`${PAGE_PATHS.FOLDERS}`} />} />
       <Route
         path={PAGE_PATHS.DASHBOARD}
         element={
@@ -30,26 +29,10 @@ const App = () => {
         }
       ></Route>
       <Route
-        path={PAGE_PATHS.ITEMS}
-        element={
-          <PageLayout>
-            <ItemPage />
-          </PageLayout>
-        }
-      ></Route>
-      <Route
         path={PAGE_PATHS.SEARCH}
         element={
           <PageLayout>
             <SearchPage />
-          </PageLayout>
-        }
-      ></Route>
-      <Route
-        path={PAGE_PATHS.UPDATE}
-        element={
-          <PageLayout>
-            <UpdatePage />
           </PageLayout>
         }
       ></Route>
