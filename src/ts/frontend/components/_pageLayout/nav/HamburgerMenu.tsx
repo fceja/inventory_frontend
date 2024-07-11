@@ -16,10 +16,13 @@ const HamburgerMenu = () => {
   useEffect(() => {
     if (isMenuClicked) {
       document.addEventListener("click", handleClickOutsideMenu, true);
-    } else {
-      document.removeEventListener("click", handleClickOutsideMenu, true);
     }
+
+    return () => {
+      document.removeEventListener("click", handleClickOutsideMenu, true);
+    };
   }, [isMenuClicked]);
+
 
   /* hides hamburger menu if not authd */
   useEffect(() => {
@@ -28,11 +31,20 @@ const HamburgerMenu = () => {
 
   /* update hamburger menu visibility */
   const updateMenuVisibility = () => {
-    if (!isMenuClicked) { setIsMenuVisible(true) }
-    else { setIsMenuVisible(false); }
+    if (!isMenuClicked) {
+      setIsMenuVisible(true)
+      setIsMenuClicked(true);
 
-    setIsMenuClicked(!isMenuClicked);
+    }
+    else {
+      setIsMenuVisible(false);
+      setIsMenuClicked(false);
+    }
   };
+
+  const handleHamMenuClick = () => {
+    updateMenuVisibility()
+  }
 
   /* handles closure of menu if clicked outside of menu container */
   const handleClickOutsideMenu = (event: MouseEvent) => {
@@ -47,14 +59,14 @@ const HamburgerMenu = () => {
 
   return (
     <>
-      <div className="ham-menu-container">
+      <div className="ham-container">
         <div
-          className={`ham ${isMenuClicked ? "clicked" : ""}`}
-          onClick={updateMenuVisibility}
+          className={`ham-state${isMenuClicked ? " clicked" : ""}`}
+          onClick={handleHamMenuClick}
         >
-          <div>
-            <span ></span>
-            <span></span>
+          <div className="ham-top-bot-lines">
+            <span className="ham-top-line"></span>
+            <span className="ham-bot-line"></span>
           </div>
           <svg><use xlinkHref="#sym-path" /></svg>
           <svg><use xlinkHref="#sym-path" /></svg>

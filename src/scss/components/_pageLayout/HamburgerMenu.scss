@@ -1,147 +1,158 @@
 @import "@scss/Global.scss";
 
-$color: #6f24d7;
-$active: #2e0b7f;
+$color: #a366f9;
+$active: #a366f9;
 
-.ham-menu-container {
-    display: block;
+div.ham-container {
+    margin: 0 0 0 30px;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
+}
 
-    div.ham {
-        width: 20px;
-        height: 14px;
-        position: relative;
+div.ham-state {
+    width: 30px;
+    height: 30px;
+    position: relative;
 
-        div {
+    div.ham-top-bot-lines {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        transition: transform .5s ease;
+
+        span {
+            display: block;
             position: absolute;
             left: 0;
-            top: 0;
             right: 0;
-            bottom: 0;
-            transition: transform .5s ease;
 
-            span {
+            &:before,
+            &:after {
+                content: '';
                 display: block;
+                width: 53%; // for lines to overlap
+                height: 2px;
+                border-radius: 1px;
+                background: $color;
                 position: absolute;
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+                transition: transform .5s ease, border-radius .3s ease, background .4s ease;
+            }
+
+            &:before {
                 left: 0;
+                transform-origin: 0 50%;
+            }
+
+            &:after {
                 right: 0;
-
-                &:first-child {
-                    top: 0;
-
-                    &:before,
-                    &:after {
-                        top: 0;
-                    }
-                }
-
-                &:last-child {
-                    bottom: 0;
-
-                    &:before,
-                    &:after {
-                        bottom: 0;
-                    }
-                }
-
-                &:before,
-                &:after {
-                    content: '';
-                    display: block;
-                    width: 47%;
-                    height: 2px;
-                    border-radius: 1px;
-                    background: $color;
-                    position: absolute;
-                    backface-visibility: hidden;
-                    -webkit-backface-visibility: hidden;
-                    transition: transform .5s ease, border-radius .3s ease, background .4s ease;
-                }
-
-                &:before {
-                    left: 0;
-                    transform-origin: 0 50%;
-                    transform: translate(1px, 0) scaleX(1.1);
-                }
-
-                &:after {
-                    right: 0;
-                    transform-origin: 100% 50%;
-                    transform: translate(-1px, 0) scaleX(1.1);
-                }
+                transform-origin: 100% 50%;
             }
         }
 
-        svg {
-            display: block;
-            fill: none;
-            stroke: $color;
-            stroke-width: 2px;
-            width: 44px;
-            height: 44px;
-            stroke-linecap: round;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            margin: -22px 0 0 -22px;
-            stroke-dasharray: 0 82.801 8 82.801;
-            stroke-dashoffset: 82.801;
-            transform-origin: 50% 50%;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            transform: scale(1);
-            transition: stroke-dashoffset .5s ease, stroke-dasharray .6s ease, transform .5s ease, stroke .4s ease;
+        // animates to right arrow
+        span.ham-top-line {
+            top: 0;
 
-            &:nth-child(3) {
-                transform: rotate(180deg) scale(1);
+            &:before,
+            &:after {
+                top: 0;
             }
+
+            transform: translate(0, 3px);
+            transform: translate(.1px, 3px);
         }
 
+        // animates to left arrow
+        span.ham-bot-line {
+            bottom: 0;
 
+            &:before,
+            &:after {
+                bottom: 0;
+            }
+
+            transform: translate(0, -3px);
+            transform: translate(-.1px, -3px);
+        }
     }
 
-    div.ham.clicked {
-        div {
-            transform: rotate(90deg);
+    svg {
+        display: block;
+        fill: none;
+        stroke: $color;
+        stroke-width: 2px;
+        width: 44px;
+        height: 44px;
+        stroke-linecap: round;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        margin: -22px 0 0 -22px;
+        stroke-dasharray: 0 82.801 8 82.801;
+        stroke-dashoffset: 82.801;
+        transform-origin: 50% 50%;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        transform: scale(1);
+        transition: stroke-dashoffset .5s ease, stroke-dasharray .6s ease, transform .5s ease, stroke .4s ease;
 
-            span {
+        &:nth-child(3) {
+            transform: rotate(180deg) scale(1);
+        }
+    }
+}
 
-                &:before,
-                &:after {
-                    background: $active;
-                }
+div.ham-state.clicked {
+    div.ham-top-bot-lines {
+        transform: rotate(90deg);
 
-                &:first-child {
-                    &:before {
-                        transform: rotate(45deg) translate(2.2px, -3px) scaleX(1.05);
-                    }
+        span {
 
-                    &:after {
-                        transform: rotate(-45deg) translate(-2.2px, -3px) scaleX(1.05);
-                    }
-                }
-
-                &:last-child {
-                    &:before {
-                        transform: rotate(-45deg) translate(2.2px, 3px) scaleX(1.05);
-                    }
-
-                    &:after {
-                        transform: rotate(45deg) translate(-2.2px, 3px) scaleX(1.05);
-                    }
-                }
+            &:before,
+            &:after {
+                background: $active;
             }
         }
 
-        svg {
-            stroke-dashoffset: 62;
-            stroke-dasharray: 0 82.801 62 82.801;
-            transform: rotate(90deg);
-            stroke: $active;
-
-            &:nth-child(3) {
-                transform: rotate(270deg);
+        // animates to right arrow
+        span.ham-top-line {
+            &:before {
+                transform: rotate(45deg) translate(2.2px, -3px) scaleX(1.05);
             }
+
+            &:after {
+                transform: rotate(-45deg) translate(-2.2px, -3px) scaleX(1.05);
+            }
+
+        }
+
+        // animates to left arrow
+        span.ham-bot-line {
+            &:before {
+                transform: rotate(-45deg) translate(2.2px, 3px) scaleX(1.05);
+            }
+
+            &:after {
+                transform: rotate(45deg) translate(-2.2px, 3px) scaleX(1.05);
+            }
+        }
+    }
+
+    svg {
+        stroke-dashoffset: 62;
+        stroke-dasharray: 0 82.801 62 82.801;
+        transform: rotate(90deg);
+        stroke: $active;
+
+        &:nth-child(3) {
+            transform: rotate(270deg);
         }
     }
 }
