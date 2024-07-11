@@ -1,0 +1,209 @@
+@import "@scss/Global.scss";
+
+$color: #6f24d7;
+$active: #2e0b7f;
+
+.ham-menu-container {
+    display: block;
+    cursor: pointer;
+
+    div.ham {
+        width: 20px;
+        height: 14px;
+        position: relative;
+
+        div {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            transition: transform .5s ease;
+
+            span {
+                display: block;
+                position: absolute;
+                left: 0;
+                right: 0;
+
+                &:first-child {
+                    top: 0;
+
+                    &:before,
+                    &:after {
+                        top: 0;
+                    }
+                }
+
+                &:last-child {
+                    bottom: 0;
+
+                    &:before,
+                    &:after {
+                        bottom: 0;
+                    }
+                }
+
+                &:before,
+                &:after {
+                    content: '';
+                    display: block;
+                    width: 47%;
+                    height: 2px;
+                    border-radius: 1px;
+                    background: $color;
+                    position: absolute;
+                    backface-visibility: hidden;
+                    -webkit-backface-visibility: hidden;
+                    transition: transform .5s ease, border-radius .3s ease, background .4s ease;
+                }
+
+                &:before {
+                    left: 0;
+                    transform-origin: 0 50%;
+                    transform: translate(1px, 0) scaleX(1.1);
+                }
+
+                &:after {
+                    right: 0;
+                    transform-origin: 100% 50%;
+                    transform: translate(-1px, 0) scaleX(1.1);
+                }
+            }
+        }
+
+        svg {
+            display: block;
+            fill: none;
+            stroke: $color;
+            stroke-width: 2px;
+            width: 44px;
+            height: 44px;
+            stroke-linecap: round;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin: -22px 0 0 -22px;
+            stroke-dasharray: 0 82.801 8 82.801;
+            stroke-dashoffset: 82.801;
+            transform-origin: 50% 50%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transform: scale(1);
+            transition: stroke-dashoffset .5s ease, stroke-dasharray .6s ease, transform .5s ease, stroke .4s ease;
+
+            &:nth-child(3) {
+                transform: rotate(180deg) scale(1);
+            }
+        }
+
+
+    }
+
+    div.ham.clicked {
+        div {
+            transform: rotate(90deg);
+
+            span {
+
+                &:before,
+                &:after {
+                    background: $active;
+                }
+
+                &:first-child {
+                    &:before {
+                        transform: rotate(45deg) translate(2.2px, -3px) scaleX(1.05);
+                    }
+
+                    &:after {
+                        transform: rotate(-45deg) translate(-2.2px, -3px) scaleX(1.05);
+                    }
+                }
+
+                &:last-child {
+                    &:before {
+                        transform: rotate(-45deg) translate(2.2px, 3px) scaleX(1.05);
+                    }
+
+                    &:after {
+                        transform: rotate(45deg) translate(-2.2px, 3px) scaleX(1.05);
+                    }
+                }
+            }
+        }
+
+        svg {
+            stroke-dashoffset: 62;
+            stroke-dasharray: 0 82.801 62 82.801;
+            transform: rotate(90deg);
+            stroke: $active;
+
+            &:nth-child(3) {
+                transform: rotate(270deg);
+            }
+        }
+    }
+}
+
+.menu {
+    position: absolute;
+    top: 100px;
+    background-color: white;
+
+    display: flex;
+    flex-direction: column;
+
+    height: 350px;
+    width: 150px;
+    margin-left: 15px;
+
+    align-items: center;
+    justify-content: space-evenly;
+
+    min-width: 200px;
+    z-index: 1;
+}
+
+.menu-link {
+    cursor: pointer;
+    color: $default-teal;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+
+    border: 2px solid #1a1a1a;
+    border-radius: 5px;
+    border-color: $default-teal;
+    background-color: transparent;
+    padding: 5px;
+
+    display: inline-block;
+    outline: none;
+
+    transition: all 300ms cubic-bezier(0.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    will-change: transform;
+
+    width: 100px;
+
+    &:active {
+        box-shadow: none;
+        transform: translateY(0);
+    }
+
+    &:disabled {
+        pointer-events: none;
+    }
+
+    &:hover {
+        color: $default-white;
+        background-color: $default-teal;
+        border-color: $default-white;
+        box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+        transform: translateY(-2px);
+    }
+}
