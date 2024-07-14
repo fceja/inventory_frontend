@@ -14,13 +14,19 @@ This project works together with the following repositories:
 ## Installation
 ![](https://img.shields.io/badge/OS-Linux%20%7C%20MacOS%20%7C%20Windows-eaeaea)
 1. Install Node
-   - `https://nodejs.org/en/download`
+   - ```
+     https://nodejs.org/en/download
+     ```
 2. Clone repo
 3. Install project dependencies, at project root run:
-   - `npm install`
+   - ```
+     npm install
+     ```
 4. Init React development server:
-   - `npm start`
-   - App served on `http://localhost:8080/`
+   - ```
+     npm start
+     ```
+   - App served on `http://localhost:5173/`
 
 <br/>
 
