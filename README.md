@@ -1,6 +1,6 @@
 # Description
 
-An inventory app that organizes and manages items, as well as providing analytics. <br/>
+Inventory App - organizes and manages items, as well as providing analytics. <br/>
 Currently under development.
 
 <br/>
