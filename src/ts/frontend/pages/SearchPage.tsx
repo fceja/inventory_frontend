@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import "@scss/pages/SearchPage.scss"
 import SearchApi from "@api/SearchApi";
 import SearchForm, { FormDataT } from "@components/searchPage/SearchForm"
-import ListSearchResults from "@components/searchPage/ListSearchResults"
+import SearchResultsList from "@components/searchPage/SearchResultsList"
 
 const SearchPage = () => {
     const [responseData, setResponseData] = useState(null)
@@ -13,6 +13,7 @@ const SearchPage = () => {
         includeItems: true
     })
 
+    /* retrieve auto complete data from api */
     useEffect(() => {
         if (queryParams.query) {
             const fetchData = async () => {
@@ -30,6 +31,7 @@ const SearchPage = () => {
 
     }, [queryParams.query])
 
+    /* set form data from SearchForm component callback */
     const handleFormData = (searchQueryParams: FormDataT) => {
         setQueryParams(searchQueryParams)
     }
@@ -37,10 +39,9 @@ const SearchPage = () => {
     return (
         <main className="search-page">
             <SearchForm onFormSubmit={handleFormData} />
-            {responseData && <ListSearchResults searchResults={responseData} />}
+            {responseData && <SearchResultsList searchResults={responseData} />}
         </main>
     );
-
 }
 
 export default SearchPage;

@@ -9,15 +9,17 @@
 
 /* user profile container */
 .user-profile {
-  @include flex-center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .img-container {
-  @include flex-center;
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   text-wrap: wrap;
-
   border-style: dashed;
   height: 80%;
   width: 125px;

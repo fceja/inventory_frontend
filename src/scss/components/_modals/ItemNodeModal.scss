@@ -3,7 +3,6 @@
 .item-images-qr {
     margin: 0 15px 0 15px;
     padding: 10px 10px 10px 10px;
-
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -16,9 +15,9 @@
     &-qrcode {
         width: 125px;
         height: 125px;
-
-        @include flex-center;
-
+        display: flex;
+        align-items: center;
+        justify-content: center;
         border-style: dashed;
     }
 
@@ -29,17 +28,14 @@
     &-details {
         height: 50px;
         padding: 10px;
-
         border-style: dashed;
     }
 
     &-quantity {
         height: 50px;
         padding: 10px;
-
         display: flex;
         align-items: center;
-
         border-style: dashed;
 
         span {
@@ -50,10 +46,8 @@
     &-price {
         height: 50px;
         padding: 10px;
-
         display: flex;
         align-items: center;
-
         border-style: dashed;
 
         span {

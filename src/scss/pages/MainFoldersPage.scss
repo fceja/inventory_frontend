@@ -17,11 +17,10 @@
         height: inherit;
         padding: 5px;
         box-sizing: border-box;
-
-        @include flex-center;
-
+        display: flex;
+        align-items: center;
+        justify-content: center;
         border-style: dashed;
-
         text-align: center;
     }
 }
@@ -34,7 +33,6 @@
 .item-node {
     height: 100px;
     margin: 15px 0 0 0;
-
     border-style: dashed;
 }
 
@@ -43,7 +41,6 @@
     box-sizing: border-box;
     padding-top: 10px;
     padding-bottom: 10px;
-
     border-style: dashed;
 }
 
