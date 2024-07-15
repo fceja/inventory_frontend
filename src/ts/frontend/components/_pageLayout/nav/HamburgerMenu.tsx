@@ -2,103 +2,103 @@ import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
+import "@scss/components/_pageLayout/HamburgerMenu.scss"
 import { PAGE_PATHS } from "@common/Constants"
 import { RootState } from "@store/ConfigureStore";
 
 const HamburgerMenu = () => {
   const isAuthd = useSelector((state: RootState) => state.authState.isAuthd);
-  const [barClass, setBarClass] = useState("hamburger-bar unclicked");
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [isMenuClicked, setIsMenuClicked] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  /* adds click listener if hamburger menu is opened */
+  /* adds click listener if hamburger menu is visible */
   useEffect(() => {
     if (isMenuClicked) {
       document.addEventListener("click", handleClickOutsideMenu, true);
-    } else {
-      document.removeEventListener("click", handleClickOutsideMenu, true);
     }
+
+    return () => {
+      document.removeEventListener("click", handleClickOutsideMenu, true);
+    };
   }, [isMenuClicked]);
 
-  /* hides hamburger menu is not authd */
+
+  /* hides hamburger menu if not authd */
   useEffect(() => {
-    if (!isAuthd) {
-      setIsMenuVisible(false);
-      setBarClass("hamburger-bar unclicked");
-    }
+    if (!isAuthd) { setIsMenuVisible(false) }
   }, [isAuthd])
 
   /* update hamburger menu visibility */
   const updateMenuVisibility = () => {
     if (!isMenuClicked) {
-      setIsMenuVisible(true);
-      setBarClass("hamburger-bar clicked");
-    } else {
-      setIsMenuVisible(false);
-      setBarClass("hamburger-bar unclicked");
+      setIsMenuVisible(true)
+      setIsMenuClicked(true);
+
     }
-    setIsMenuClicked(!isMenuClicked);
+    else {
+      setIsMenuVisible(false);
+      setIsMenuClicked(false);
+    }
   };
+
+  const handleHamMenuClick = () => {
+    updateMenuVisibility()
+  }
 
   /* handles closure of menu if clicked outside of menu container */
   const handleClickOutsideMenu = (event: MouseEvent) => {
-    const targetNode = event.target as Node;
+    const targetNode = event.target as HTMLElement;
+
     if (
       isMenuClicked &&
       menuRef.current &&
-      !menuRef.current.contains(targetNode) &&
-      targetNode instanceof HTMLElement &&
-      targetNode.className !==
-      "hamburger-menu-bar-container" /* exclude since handled in onClick */ &&
-      targetNode.className !==
-      "hamburger-bar clicked" /* exclude since handled in onClick */
-    ) {
-      updateMenuVisibility();
-    }
+      !menuRef.current.contains(targetNode) /* excluded clicking within menu area */
+    ) { updateMenuVisibility() }
   };
 
   return (
     <>
-      <div className="hamburger-menu-container">
+      <div className="ham-container">
         <div
-          className="hamburger-menu-bar-container"
-          onClick={updateMenuVisibility}
+          className={`ham-state${isMenuClicked ? " clicked" : ""}`}
+          onClick={handleHamMenuClick}
         >
-          <div className={barClass}></div>
-          <div className={barClass}></div>
-          <div className={barClass}></div>
+          <div className="ham-top-bot-lines">
+            <span className="ham-top-line"></span>
+            <span className="ham-bot-line"></span>
+          </div>
+          <svg><use xlinkHref="#sym-path" /></svg>
+          <svg><use xlinkHref="#sym-path" /></svg>
         </div>
-      </div>
+      </ div>
+      <svg xmlns="http://www.w3.org/2000/svg" style={{ display: 'none' }}>
+        <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 44" id="sym-path">
+          <path d="M22,22 L2,22 C2,11 11,2 22,2 C33,2 42,11 42,22" />
+        </symbol>
+      </svg>
       {isMenuVisible && (
         <div className="menu shadow" ref={menuRef}>
           <Link
-            className="ham-menu-btn-link"
+            className="menu-link"
             to={PAGE_PATHS.DASHBOARD}
             onClick={updateMenuVisibility}
           >
             Dashboard
           </Link>
           <Link
-            className="ham-menu-btn-link"
+            className="menu-link"
             to={PAGE_PATHS.FOLDERS.replace(":folderId", "main")}
             onClick={updateMenuVisibility}
           >
             Folder Content
           </Link>
           <Link
-            className="ham-menu-btn-link"
+            className="menu-link"
             to={PAGE_PATHS.SEARCH}
             onClick={updateMenuVisibility}
           >
             Search
-          </Link>
-          <Link
-            className="ham-menu-btn-link"
-            to={PAGE_PATHS.UPDATE}
-            onClick={updateMenuVisibility}
-          >
-            Update
           </Link>
         </div>
       )}
