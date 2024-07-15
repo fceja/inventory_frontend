@@ -69,7 +69,7 @@ const FolderContentNodes = () => {
          * if folderId url param is non-zero, keep displayed browser url as is
          */
         if (isStringAllZeroes(folderId)) {
-            window.history.pushState({}, 'Update URL to main', PAGE_PATHS.FOLDERS.replace(':folderId', 'main'));
+            window.history.pushState({}, 'Update URL to main', PAGE_PATHS.MAIN_FOLDERS.replace(':folderId', 'main'));
             folderIdRef.current = 0
         }
         else if (isStringANumber(folderId) && pathEndsWithString(folderId)) {

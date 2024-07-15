@@ -2,8 +2,8 @@ import React from "react";
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
-import { PAGE_PATHS } from "@common/Constants"
 import { RootState } from '@store/ConfigureStore';
+import { PAGE_PATHS } from "@common/Constants"
 
 interface ProtectedRouteI {
     protectedComponent: JSX.Element;

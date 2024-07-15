@@ -11,7 +11,7 @@ interface ItemDataI {
 
 const ItemPage = () => {
     const [itemName, setItemName] = useState<string>('Item not found')
-    const [folderPath, setFolderPath] = useState<string>(PAGE_PATHS.FOLDERS.replace(":folderId", 'main'))
+    const [folderPath, setFolderPath] = useState<string>(PAGE_PATHS.MAIN_FOLDERS.replace(":folderId", 'main'))
     const [itemData, setItemData] = useState<ItemDataI | null>(null)
     let { itemId } = useParams();
 
@@ -31,7 +31,7 @@ const ItemPage = () => {
 
         if (itemData) {
             setItemName(itemData.name)
-            setFolderPath(PAGE_PATHS.FOLDERS.replace(":folderId", `${itemData.parentFolderId}`))
+            setFolderPath(PAGE_PATHS.MAIN_FOLDERS.replace(":folderId", `${itemData.parentFolderId}`))
 
         }
 

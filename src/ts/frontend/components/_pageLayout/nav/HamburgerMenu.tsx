@@ -87,7 +87,7 @@ const HamburgerMenu = () => {
           </Link>
           <Link
             className="menu-link"
-            to={PAGE_PATHS.FOLDERS.replace(":folderId", "main")}
+            to={PAGE_PATHS.MAIN_FOLDERS.replace(":folderId", "main")}
             onClick={updateMenuVisibility}
           >
             Folder Content

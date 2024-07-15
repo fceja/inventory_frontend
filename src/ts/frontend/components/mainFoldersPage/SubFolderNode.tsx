@@ -11,7 +11,7 @@ const SubFolderNode: React.FC<PropsI> = (props) => {
     const { subFolderData } = props
 
     return (
-        <Link to={`${PAGE_PATHS.FOLDERS.replace(':folderId', `${subFolderData.folderId}`)}`} >
+        <Link to={`${PAGE_PATHS.MAIN_FOLDERS.replace(':folderId', `${subFolderData.folderId}`)}`} >
             <div className={`${subFolderData.nodeType}-node`}>{`${subFolderData.name} ${subFolderData.nodeType}`}</div>
         </Link>
     )

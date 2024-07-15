@@ -37,7 +37,7 @@ const App = () => {
           } />}>
       </Route>
       <Route
-        path={PAGE_PATHS.FOLDERS}
+        path={PAGE_PATHS.MAIN_FOLDERS}
         element={
           <ProtectedRoute protectedComponent={
             <PageLayout children={<MainFoldersPage />} />
