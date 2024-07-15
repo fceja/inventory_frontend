@@ -34,7 +34,6 @@ const HamburgerMenu = () => {
     if (!isMenuClicked) {
       setIsMenuVisible(true)
       setIsMenuClicked(true);
-
     }
     else {
       setIsMenuVisible(false);
