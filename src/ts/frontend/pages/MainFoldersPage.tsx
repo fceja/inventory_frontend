@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 
 import "@scss/pages/MainFoldersPage.scss"
 import { setFolderData, FolderActionT } from "@store/folder/FolderActions";
-import SelectionMenuAddNodes from "@components/mainFoldersPage/SelectionMenuAddNodes"
+import AddNodeButton from "@components/mainFoldersPage/AddNodeButton"
 import FolderNavigation from "@components/mainFoldersPage/FolderNavigation"
 import FolderContentNodes from "@components/mainFoldersPage/FolderContentNodes"
 import FolderStats from "@components/mainFoldersPage/FolderStats"
@@ -28,7 +28,7 @@ const MainFoldersPage = () => {
             <FolderNavigation />
             <FolderStats />
             <FolderContentNodes />
-            <SelectionMenuAddNodes />
+            <AddNodeButton />
         </main>
     )
 }
