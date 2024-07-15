@@ -1,12 +1,12 @@
 import Footer from "@components/_pageLayout/footer/_Footer";
-import { useLogoutTimer } from "@hooks/LogoutTimeout.hook"
+import { useLogoutTimer } from "@hooks/useLogoutTimer"
 import Nav from "@components/_pageLayout/nav/_Nav";
 
 interface PageLayoutI {
   children: React.ReactNode;
 }
 
-const PageLayout = (props: PageLayoutI) => {
+const PageLayout: React.FC<PageLayoutI> = (props) => {
   const { children } = props
 
   useLogoutTimer()
