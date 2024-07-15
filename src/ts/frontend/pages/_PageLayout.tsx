@@ -6,7 +6,7 @@ interface PageLayoutI {
   children: React.ReactNode;
 }
 
-const PageLayout = (props: PageLayoutI) => {
+const PageLayout: React.FC<PageLayoutI> = (props) => {
   const { children } = props
 
   useLogoutTimer()
