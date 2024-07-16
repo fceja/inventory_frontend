@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
+import "@scss/components/searchPage/SearchForm.scss";
+
 export type FormDataT = {
     query: string
     includeFolders: boolean
@@ -64,7 +66,7 @@ const SearchForm = (props: SearchFormI) => {
 
     return (
         <>
-            <form onSubmit={(event) => event.preventDefault()}>
+            <form className="search-form" onSubmit={(event) => event.preventDefault()}>
                 <input
                     type="search"
                     value={formData.query}

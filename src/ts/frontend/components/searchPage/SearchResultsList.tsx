@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from "redux";
 
+import "@scss/components/searchPage/SearchResultsList.scss"
 import { RootState } from "@store/ConfigureStore";
 import { setSelectedFolderId, setSelectedFolderName, FolderActionT } from "@store/folder/FolderActions";
 import FolderModal from "@components/_modals/folder/FolderModal"
@@ -17,7 +18,7 @@ interface PropsI {
     }
 }
 
-const ListSearchResults = (props: PropsI) => {
+const SearchResultsList = (props: PropsI) => {
     const { searchResults } = props
     const dispatch: Dispatch<FolderActionT | ItemActionT | ModalActionT> = useDispatch();
     const { isFolderModalOpen, isItemModalOpen } = useSelector((state: RootState) => state.modalState);
@@ -50,7 +51,7 @@ const ListSearchResults = (props: PropsI) => {
             {searchResults.folders !== null && searchResults.items !== null &&
                 <>
                     <div className="folder-results">
-                        Folder results:
+                        <div>Folder results:</div>
                         {folderResultsEmpty ? (
                             <div className="empty-search">[None]</div>
                         ) : (
@@ -96,4 +97,4 @@ const ListSearchResults = (props: PropsI) => {
         </div>
     )
 }
-export default ListSearchResults
+export default SearchResultsList

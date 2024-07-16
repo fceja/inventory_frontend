@@ -1,0 +1,28 @@
+.search-form {
+    width: 300px;
+    width: clamp(300px, 100%, 500px);
+    margin: 50px auto 0 auto;
+}
+
+#search-input {
+    margin-top: 25px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.checkboxes {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    label {
+        margin: 10px;
+    }
+}
+
+.folder-item-error {
+    text-align: center;
+}

@@ -1,14 +1,19 @@
+$add-btn-overlay-color: #5100c2;
+
 .add-node-btn-overlay {
     position: fixed;
-    bottom: 50px;
-    right: 20px;
-    height: 75px;
-    width: 75px;
+    bottom: 70px;
+    right: 50px;
+    height: 45px;
+    width: 45px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    border-style: dashed;
+
+    svg {
+        fill: $add-btn-overlay-color;
+    }
 }
 
 .add-folder-item-selection {
