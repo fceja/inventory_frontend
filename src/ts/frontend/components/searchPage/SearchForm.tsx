@@ -2,20 +2,20 @@ import { useEffect, useRef, useState } from "react";
 
 import "@scss/components/searchPage/SearchForm.scss";
 
-export type FormDataT = {
-    query: string
+export type SearchFormT = {
+    searchQuery: string
     includeFolders: boolean
     includeItems: boolean
 }
 
 interface SearchFormI {
-    onFormSubmit: (formData: FormDataT) => void
+    onFormSubmit: (searchFormData: SearchFormT) => void
 }
 
 const SearchForm = (props: SearchFormI) => {
     const { onFormSubmit } = props
-    const [formData, setFormData] = useState({
-        query: "",
+    const [formData, setFormData] = useState<SearchFormT>({
+        searchQuery: "",
         includeFolders: true,
         includeItems: true,
     });
@@ -28,7 +28,7 @@ const SearchForm = (props: SearchFormI) => {
         if (!formData) return;
 
         const timer = setTimeout(() => {
-            if (formData.query.length > 2) { onFormSubmit(formData) }
+            if (formData.searchQuery.length > 2) { onFormSubmit(formData) }
         }, 750);
 
         return () => clearTimeout(timer);
@@ -45,7 +45,7 @@ const SearchForm = (props: SearchFormI) => {
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFormData(prevState => ({
             ...prevState,
-            query: event.target.value
+            searchQuery: event.target.value
         }));
 
         setHandleSubmit(false)
@@ -56,8 +56,8 @@ const SearchForm = (props: SearchFormI) => {
             event.preventDefault();
 
             if (formData && handleSubmit) {
-                if (lastSearchQueryRef.current !== formData.query) {
-                    lastSearchQueryRef.current = formData.query
+                if (lastSearchQueryRef.current !== formData.searchQuery) {
+                    lastSearchQueryRef.current = formData.searchQuery
                     setHandleSubmit(true)
                 }
             }
@@ -69,7 +69,7 @@ const SearchForm = (props: SearchFormI) => {
             <form className="search-form" onSubmit={(event) => event.preventDefault()}>
                 <input
                     type="search"
-                    value={formData.query}
+                    value={formData.searchQuery}
                     id={"search-input"}
                     placeholder="Search..."
                     onChange={(event) => handleInputChange(event)}
