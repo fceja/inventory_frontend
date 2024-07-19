@@ -1,0 +1,15 @@
+.user-profile {
+    margin: 10px 10px 0 0;
+}
+
+.user-img {
+    box-sizing: border-box;
+    text-align: center;
+    text-wrap: wrap;
+    border-style: dashed;
+    height: 60px;
+
+    img {
+        height: 100%;
+    }
+}

@@ -1,9 +1,8 @@
-import Logout from "@components/_pageLayout/footer/Logout"
-import "@scss/components/_pageLayout/Footer.scss";
+import "@scss/components/_pageLayout/footer/_Footer.scss";
 
 const Footer = () => {
     return (
-        <footer><Logout /></footer>
+        <footer></footer>
     )
 }
 
