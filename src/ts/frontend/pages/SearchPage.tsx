@@ -6,7 +6,7 @@ import SearchForm, { FormDataT } from "@components/searchPage/SearchForm"
 import SearchResultsList from "@components/searchPage/SearchResultsList"
 
 const SearchPage = () => {
-    const [responseData, setResponseData] = useState(null)
+    const [searchResultsData, setSearchResultsData] = useState(null)
     const [queryParams, setQueryParams] = useState<FormDataT>({
         query: "",
         includeFolders: true,
@@ -23,7 +23,7 @@ const SearchPage = () => {
                     queryParams.includeItems
                 );
                 if (response && response.status === 200 && response.data.success) {
-                    setResponseData(response.data.results)
+                    setSearchResultsData(response.data.results)
                 }
             }
             fetchData();
@@ -39,7 +39,7 @@ const SearchPage = () => {
     return (
         <main className="search-page">
             <SearchForm onFormSubmit={handleFormData} />
-            {responseData && <SearchResultsList searchResults={responseData} />}
+            {searchResultsData && <SearchResultsList searchResults={searchResultsData} />}
         </main>
     );
 }
