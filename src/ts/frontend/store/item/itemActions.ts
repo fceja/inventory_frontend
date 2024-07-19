@@ -7,7 +7,8 @@ interface SetSelectedItemIdAction {
 
 export type ItemActionT = SetSelectedItemIdAction
 
-export const setSelectedItemId = (itemId: string | null): ItemActionT => {
+
+export const setSelectedItemId = (itemId: string | null): SetSelectedItemIdAction => {
     return {
         type: SET_SELECTED_ITEM_ID,
         payload: { selectedItemId: itemId }
