@@ -2,44 +2,44 @@ import { useEffect, useState } from "react";
 
 import "@scss/pages/SearchPage.scss"
 import SearchApi from "@api/SearchApi";
-import SearchForm, { FormDataT } from "@components/searchPage/SearchForm"
+import SearchForm, { SearchFormT } from "@components/searchPage/SearchForm"
 import SearchResultsList from "@components/searchPage/SearchResultsList"
 
 const SearchPage = () => {
-    const [responseData, setResponseData] = useState(null)
-    const [queryParams, setQueryParams] = useState<FormDataT>({
-        query: "",
+    const [searchResults, setSearchResultsData] = useState(null)
+    const [searchQueryParams, setSearchQueryParams] = useState<SearchFormT>({
+        searchQuery: "",
         includeFolders: true,
         includeItems: true
     })
 
     /* retrieve auto complete data from api */
     useEffect(() => {
-        if (queryParams.query) {
+        if (searchQueryParams.searchQuery) {
             const fetchData = async () => {
                 const response = await SearchApi().getAutoCompleteData(
-                    queryParams.query,
-                    queryParams.includeFolders,
-                    queryParams.includeItems
+                    searchQueryParams.searchQuery,
+                    searchQueryParams.includeFolders,
+                    searchQueryParams.includeItems
                 );
                 if (response && response.status === 200 && response.data.success) {
-                    setResponseData(response.data.results)
+                    setSearchResultsData(response.data.results)
                 }
             }
             fetchData();
         }
 
-    }, [queryParams.query])
+    }, [searchQueryParams.searchQuery])
 
-    /* set form data from SearchForm component callback */
-    const handleFormData = (searchQueryParams: FormDataT) => {
-        setQueryParams(searchQueryParams)
+    /* callback that sets search query from SearchForm component*/
+    const handleSearchFormSubmit = (searchQueryParams: SearchFormT) => {
+        setSearchQueryParams(searchQueryParams)
     }
 
     return (
         <main className="search-page">
-            <SearchForm onFormSubmit={handleFormData} />
-            {responseData && <SearchResultsList searchResults={responseData} />}
+            <SearchForm onFormSubmit={handleSearchFormSubmit} />
+            {searchResults && <SearchResultsList searchResults={searchResults} />}
         </main>
     );
 }

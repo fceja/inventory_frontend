@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import "@scss/components/_pageLayout/HamburgerMenu.scss"
+import "@scss/components/_pageLayout/nav/HamburgerMenu.scss"
 import { PAGE_PATHS } from "@common/Constants"
 import { RootState } from "@store/ConfigureStore";
 
