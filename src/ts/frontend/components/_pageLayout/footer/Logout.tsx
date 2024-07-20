@@ -5,12 +5,14 @@ import "@scss/components/_pageLayout/nav/Logout.scss"
 import { clearAuth, AuthActionT } from "@store/auth/AuthActions";
 import { setIsLoginModalOpen, ModalActionT } from "@store/modal/ModalActions";
 import { cancelLogoutTimeout } from "@utils/store/LogoutUtils"
+import { clearUserData, UserActionT } from "@store/user/UserActions"
 
 const Logout = () => {
-    const dispatch: Dispatch<AuthActionT | ModalActionT> = useDispatch();
+    const dispatch: Dispatch<AuthActionT | ModalActionT | UserActionT> = useDispatch();
 
     const handleLogout = () => {
         dispatch(clearAuth());
+        dispatch(clearUserData())
         dispatch(setIsLoginModalOpen(true))
         cancelLogoutTimeout()
     }

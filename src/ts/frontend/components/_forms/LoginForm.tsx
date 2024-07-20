@@ -1,9 +1,14 @@
 import { useState } from "react";
+import { useDispatch } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import "@scss/components/_forms/LoginForm.scss"
 import SystemAuthApi from "@api/SystemAuthApi";
+import { setUserData, UserActionT } from "@store/user/UserActions"
 
 const LoginForm = () => {
+  const dispatch: Dispatch<UserActionT> = useDispatch();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -18,6 +23,9 @@ const LoginForm = () => {
 
     const response = await SystemAuthApi().systemLogin(formData);
     if (response && response.status === 200 && response.data.success) {
+      const { userId, userRole } = response.data.userData
+
+      dispatch(setUserData(userId, userRole))
       console.log("Login successful.");
     }
   };
