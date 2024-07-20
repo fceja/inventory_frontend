@@ -2,7 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 
 import "@scss/components/App.scss";
 import { PAGE_PATHS } from "@common/Constants"
-import LoginModal from "@components/_modals/LoginModal";
+import LoginPage from "@pages/LoginPage";
 import DashboardPage from "@pages/DashboardPage";
 import MainFoldersPage from "@pages/MainFoldersPage";
 import PageLayout from "@pages/_PageLayout";
@@ -17,7 +17,7 @@ const App = () => {
       <Route path="/*" element={<Navigate to={`${PAGE_PATHS.LOGIN}`} />} />
       <Route
         path={PAGE_PATHS.LOGIN}
-        element={<LoginModal />}>
+        element={<LoginPage />}>
       </Route>
       <Route
         path={PAGE_PATHS.NOT_FOUND}
