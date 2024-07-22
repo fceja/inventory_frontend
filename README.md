@@ -25,7 +25,7 @@ This project works together with the following repositories:
      ```
 4. Init React development server:
    - ```
-     npm start
+     npm run dev
      ```
    - App served on `http://localhost:5173/`
 
