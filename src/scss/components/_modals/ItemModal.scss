@@ -1,62 +1,88 @@
 @import "@scss/Variables.scss";
 
+$menu-bar-container-height: 60px;
+$menu-bar-container-width: 52px;
+
 #item-modal {
     width: 300px;
     background-color: white;
 }
 
-$menu-bar-container-height: 60px;
-$menu-bar-container-width: 52px;
-
-.item-modal-header {
-    padding: 20px 0 20px 0;
+div.item-modal-header {
+    padding: 20px 10px 20px 10px;
     position: relative;
     height: $menu-bar-container-height;
     display: flex;
-}
+    justify-content: space-between;
 
-.item-modal-header-options {
-    height: inherit;
-    position: relative;
-
-    svg {
+    span.edit-options {
         height: inherit;
-        position: absolute;
-        left: 15px;
+        position: relative;
 
+        svg {
+            height: inherit;
+            position: absolute;
+            fill: rgb(156, 156, 156);
+        }
+
+        span.disabled-text {
+            background-color: gray;
+            position: absolute;
+            top: 70px;
+            left: 20px;
+            width: 200px;
+            height: 150px;
+            align-content: center;
+            text-align: center;
+
+            button {
+                margin: 5px 0 0 0;
+            }
+        }
     }
 
-    span.disabled-text {
+    div.header-item-menu-options {
         background-color: gray;
         position: absolute;
         top: 70px;
         left: 20px;
-        width: 200px;
+        width: 150px;
         height: 150px;
         align-content: center;
-        text-align: center;
 
-        button {
-            margin: 5px 0 0 0;
+        ul li {
+            padding: 3px 0;
+        }
+    }
+
+    span.modal-close {
+        max-height: $menu-bar-container-height;
+        min-height: $menu-bar-container-height;
+        max-width: $menu-bar-container-width;
+        min-width: $menu-bar-container-width;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        cursor: pointer;
+
+        div.bar {
+            width: 100%;
+            height: 10px;
+            background-color: $default-app-color;
+            border-radius: 0.5em;
+
+            &:nth-child(1) {
+                transform: translate(0, 13px) rotate(45deg);
+            }
+
+            &:nth-child(2) {
+                transform: translate(0, -10px) rotate(-45deg);
+            }
         }
     }
 }
 
-.header-item-menu-options {
-    background-color: gray;
-    position: absolute;
-    top: 70px;
-    left: 20px;
-    width: 150px;
-    height: 150px;
-    align-content: center;
-
-    ul li {
-        padding: 3px 0;
-    }
-}
-
-.item-modal-confirm-delete {
+div.item-modal-confirm-delete {
     padding: 10px;
     box-sizing: border-box;
     height: 200px;
@@ -71,43 +97,13 @@ $menu-bar-container-width: 52px;
     background-color: whitesmoke;
     text-align: center;
 
-    .confirm-btns {
+    div.confirm-btns {
         margin-top: 25px;
-
         display: flex;
-        justify-content: space-evenly; // margin: 20px auto 10px auto;
+        justify-content: space-evenly;
 
         button {
             width: 70px;
         }
     }
-}
-
-.item-modal-close {
-    position: absolute;
-    right: 15px;
-    max-height: $menu-bar-container-height;
-    min-height: $menu-bar-container-height;
-    max-width: $menu-bar-container-width;
-    min-width: $menu-bar-container-width;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    cursor: pointer;
-}
-
-
-.item-modal-close-bar {
-    width: 100%;
-    height: 10px;
-    background-color: $default-light-teal;
-    border-radius: 0.5em;
-}
-
-.item-modal-close-bar:nth-child(1) {
-    transform: translate(0, 13px) rotate(45deg);
-}
-
-.item-modal-close-bar:nth-child(2) {
-    transform: translate(0, -10px) rotate(-45deg);
 }

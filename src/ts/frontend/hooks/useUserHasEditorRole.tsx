@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { RootState } from "@store/ConfigureStore";
 
-/* determines if user has editor or readonly role */
+/* determines if user has an editor or readonly role */
 const useUserHasEditorRole = () => {
     const { userRole } = useSelector((state: RootState) => state.userState);
 
