@@ -25,6 +25,35 @@ $menu-bar-container-width: 52px;
         left: 15px;
 
     }
+
+    span.disabled-text {
+        background-color: gray;
+        position: absolute;
+        top: 70px;
+        left: 20px;
+        width: 200px;
+        height: 150px;
+        align-content: center;
+        text-align: center;
+
+        button {
+            margin: 5px 0 0 0;
+        }
+    }
+}
+
+.header-item-menu-options {
+    background-color: gray;
+    position: absolute;
+    top: 70px;
+    left: 20px;
+    width: 150px;
+    height: 150px;
+    align-content: center;
+
+    ul li {
+        padding: 3px 0;
+    }
 }
 
 .item-modal-confirm-delete {
