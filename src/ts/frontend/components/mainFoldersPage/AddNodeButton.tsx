@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from "redux";
 
@@ -7,15 +7,15 @@ import AddItemModal from "@components/_modals/AddItemModal"
 import { RootState } from "@store/ConfigureStore";
 import { FolderActionT } from "@store/folder/FolderActions";
 import { setIsAddItemModalOpen, ModalActionT } from "@store/modal/ModalActions";
+import useUserHasEditorRole from "@hooks/useUserHasEditorRole"
 
 const SELECTION_DIV_CLASS_NAME = 'add-folder-item-selection'
 
 const AddNodeButton = () => {
     const dispatch: Dispatch<FolderActionT | ModalActionT> = useDispatch();
     const { isAddItemModalOpen } = useSelector((state: RootState) => state.modalState);
-    const { userRole } = useSelector((state: RootState) => state.userState);
-    const isEditorRef = useRef(false)
     const [isAddNodeBtnClicked, setIsAddNodeBtnClicked] = useState(false);
+    const isEditor = useUserHasEditorRole()
     const [isSelectionMenuVisible, setIsSelectionMenuVisible] = useState(false);
 
     useEffect(() => {
@@ -59,15 +59,6 @@ const AddNodeButton = () => {
         setIsSelectionMenuVisible(false);
     }
 
-    /* determines if user can edit or readonly */
-    if (!userRole) {
-        isEditorRef.current = false
-    }
-    else if (["editor", "publisher", "admin"].includes(userRole)) {
-        isEditorRef.current = true
-    }
-    else { isEditorRef.current = false }
-
     return (
         <>
             <div
@@ -82,14 +73,14 @@ const AddNodeButton = () => {
                 </svg>
             </div>
             {/* read only mode */}
-            {!isEditorRef.current && isAddNodeBtnClicked &&
+            {!isEditor && isAddNodeBtnClicked &&
                 <div className={SELECTION_DIV_CLASS_NAME}>
                     <span className="disabled-text">Feature disabled. <br /> READ-ONLY mode.</span>
                     <button onClick={() => handleSelectionBtnClicks('exit')}>Exit</button>
                 </div>
             }
             {/* editor mode */}
-            {isEditorRef.current && isAddNodeBtnClicked &&
+            {isEditor && isAddNodeBtnClicked &&
                 <div className={SELECTION_DIV_CLASS_NAME}>
                     <button onClick={() => handleSelectionBtnClicks('folder')}>Add Folder</button>
                     <button onClick={() => handleSelectionBtnClicks('item')}>Add Item</button>
