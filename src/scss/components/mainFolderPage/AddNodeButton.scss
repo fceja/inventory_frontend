@@ -41,3 +41,8 @@ $add-btn-overlay-color: #5100c2;
 .add-folder-item-selection:not(.animate) {
     bottom: -200px;
 }
+
+span.disabled-text {
+    text-align: center;
+    margin: 0 0 10px 0;
+}
