@@ -27,6 +27,20 @@ $menu-bar-container-width: 52px;
     }
 }
 
+.header-item-menu-options {
+    background-color: gray;
+    position: absolute;
+    top: 70px;
+    left: 20px;
+    width: 150px;
+    height: 150px;
+    align-content: center;
+
+    ul li {
+        padding: 3px 0;
+    }
+}
+
 .item-modal-confirm-delete {
     padding: 10px;
     box-sizing: border-box;
@@ -81,4 +95,18 @@ $menu-bar-container-width: 52px;
 
 .item-modal-close-bar:nth-child(2) {
     transform: translate(0, -10px) rotate(-45deg);
+}
+
+span.disabled-text {
+    background-color: gray;
+    position: absolute;
+    top: 70px;
+    left: 20px;
+    width: 200px;
+    height: 150px;
+    align-content: center;
+
+    button {
+        margin: 5px 0 0 0;
+    }
 }
