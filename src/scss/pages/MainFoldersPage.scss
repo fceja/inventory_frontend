@@ -24,29 +24,3 @@
         text-align: center;
     }
 }
-
-.folder-nodes {
-    box-sizing: border-box;
-}
-
-.folder-node,
-.item-node {
-    height: 100px;
-    margin: 15px 0 0 0;
-    border-style: dashed;
-}
-
-.item {
-    height: 100px;
-    box-sizing: border-box;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border-style: dashed;
-}
-
-.folder-empty {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 200px;
-}

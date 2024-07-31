@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { Dispatch } from "redux";
 
+import "@scss/components/mainFolderPage/ItemNode.scss"
 import { setSelectedItemId, ItemActionT } from "@store/item/ItemActions";
 import { setIsItemModalOpen, ModalActionT } from "@store/modal/ModalActions";
 import { ItemModelI } from "@common/Models"
@@ -22,7 +23,7 @@ const ItemNode: React.FC<PropsI> = (props) => {
     return (
         <>
             <div
-                className={`${itemData.nodeType}-node`}
+                className={"item-node"}
                 onClick={() => handleItemClick(itemData.itemId)}>
                 {`${itemData.name} ${itemData.nodeType}`}
             </div>
