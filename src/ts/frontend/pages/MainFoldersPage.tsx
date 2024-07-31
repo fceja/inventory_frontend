@@ -28,9 +28,11 @@ const MainFoldersPage = () => {
 
     return (
         <main className="main-folders-page">
-            <FolderNavigation />
-            <FolderStats />
-            <FolderContentNodes />
+            <div className="folder-content">
+                <FolderNavigation />
+                <FolderStats />
+                <FolderContentNodes />
+            </div>
             <AddNodeButton />
         </main>
     )

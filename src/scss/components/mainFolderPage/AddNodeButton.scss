@@ -17,7 +17,7 @@ $add-btn-overlay-color: #5100c2;
 }
 
 .add-folder-item-selection {
-    height: 200px;
+    height: 175px;
     width: 100%;
     position: fixed;
     display: flex;
@@ -31,6 +31,9 @@ $add-btn-overlay-color: #5100c2;
     button {
         margin: 10px 15px 0 15px;
         padding: 10px;
+        background-color: white;
+        border-color: rgb(234, 234, 234);
+        border-style: solid
     }
 
     span.disabled-text {
