@@ -1,13 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import "@scss/components/_pageLayout/nav/HamburgerMenu.scss"
 import { PAGE_PATHS } from "@common/Constants"
-import { RootState } from "@store/ConfigureStore";
 
 const HamburgerMenu = () => {
-  const isAuthd = useSelector((state: RootState) => state.authState.isAuthd);
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const [isMenuClicked, setIsMenuClicked] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -23,37 +20,32 @@ const HamburgerMenu = () => {
     };
   }, [isMenuClicked]);
 
-
-  /* hides hamburger menu if not authd */
-  useEffect(() => {
-    if (!isAuthd) { setIsMenuVisible(false) }
-  }, [isAuthd])
-
-  /* update hamburger menu visibility */
-  const updateMenuVisibility = () => {
-    if (!isMenuClicked) {
-      setIsMenuVisible(true)
-      setIsMenuClicked(true);
-    }
-    else {
-      setIsMenuVisible(false);
-      setIsMenuClicked(false);
-    }
+  /* update ham menu visibility */
+  const handleHamMenuVisibility = () => {
+    setIsMenuClicked(!isMenuClicked);
+    setIsMenuVisible(!isMenuVisible)
   };
 
-  const handleHamMenuClick = () => {
-    updateMenuVisibility()
-  }
-
-  /* handles closure of menu if clicked outside of menu container */
+  /* handles closing of menu if clicked outside of menu container */
   const handleClickOutsideMenu = (event: MouseEvent) => {
     const targetNode = event.target as HTMLElement;
 
+    /* if target is svg close icon, ignore since handled in handleHamMenuVisibility */
+    if (targetNode.tagName.toLowerCase() === 'svg') {
+      const useElement = targetNode.querySelector('use');
+      if (useElement && useElement.getAttribute('xlink:href') === '#sym-path') {
+        return;
+      }
+    }
+
+    /* if target is outside of menu container, close menu */
     if (
       isMenuClicked &&
       menuRef.current &&
       !menuRef.current.contains(targetNode) /* excluded clicking within menu area */
-    ) { updateMenuVisibility() }
+    ) {
+      handleHamMenuVisibility()
+    }
   };
 
   return (
@@ -61,7 +53,7 @@ const HamburgerMenu = () => {
       <div className="ham-container">
         <div
           className={`ham-state${isMenuClicked ? " clicked" : ""}`}
-          onClick={handleHamMenuClick}
+          onClick={handleHamMenuVisibility}
         >
           <div className="ham-top-bot-lines">
             <span className="ham-top-line"></span>
@@ -81,21 +73,21 @@ const HamburgerMenu = () => {
           <Link
             className="menu-link"
             to={PAGE_PATHS.DASHBOARD}
-            onClick={updateMenuVisibility}
+            onClick={handleHamMenuVisibility}
           >
             Dashboard
           </Link>
           <Link
             className="menu-link"
             to={PAGE_PATHS.MAIN_FOLDERS.replace(":folderId", "main")}
-            onClick={updateMenuVisibility}
+            onClick={handleHamMenuVisibility}
           >
             Folder Content
           </Link>
           <Link
             className="menu-link"
             to={PAGE_PATHS.SEARCH}
-            onClick={updateMenuVisibility}
+            onClick={handleHamMenuVisibility}
           >
             Search
           </Link>

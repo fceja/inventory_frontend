@@ -3,6 +3,7 @@ import { Dispatch } from "redux";
 import { useDispatch } from 'react-redux';
 import { useNavigate, useParams } from "react-router-dom";
 
+import "@scss/components/mainFolderPage/FolderContentNodes.scss"
 import { PAGE_PATHS } from "@common/Constants"
 import { setFolderData, FolderActionT } from "@store/folder/FolderActions";
 import FoldersApi from "@api/FoldersApi"

@@ -1,5 +1,4 @@
-$hamMenuColor: #5100c2;
-$active: #5100c2;
+@import "@scss/Variables.scss";
 
 div.ham-container {
     margin: 0 0 0 30px;
@@ -36,7 +35,7 @@ div.ham-state {
                 width: 53%; // for lines to overlap
                 height: 2px;
                 border-radius: 1px;
-                background: $hamMenuColor;
+                background: $default-app-color;
                 position: absolute;
                 backface-visibility: hidden;
                 -webkit-backface-visibility: hidden;
@@ -84,7 +83,7 @@ div.ham-state {
     svg {
         display: block;
         fill: none;
-        stroke: $hamMenuColor;
+        stroke: $default-app-color;
         stroke-width: 2px;
         width: 44px;
         height: 44px;
@@ -115,7 +114,7 @@ div.ham-state.clicked {
 
             &:before,
             &:after {
-                background: $active;
+                background: $default-app-color;
             }
         }
 
@@ -147,7 +146,7 @@ div.ham-state.clicked {
         stroke-dashoffset: 62;
         stroke-dasharray: 0 82.801 62 82.801;
         transform: rotate(90deg);
-        stroke: $active;
+        stroke: $default-app-color;
 
         &:nth-child(3) {
             transform: rotate(270deg);
@@ -176,14 +175,14 @@ div.ham-state.clicked {
 
 .menu-link {
     cursor: pointer;
-    color: $hamMenuColor;
+    color: $default-app-color-med;
     font-size: 16px;
     font-weight: 600;
     text-align: center;
     text-decoration: none;
     border: 2px solid #1a1a1a;
     border-radius: 5px;
-    border-color: $hamMenuColor;
+    border-color: $default-app-color-light;
     background-color: transparent;
     padding: 5px;
     display: inline-block;
@@ -206,9 +205,8 @@ div.ham-state.clicked {
     }
 
     &:hover {
-        color: rgb(255, 255, 255);
-        background-color: $hamMenuColor;
-        border-color: rgb(255, 255, 255);
+        color: $default-app-color;
+        border-color: $default-app-color;
         box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
         transform: translateY(-2px);
     }
