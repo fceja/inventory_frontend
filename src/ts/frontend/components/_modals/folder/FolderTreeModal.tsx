@@ -5,6 +5,7 @@ import { RootState } from "@store/ConfigureStore";
 import Modal from "@components/_modals/_Modal"
 import FolderTree from "@common/components/FolderTree"
 
+// TODO - retrieve from api
 const FOLDERS = [
     {
         "folderId": 0,
@@ -54,9 +55,11 @@ const FolderTreeModal = () => {
     const { folderId } = useSelector((state: RootState) => state.folderState);
 
     return (
-        <Modal className="folder-tree-modal">
-            <FolderTree folders={FOLDERS} upToFolderId={folderId} />
-        </Modal>
+        <div className="folder-tree-ref">
+            <Modal className="folder-tree-modal">
+                <FolderTree folders={FOLDERS} upToFolderId={folderId} />
+            </Modal>
+        </div>
     )
 }
 
