@@ -28,8 +28,8 @@ const ItemNode: React.FC<PropsI> = (props) => {
             <div
                 className={"item-node"}
                 onClick={() => handleItemClick(itemData.itemId)}>
-                {`${itemData.name} ${itemData.nodeType}`}
-            </div>
+                <span>{`${itemData.name} ${itemData.nodeType}`}</span>
+            </div >
             {isItemModalOpen &&
                 <ItemModal />
             }

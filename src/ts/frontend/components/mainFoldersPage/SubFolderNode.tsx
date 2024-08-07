@@ -35,7 +35,7 @@ const SubFolderNode: React.FC<PropsI> = (props) => {
                     <div>{`${subFolderData.name} ${subFolderData.nodeType}`}</div>
                 </div>
             </ Link >
-            <div className="info-container">
+            <div className="subfolder-info-container">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 512 512"
