@@ -13,12 +13,12 @@ const UserProfile = () => {
         {!isAuthd ? (
           <>
             {/* <a href="https://www.flaticon.com/free-icons/read-only" title="read only icons">Read only icons created by Freepik - Flaticon</a> */}
-            <img src="/src/assets/icons/read-only.png" />
+            <img src="/src/assets/icons/png/read-only.png" />
           </>
         ) : (
           <>
             {/* <a href="https://www.flaticon.com/free-icons/read-only" title="read only icons">Read only icons created by Freepik - Flaticon</a> */}
-            <img src="/src/assets/icons/user.png" />
+            <img src="/src/assets/icons/png/user.png" />
           </>
         )}
       </div>

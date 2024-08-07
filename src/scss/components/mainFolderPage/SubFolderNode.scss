@@ -1,5 +1,50 @@
-.folder-node {
+div.folder-node {
     height: 100px;
     margin: 15px 0 0 0;
     border-style: dashed;
+    display: flex;
+    justify-content: space-between;
+}
+
+div.folder-node {
+    a {
+        margin: 10px;
+        display: flex;
+        width: 90%;
+        border-style: dashed;
+    }
+}
+
+div.img-container {
+    display: flex;
+    margin: 10px;
+    padding: 10px;
+
+    img {
+        width: 40px;
+    }
+}
+
+div.folder-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+div.info-container {
+    width: 10%;
+    margin: 10px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+        height: 25px;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
 }
