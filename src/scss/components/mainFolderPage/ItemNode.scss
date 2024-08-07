@@ -3,18 +3,18 @@ div.item-node {
     margin: 15px 0 0 0;
     border-style: dashed;
     display: flex;
-    text-align: center;
 
     span {
         align-content: center;
     }
 
     span.item-title {
-        width: 80%;
+        width: 70%;
+        padding: 0 0 0 30px;
     }
 
     span.item-node-stats {
-        margin: 0 10px 0 10px;
+        margin: 0 auto 0 auto;
 
         label {
             margin: 0 5px 0 5px;

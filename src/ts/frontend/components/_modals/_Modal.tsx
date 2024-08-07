@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import "@scss/components/_modals/Modal.scss"
-import { setIsFolderTreeModalOpen, ModalActionT } from "@store/modal/ModalActions";
+import { setIsFolderModalOpen, setIsFolderTreeModalOpen, setIsItemModalOpen, ModalActionT } from "@store/modal/ModalActions";
 
 interface ModalI {
   className: string
@@ -45,16 +45,19 @@ const Modal = (props: ModalI) => {
 
   const handleBackdropClick = () => {
     switch (className) {
-      case 'login-modal':
+      case 'folder-modal':
+        dispatch(setIsFolderModalOpen(false))
         break
-
       case 'folder-tree-modal':
         dispatch(setIsFolderTreeModalOpen(false))
         break
-
+      case 'item-modal':
+        dispatch(setIsItemModalOpen(false))
+        break
+      case 'login-modal':
+        break
       default:
         throw new Error('Invalid param.')
-
     }
   }
 

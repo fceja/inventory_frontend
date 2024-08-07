@@ -55,11 +55,9 @@ const FolderTreeModal = () => {
     const { folderId } = useSelector((state: RootState) => state.folderState);
 
     return (
-        <div className="folder-tree-ref">
-            <Modal className="folder-tree-modal">
-                <FolderTree folders={FOLDERS} upToFolderId={folderId} />
-            </Modal>
-        </div>
+        <Modal className="folder-tree-modal">
+            <FolderTree folders={FOLDERS} upToFolderId={folderId} />
+        </Modal>
     )
 }
 
