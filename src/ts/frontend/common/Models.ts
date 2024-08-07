@@ -16,5 +16,6 @@ export interface SubFolderModelI {
 export interface ItemModelI {
     itemId: string,
     name: string,
+    quantity: string,
     nodeType: string;
 }

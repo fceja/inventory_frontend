@@ -3,9 +3,21 @@ div.item-node {
     margin: 15px 0 0 0;
     border-style: dashed;
     display: flex;
-    justify-content: center;
+    text-align: center;
 
     span {
         align-content: center;
+    }
+
+    span.item-title {
+        width: 80%;
+    }
+
+    span.item-node-stats {
+        margin: 0 10px 0 10px;
+
+        label {
+            margin: 0 5px 0 5px;
+        }
     }
 }

@@ -28,7 +28,11 @@ const ItemNode: React.FC<PropsI> = (props) => {
             <div
                 className={"item-node"}
                 onClick={() => handleItemClick(itemData.itemId)}>
-                <span>{`${itemData.name} ${itemData.nodeType}`}</span>
+                <span className="item-title">{`${itemData.name} ${itemData.nodeType}`}</span>
+                <span className="item-node-stats">
+                    <label>{`Qty:`}</label>
+                    <label>{`${itemData.quantity}`}</label>
+                </span>
             </div >
             {isItemModalOpen &&
                 <ItemModal />
