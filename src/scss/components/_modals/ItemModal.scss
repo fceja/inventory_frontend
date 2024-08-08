@@ -1,92 +1,92 @@
 @import "@scss/Variables.scss";
 
-$menu-bar-container-height: 60px;
-$menu-bar-container-width: 52px;
-
 #item-modal {
     width: 300px;
     background-color: white;
 }
 
 div.item-modal-header {
-    padding: 20px 10px 20px 10px;
+    box-sizing: border-box;
+    height: 70px;
     position: relative;
-    height: $menu-bar-container-height;
     display: flex;
     justify-content: space-between;
+    padding: 2px;
+}
 
-    span.edit-options {
-        height: inherit;
-        position: relative;
+$svg-width: 50px;
+$svg-height: 50px;
+$svg-fill: rgb(156, 156, 156);
 
-        svg {
-            height: inherit;
-            position: absolute;
-            fill: rgb(156, 156, 156);
-        }
+span.edit-options {
+    box-sizing: border-box;
+    margin: 0 0 0 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 
-        span.disabled-text {
-            background-color: gray;
-            position: absolute;
-            top: 70px;
-            left: 20px;
-            width: 200px;
-            height: 150px;
-            align-content: center;
-            text-align: center;
-
-            button {
-                margin: 5px 0 0 0;
-            }
-        }
-    }
-
-    div.header-item-menu-options {
-        background-color: gray;
-        position: absolute;
-        top: 70px;
-        left: 20px;
-        width: 150px;
-        height: 150px;
-        align-content: center;
-
-        ul li {
-            padding: 3px 0;
-        }
-    }
-
-    span.modal-close {
-        max-height: $menu-bar-container-height;
-        min-height: $menu-bar-container-height;
-        max-width: $menu-bar-container-width;
-        min-width: $menu-bar-container-width;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-evenly;
+    svg {
+        width: $svg-width;
+        height: calc(#{$svg-height} - 8px);
+        fill: $svg-fill;
         cursor: pointer;
+    }
 
-        div.bar {
-            width: 100%;
-            height: 10px;
-            background-color: $default-app-color;
-            border-radius: 0.5em;
+}
 
-            &:nth-child(1) {
-                transform: translate(0, 13px) rotate(45deg);
-            }
+span.close-btn {
+    margin: 0 10px 0 0;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    cursor: pointer;
 
-            &:nth-child(2) {
-                transform: translate(0, -10px) rotate(-45deg);
-            }
-        }
+    svg {
+        height: $svg-height;
+        width: $svg-width;
+        fill: $svg-fill;
+    }
+}
+
+span.disabled-text {
+    position: absolute;
+    top: 70px;
+    left: 20px;
+    width: 200px;
+    height: 150px;
+    align-content: center;
+    text-align: center;
+    background-color: gray;
+
+    button {
+        margin: 5px 0 0 0;
+        cursor: pointer;
+    }
+}
+
+div.header-item-menu-options {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    top: 70px;
+    left: 20px;
+    background-color: gray;
+
+    ul li {
+        padding: 3px 0;
+    }
+
+    button {
+        cursor: pointer;
     }
 }
 
 div.item-modal-confirm-delete {
-    padding: 10px;
     box-sizing: border-box;
     height: 200px;
     width: 300px;
+    padding: 10px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -94,8 +94,8 @@ div.item-modal-confirm-delete {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: whitesmoke;
     text-align: center;
+    background-color: whitesmoke;
 
     div.confirm-btns {
         margin-top: 25px;

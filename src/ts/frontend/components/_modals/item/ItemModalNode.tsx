@@ -41,8 +41,8 @@ const ItemNodeModal = () => {
                     </div>
                     <div className="item-description">
                         <div className="item-details">
-                            <div>Folder path: TODO</div>
-                            <div >{`Item name: ${itemData.name}`}</div>
+                            <div className="item-path">Folder path: TODO</div>
+                            <div className="item-name">{`Item name: ${itemData.name}`}</div>
                         </div>
                         <div className="item-quantity">
                             <span>Quantity: {`${itemData.quantity}`}</span>
