@@ -9,49 +9,54 @@
     border-style: dashed;
 }
 
-.item {
 
-    &-image,
-    &-qrcode {
-        width: 125px;
-        height: 125px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-style: dashed;
+span.item-image,
+span.item-qrcode {
+    width: 125px;
+    height: 125px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-style: dashed;
+}
+
+div.item-description {
+    padding: 15px;
+}
+
+div.item-quantity {
+    height: 50px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    border-style: dashed;
+
+    span {
+        width: 50%;
     }
+}
 
-    &-description {
-        padding: 15px;
+div.item-details {
+    height: 50px;
+    padding: 10px;
+    border-style: dashed;
+
+    div.item-path,
+    div.item-name {
+        white-space: nowrap;
+        overflow-x: scroll;
+        scrollbar-width: none;
     }
+}
 
-    &-details {
-        height: 50px;
-        padding: 10px;
-        border-style: dashed;
-    }
+div.item-price {
+    height: 50px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    border-style: dashed;
 
-    &-quantity {
-        height: 50px;
-        padding: 10px;
-        display: flex;
-        align-items: center;
-        border-style: dashed;
-
-        span {
-            width: 50%;
-        }
-    }
-
-    &-price {
-        height: 50px;
-        padding: 10px;
-        display: flex;
-        align-items: center;
-        border-style: dashed;
-
-        span {
-            width: 50%;
-        }
+    span {
+        width: 50%;
     }
 }

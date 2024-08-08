@@ -1,5 +1,23 @@
-.item-node {
+div.item-node {
     height: 100px;
     margin: 15px 0 0 0;
     border-style: dashed;
+    display: flex;
+
+    span {
+        align-content: center;
+    }
+
+    span.item-title {
+        width: 70%;
+        padding: 0 0 0 30px;
+    }
+
+    span.item-node-stats {
+        margin: 0 auto 0 auto;
+
+        label {
+            margin: 0 5px 0 5px;
+        }
+    }
 }

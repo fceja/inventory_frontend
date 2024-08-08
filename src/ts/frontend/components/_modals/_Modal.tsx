@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { useDispatch } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import "@scss/components/_modals/Modal.scss"
+import { setIsFolderModalOpen, setIsFolderTreeModalOpen, setIsItemModalOpen, ModalActionT } from "@store/modal/ModalActions";
 
 interface ModalI {
   className: string
@@ -9,8 +12,9 @@ interface ModalI {
 }
 
 const Modal = (props: ModalI) => {
-  const [modalRootContainer, setModalRootContainer] = useState<null | HTMLDivElement>(null);
   const { className, children } = props
+  const dispatch: Dispatch<ModalActionT> = useDispatch();
+  const [modalRootContainer, setModalRootContainer] = useState<null | HTMLDivElement>(null);
 
   const addRootDivToHtmlBody = () => {
     const div = document.createElement("div");
@@ -31,14 +35,37 @@ const Modal = (props: ModalI) => {
 
   useEffect(() => {
     addRootDivToHtmlBody()
+    document.body.classList.add("modal-open")
 
-    return (() => removeRootDivFromHtmlBody())
+    return (() => {
+      removeRootDivFromHtmlBody()
+      document.body.classList.remove("modal-open")
+    })
   }, [])
+
+  const handleBackdropClick = () => {
+    switch (className) {
+      case 'folder-modal':
+        dispatch(setIsFolderModalOpen(false))
+        break
+      case 'folder-tree-modal':
+        dispatch(setIsFolderTreeModalOpen(false))
+        break
+      case 'item-modal':
+        dispatch(setIsItemModalOpen(false))
+        break
+      case 'login-modal':
+        break
+      default:
+        throw new Error('Invalid param.')
+    }
+  }
 
   if (!modalRootContainer) return null;
 
   return createPortal(
     <>
+      <div className="modal-backdrop" onClick={handleBackdropClick}></div>
       <div id={`${className}`} className={`modal shadow`}>
         {children}
       </div>

@@ -6,6 +6,8 @@ import { RootState } from "@store/ConfigureStore";
 import FolderTreeModal from "@components/_modals/folder/FolderTreeModal"
 import { setIsFolderTreeModalOpen, ModalActionT } from "@store/modal/ModalActions";
 
+const FOLDER_TREE_CLASSNAME = "folder-tree-btn"
+
 const FolderTreeButton = () => {
     const dispatch: Dispatch<ModalActionT> = useDispatch();
     const { isFolderTreeModalOpen } = useSelector((state: RootState) => state.modalState);
@@ -13,7 +15,7 @@ const FolderTreeButton = () => {
     return (
         <>
             <span
-                className="folder-tree-btn"
+                className={FOLDER_TREE_CLASSNAME}
                 onClick={() => dispatch(setIsFolderTreeModalOpen(!isFolderTreeModalOpen))}>
                 {/* Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc. */}
                 <svg

@@ -5,6 +5,7 @@ import { RootState } from "@store/ConfigureStore";
 import Modal from "@components/_modals/_Modal"
 import FolderTree from "@common/components/FolderTree"
 
+// TODO - retrieve from api
 const FOLDERS = [
     {
         "folderId": 0,

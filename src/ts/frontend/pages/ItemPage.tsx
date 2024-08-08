@@ -27,8 +27,6 @@ const ItemPage = () => {
     }, [])
 
     useEffect(() => {
-        console.log('in here itemdata')
-
         if (itemData) {
             setItemName(itemData.name)
             setFolderPath(PAGE_PATHS.MAIN_FOLDERS.replace(":folderId", `${itemData.parentFolderId}`))
