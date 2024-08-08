@@ -57,26 +57,26 @@ div.ham-state {
         span.ham-top-line {
             top: 0;
 
+            transform: translate(0, 3px);
+            transform: translate(.1px, 3px);
+
             &:before,
             &:after {
                 top: 0;
             }
-
-            transform: translate(0, 3px);
-            transform: translate(.1px, 3px);
         }
 
         // animates to left arrow
         span.ham-bot-line {
             bottom: 0;
 
+            transform: translate(0, -3px);
+            transform: translate(-.1px, -3px);
+
             &:before,
             &:after {
                 bottom: 0;
             }
-
-            transform: translate(0, -3px);
-            transform: translate(-.1px, -3px);
         }
     }
 
