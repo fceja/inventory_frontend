@@ -75,7 +75,7 @@ const AddNodeButton = () => {
             {/* read only mode */}
             {!isEditor && isAddNodeBtnClicked &&
                 <div className={SELECTION_DIV_CLASS_NAME}>
-                    <span className="disabled-text">Feature disabled. <br /> READ-ONLY mode.</span>
+                    <span className="add-overlay-disabled-text">Feature disabled. <br /> READ-ONLY mode.</span>
                     <button onClick={() => handleSelectionBtnClicks('exit')}>Exit</button>
                 </div>
             }

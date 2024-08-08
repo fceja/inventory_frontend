@@ -46,11 +46,11 @@ const ItemNodeModal = () => {
                         </div>
                         <div className="item-quantity">
                             <span>Quantity: {`${itemData.quantity}`}</span>
-                            <span>Min Level: {itemData.minLevel ? itemData.minLevel : '-'}</span>
+                            <span>Min level: {itemData.minLevel ? itemData.minLevel : '-'}</span>
                         </div>
                         <div className="item-price">
                             <span>Price: {`$${itemData.price}`}</span>
-                            <span>Total Value: {`$${itemData.quantity * itemData.price}`}</span>
+                            <span>Total value: {`$${itemData.quantity * itemData.price}`}</span>
                         </div>
                     </div>
                 </>

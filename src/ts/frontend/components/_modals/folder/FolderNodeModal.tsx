@@ -35,27 +35,28 @@ const FolderNodeModal = () => {
 
     return (
         <div className="folder-container">
-            <span>Folder Info</span>
-            <div className="folder-details">
-                {statsData &&
-                    <>
-                        <label className="folder-name">Name: {selectedFolderName}</label>
-                        <label className="folder-count">Sub-folders: {statsData.folderTotal}</label>
-                    </>
-                }
+            <div className="folder-title">Folder Info</div>
+            <div className="folder-node-info">
+                <div className="folder-details">
+                    {statsData &&
+                        <>
+                            <div className="folder-name">Name: {selectedFolderName}</div>
+                            <div className="folder-count">Subfolders: {statsData.folderTotal}</div>
+                        </>
+                    }
+                </div>
             </div>
-            <span>Item Info</span>
-            <div className="folder-item-details">
-                {statsData &&
-                    <>
-                        <label className="folder-items-count">Item Total: {statsData.itemTotal}</label>
-                        <label className="folder-items-quantity">Quantity Total: {statsData.quantityTotal}</label>
-                        <label className="folder-total-value">Value Total: ${statsData.valueTotal}</label>
-                    </>
-                }
-            </div>
-            <div className="btn-edit">
-                <button>Edit</button>
+            <div className="item-title">Item Info</div>
+            <div className="item-node-info">
+                <div className="folder-item-details">
+                    {statsData &&
+                        <>
+                            <div className="folder-items-count">Item total: {statsData.itemTotal}</div>
+                            <div className="folder-items-quantity">Quantity total: {statsData.quantityTotal}</div>
+                            <div className="folder-total-value">Value total: ${statsData.valueTotal}</div>
+                        </>
+                    }
+                </div>
             </div>
         </div>
     )

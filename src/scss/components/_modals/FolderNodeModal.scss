@@ -1,26 +1,44 @@
 .folder-container {
-
-    margin: 0 10px 0 10px;
+    margin: 10px 10px 0 10px;
+    padding: 15px;
 }
 
-.folder-details {
-    padding: 25px;
+span.folder-name {
+    white-space: nowrap;
+    overflow-x: scroll;
+    scrollbar-width: none;
+}
+
+div.folder-node-info {
+    margin: 5px 0 0 0;
     border-style: dashed;
+    padding: 5px;
+
+    .folder-details {
+
+        div.folder-name,
+        div.folder-count {
+            white-space: nowrap;
+            overflow-x: scroll;
+            scrollbar-width: none;
+            margin: 5px 0;
+        }
+    }
 }
 
-.folder-item-details {
-    padding: 25px;
+div.item-title {
+    margin: 20px 0 0 0;
+}
+
+div.item-node-info {
+    margin: 5px 0 0 0;
     border-style: dashed;
-}
+    padding: 5px;
 
-.folder {
+    .folder-item-details {
 
-    &-name,
-    &-count,
-    &-items-count,
-    &-items-quantity,
-    &-total-value {
-        display: flex;
-        flex-direction: row;
+        div {
+            margin: 5px 0;
+        }
     }
 }
