@@ -12,6 +12,8 @@ div.ham-container {
 div.ham-state {
     width: 30px;
     height: 30px;
+    width: 45px;
+    height: 45px;
     position: relative;
 
     div.ham-top-bot-lines {
@@ -80,18 +82,20 @@ div.ham-state {
         }
     }
 
+    /*  */
+    /* middle line bar */
     svg {
         display: block;
         fill: none;
         stroke: $default-app-color;
-        stroke-width: 2px;
-        width: 44px;
-        height: 44px;
+        stroke-width: 1.7px;
+        width: 51px;
+        height: 51px;
         stroke-linecap: round;
         position: absolute;
         left: 50%;
         top: 50%;
-        margin: -22px 0 0 -22px;
+        margin: -25.5px 0 0 -25.5px;
         stroke-dasharray: 0 82.801 8 82.801;
         stroke-dashoffset: 82.801;
         transform-origin: 50% 50%;
@@ -118,35 +122,39 @@ div.ham-state.clicked {
             }
         }
 
-        // animates to right arrow
+        /* clicked x lines */
+        /* animates to right arrow */
         span.ham-top-line {
+
+            /* top right line*/
             &:before {
-                transform: rotate(45deg) translate(2.2px, -3px) scaleX(1.05);
+                transform: rotate(45deg) translate(5px, -2.75px) scaleX(1.2);
             }
 
             &:after {
-                transform: rotate(-45deg) translate(-2.2px, -3px) scaleX(1.05);
+                transform: rotate(-45deg) translate(-5px, -2.75px) scaleX(1.2);
             }
 
         }
 
-        // animates to left arrow
+        /* clicked x lines */
+        /* animates to left arrow */
         span.ham-bot-line {
             &:before {
-                transform: rotate(-45deg) translate(2.2px, 3px) scaleX(1.05);
+                transform: rotate(-45deg) translate(5px, 2.75px) scaleX(1.2);
             }
 
             &:after {
-                transform: rotate(45deg) translate(-2.2px, 3px) scaleX(1.05);
+                transform: rotate(45deg) translate(-5px, 2.75px) scaleX(1.2);
             }
         }
     }
 
+    /* clicked circle */
     svg {
         stroke-dashoffset: 62;
         stroke-dasharray: 0 82.801 62 82.801;
         transform: rotate(90deg);
-        stroke: $default-app-color;
 
         &:nth-child(3) {
             transform: rotate(270deg);
