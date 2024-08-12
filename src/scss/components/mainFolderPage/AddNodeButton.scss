@@ -1,4 +1,4 @@
-$add-btn-overlay-color: #5e53ff;
+@import "@scss/Variables.scss";
 
 .add-node-btn-overlay {
     position: fixed;
@@ -12,7 +12,7 @@ $add-btn-overlay-color: #5e53ff;
     text-align: center;
 
     svg {
-        fill: $add-btn-overlay-color;
+        fill: $default-app-color;
     }
 }
 
