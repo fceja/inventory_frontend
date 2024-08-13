@@ -51,9 +51,9 @@ const FolderNodeModal = () => {
                 <div className="folder-item-details">
                     {statsData &&
                         <>
-                            <div className="folder-items-count">Item total: {statsData.itemTotal}</div>
-                            <div className="folder-items-quantity">Quantity total: {statsData.quantityTotal}</div>
-                            <div className="folder-total-value">Value total: ${statsData.valueTotal}</div>
+                            <div className="folder-items-count">Subitem total: {statsData.itemTotal}</div>
+                            <div className="folder-items-quantity">Aggregated Qnty total: {statsData.quantityTotal}</div>
+                            <div className="folder-total-value">Aggregated value total: ${statsData.valueTotal}</div>
                         </>
                     }
                 </div>

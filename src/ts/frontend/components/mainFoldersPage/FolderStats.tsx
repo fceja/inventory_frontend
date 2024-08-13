@@ -34,10 +34,10 @@ const FolderStats = React.memo(() => {
         <>
             {statsData &&
                 <div className="folder-stats">
-                    <label className="folder-stats-count">Folder Total: {statsData.folderTotal}</label>
-                    <label className="folder-stats-items-count">Item Total: {statsData.itemTotal}</label>
-                    <label className="folder-stats-items-quantity">Quantity Total: {statsData.quantityTotal}</label>
-                    <label className="folder-stats-total-value">Value Total: ${statsData.valueTotal}</label>
+                    <label className="folder-stats-count">Subfolder Total: {statsData.folderTotal}</label>
+                    <label className="folder-stats-items-count">Subitem Total: {statsData.itemTotal}</label>
+                    <label className="folder-stats-items-quantity">Aggregated Qnty Total: {statsData.quantityTotal}</label>
+                    <label className="folder-stats-total-value">Aggregated Value Total: ${statsData.valueTotal}</label>
                 </div >
             }
         </>

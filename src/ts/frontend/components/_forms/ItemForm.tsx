@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { Dispatch } from 'redux';
+import { useDispatch, useSelector } from "react-redux";
 
 import "@scss/components/_forms/ItemForm.scss"
 import { RootState } from "@store/ConfigureStore";
 import ItemsApi, { ItemsModelI } from "@api/ItemsApi";
+import { setIsAddItemModalOpen, ModalActionT } from "@store/modal/ModalActions";
 
 const DEFAULT_NODE_TYPE = 'item'
 
@@ -16,6 +18,7 @@ const convertToIntIfNumber = (name: string, value: string) => {
 
 const ItemForm = () => {
     const { folderId } = useSelector((state: RootState) => state.folderState);
+    const dispatch: Dispatch<ModalActionT> = useDispatch();
 
     const [formData, setFormData] = useState<ItemsModelI>({
         cost: null,
@@ -37,18 +40,24 @@ const ItemForm = () => {
         }));
     };
 
+    const handleClose = () => {
+        dispatch(setIsAddItemModalOpen(false))
+    };
+
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         const response = await ItemsApi().createItem(formData);
         if (response && response.status === 200 && response.data.success) {
             console.log("Item created.");
+            handleClose()
+            window.location.reload();
         }
     };
 
     return (
         <form id="add-item-form" onSubmit={handleSubmit}>
-            <label className="add-item-name" htmlFor="item-name-input">Enter Item Name</label>
+            <label className="add-item-name" htmlFor="item-name-input">New item name</label>
             <input
                 type="string"
                 name="name"

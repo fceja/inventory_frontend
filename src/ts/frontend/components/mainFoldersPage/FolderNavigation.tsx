@@ -12,7 +12,7 @@ const FolderNavigation = React.memo(() => {
     return (
         <nav className="folder-hierarchy-nav">
             < FolderTreeButton />
-            <span> {folderName} </span>
+            <span>Current folder: {folderName} </span>
             <FolderLevelUp />
         </nav >
     )
