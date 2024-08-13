@@ -339,7 +339,12 @@ const FolderTree: React.FC<PropsI> = (props) => {
 
     return (
         <>
-            {finalFolderTree && <div className="folder-tree">{finalFolderTree}</div >}
+            {finalFolderTree &&
+                <>
+                    <span className="folder-tree-todo">TODO: Integrate</span>
+                    <div className="folder-tree">{finalFolderTree}</div >
+                </>
+            }
         </>
     )
 

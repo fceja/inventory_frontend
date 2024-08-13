@@ -1,7 +1,8 @@
 @import "@scss/Variables.scss";
 
 #item-modal {
-    width: 300px;
+    min-width: 350px;
+    min-height: 470px;
     background-color: white;
 }
 
@@ -67,14 +68,15 @@ span.disabled-text {
 
 div.header-item-menu-options {
     width: 150px;
-    height: 150px;
+    height: 170px;
     position: absolute;
     top: 70px;
     left: 20px;
-    background-color: gray;
+    background-color: rgb(163, 162, 162);
 
     ul li {
         padding: 3px 0;
+        list-style: none;
     }
 
     button {
@@ -95,7 +97,7 @@ div.item-modal-confirm-delete {
     flex-direction: column;
     justify-content: center;
     text-align: center;
-    background-color: whitesmoke;
+    background-color: rgb(163, 162, 162);
 
     div.confirm-btns {
         margin-top: 25px;

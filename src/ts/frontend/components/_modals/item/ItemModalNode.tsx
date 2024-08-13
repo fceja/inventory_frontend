@@ -7,33 +7,51 @@ import ItemsApi from "@api/ItemsApi"
 import NotFoundPage from "@pages/NotFoundPage";
 
 interface ItemDataI {
-    parentFolderId: number,
-    name: string,
-    minLevel: string
-    quantity: number
-    price: number
+    parentFolderId: number;
+    name: string;
+    minLevel: string;
+    quantity: number;
+    price: number;
+}
+interface ItemNodeModalI {
+    onFetchedData: () => void;
 }
 
-const ItemNodeModal = () => {
+const ItemNodeModal: React.FC<ItemNodeModalI> = (props) => {
+    const { onFetchedData } = props
     const { selectedItemId } = useSelector((state: RootState) => state.itemState);
     const [itemData, setItemData] = useState<ItemDataI | null>(null)
+    const [isLoading, setIsLoading] = useState(true)
+    const [isError, setIsError] = useState(false)
 
     useEffect(() => {
-        const fetchData = async () => {
-            if (!selectedItemId) return;
+        try {
 
-            const response = await ItemsApi().getItemByItemId(selectedItemId);
-            if (response && response.status === 200 && response.data.success)
-                setItemData(response.data.item)
+            const fetchData = async () => {
+                if (!selectedItemId) return;
 
+                const response = await ItemsApi().getItemByItemId(selectedItemId);
+                if (response && response.status === 200 && response.data.success) {
+                    setItemData(response.data.item)
+                    onFetchedData()
+                }
+
+            }
+            fetchData();
+        } catch (_) {
+            setIsError(true)
+
+        } finally {
+            setIsLoading(false)
         }
-        fetchData();
 
     }, [])
 
     return (
         <>
-            {!itemData ? <NotFoundPage /> :
+            {isLoading && <div>...loading</div>}
+            {isError && <NotFoundPage />}
+            {itemData &&
                 <>
                     <div className="item-images-qr">
                         <span className="item-image">Image</span>
