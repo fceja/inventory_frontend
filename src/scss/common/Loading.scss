@@ -1,0 +1,27 @@
+.loading-item-modal {
+    color: rgb(218, 218, 218);
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* spinner styles */
+.loading-spinner {
+    width: 80px;
+    height: 80px;
+    border: 10px solid #f3f3f3;
+    border-top: 10px solid teal;
+    border-radius: 50%;
+    animation: spin .3s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
