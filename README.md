@@ -74,3 +74,14 @@ This project works together with the following repositories:
       height="70"
     /></a>
 </p>
+
+## Screenshots
+
+1. Main folder content page
+   
+      <img src="screenshots/main.png" alt="Screenshot image" width="500"/>
+
+2. Search results page
+   
+      <img src="screenshots/search.png" alt="Screenshot image" width="500"/>
+   
