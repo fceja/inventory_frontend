@@ -1,6 +1,7 @@
 # Description
 
 Inventory App - organizes and manages items, as well as providing analytics. <br/>
+Supports role based login functionality.
 
 ** Currently under development. **
 
