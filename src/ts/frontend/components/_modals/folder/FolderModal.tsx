@@ -5,6 +5,7 @@ import { Dispatch } from 'redux';
 import "@scss/components/_modals/FolderModal.scss"
 import FolderNodeModal from "@components/_modals/folder/FolderNodeModal"
 import { setSelectedFolderId, setSelectedFolderName, FolderActionT } from "@store/folder/FolderActions";
+import Loading from "@common/components/Loading"
 import Modal from "@components/_modals/_Modal";
 import { setIsFolderModalOpen, ModalActionT } from "@store/modal/ModalActions";
 import useUserHasEditorRole from "@hooks/useUserHasEditorRole"
@@ -12,6 +13,7 @@ import useUserHasEditorRole from "@hooks/useUserHasEditorRole"
 const FolderModal = () => {
     const dispatch: Dispatch<FolderActionT | ModalActionT> = useDispatch();
     const isEditor = useUserHasEditorRole()
+    const [isLoading, setIsLoading] = useState(true);
     const [isOptionsMenuOpen, setIsOptionsMenuOpen] = useState(false)
 
     const handleCloseClick = () => {
@@ -19,6 +21,8 @@ const FolderModal = () => {
         dispatch(setSelectedFolderId(null))
         dispatch(setSelectedFolderName(null))
     }
+
+    const handleFetchedData = () => { setIsLoading(false) }
 
     const handleHeaderOptionsClick = () => { setIsOptionsMenuOpen(!isOptionsMenuOpen) }
 
@@ -77,7 +81,8 @@ const FolderModal = () => {
                         <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" /></svg>
                 </span>
             </ div>
-            <FolderNodeModal />
+            {isLoading && <Loading className="folder-modal" />}
+            <FolderNodeModal onFetchedData={handleFetchedData} />
         </Modal >
     );
 };

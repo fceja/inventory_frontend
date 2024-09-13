@@ -77,7 +77,7 @@ const SearchForm = (props: SearchFormI) => {
                     disabled={isSearchInputDisabled}
                 />
                 <div className="checkboxes">
-                    <label htmlFor={"folders"} className={`${showCheckboxError && "error-underline"}`}>
+                    <label htmlFor={"foldersCheckbox"} className={`${showCheckboxError && "error-underline"}`}>
                         Folders
                         <input
                             type="checkbox"
@@ -87,7 +87,7 @@ const SearchForm = (props: SearchFormI) => {
                             checked={formData.includeFolders}
                         />
                     </label>
-                    <label htmlFor="items" className={`${showCheckboxError && "error-underline"}`}>
+                    <label htmlFor="itemsCheckbox" className={`${showCheckboxError && "error-underline"}`}>
                         Items
                         <input
                             type="checkbox"

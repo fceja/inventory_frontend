@@ -41,9 +41,7 @@ const ItemModal = () => {
     window.location.reload();
   }
 
-  const handleFetchedData = () => {
-    setIsLoading(false)
-  }
+  const handleFetchedData = () => { setIsLoading(false) }
 
   const handleHeaderOptionsClick = () => { setIsOptionsMenuOpen(!isOptionsMenuOpen) }
 

@@ -12,14 +12,14 @@ interface statsDataI {
     valueTotal: number | null
 }
 
-const FolderNodeModal = () => {
+interface FolderNodeModalI {
+    onFetchedData: () => void;
+}
+
+const FolderNodeModal: React.FC<FolderNodeModalI> = (props) => {
+    const { onFetchedData } = props
     const { selectedFolderId, selectedFolderName } = useSelector((state: RootState) => state.folderState);
-    const [statsData, setStatsData] = useState<statsDataI>({
-        folderTotal: null,
-        itemTotal: null,
-        quantityTotal: null,
-        valueTotal: null
-    })
+    const [statsData, setStatsData] = useState<statsDataI | null>(null)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -28,6 +28,7 @@ const FolderNodeModal = () => {
             const response = await FoldersApi().getAggregatedDataByFolderId(selectedFolderId);
             if (response && response.status === 200 && response.data.success) {
                 setStatsData(response.data.folder)
+                onFetchedData()
             }
         }
         fetchData()
@@ -35,29 +36,27 @@ const FolderNodeModal = () => {
 
     return (
         <div className="folder-container">
-            <div className="folder-title">Folder Info</div>
-            <div className="folder-node-info">
-                <div className="folder-details">
-                    {statsData &&
-                        <>
-                            <div className="folder-name">Name: {selectedFolderName}</div>
-                            <div className="folder-count">Subfolders: {statsData.folderTotal}</div>
-                        </>
-                    }
-                </div>
-            </div>
-            <div className="item-title">Item Info</div>
-            <div className="item-node-info">
-                <div className="folder-item-details">
-                    {statsData &&
-                        <>
+            {statsData &&
+                <>
+                    <div className="folder-title">Folder Info</div>
+                    <div className="folder-node-info">
+                        <div className="folder-details">
+                            <>
+                                <div className="folder-name">Name: {selectedFolderName}</div>
+                                <div className="folder-count">Subfolders: {statsData.folderTotal}</div>
+                            </>
+                        </div>
+                    </div>
+                    <div className="item-title">Item Info</div>
+                    <div className="item-node-info">
+                        <div className="folder-item-details">
                             <div className="folder-items-count">Subitem total: {statsData.itemTotal}</div>
                             <div className="folder-items-quantity">Aggregated Qnty total: {statsData.quantityTotal}</div>
                             <div className="folder-total-value">Aggregated value total: ${statsData.valueTotal}</div>
-                        </>
-                    }
-                </div>
-            </div>
+                        </div>
+                    </div>
+                </>
+            }
         </div>
     )
 }

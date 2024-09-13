@@ -9,7 +9,7 @@ import NotFoundPage from "@pages/NotFoundPage";
 interface ItemDataI {
     parentFolderId: number;
     name: string;
-    minLevel: string;
+    minLevel: number;
     quantity: number;
     price: number;
 }
@@ -21,7 +21,6 @@ const ItemNodeModal: React.FC<ItemNodeModalI> = (props) => {
     const { onFetchedData } = props
     const { selectedItemId } = useSelector((state: RootState) => state.itemState);
     const [itemData, setItemData] = useState<ItemDataI | null>(null)
-    const [isLoading, setIsLoading] = useState(true)
     const [isError, setIsError] = useState(false)
 
     useEffect(() => {
@@ -41,15 +40,12 @@ const ItemNodeModal: React.FC<ItemNodeModalI> = (props) => {
         } catch (_) {
             setIsError(true)
 
-        } finally {
-            setIsLoading(false)
         }
 
     }, [])
 
     return (
         <>
-            {isLoading && <div>...loading</div>}
             {isError && <NotFoundPage />}
             {itemData &&
                 <>
