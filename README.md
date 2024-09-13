@@ -1,6 +1,8 @@
 # Description
 
-Inventory App - organizes and manages items, as well as providing analytics. <br/>
+An app that organizes and manages items in a hierarchical folder structure, while also providing analytics.<br/>
+Supports role based login functionality.<br/>
+
 
 ** Currently under development. **
 
@@ -75,13 +77,18 @@ This project works together with the following repositories:
     /></a>
 </p>
 
-## Screenshots
+## Sample Video / Screenshots
 
-1. Main folder content page
+1. Sample Video
+   - [Watch on Wave.video](https://watch.wave.video/DZ5XLdAhAI6OUOyA)
+
+   
+
+3. Screenshot - Main folder content page
    
       <img src="screenshots/main.png" alt="Screenshot image" width="500"/>
 
-2. Search results page
+4. Screenshot - Search results page
    
       <img src="screenshots/search.png" alt="Screenshot image" width="500"/>
    
