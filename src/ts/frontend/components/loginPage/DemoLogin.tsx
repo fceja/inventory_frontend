@@ -16,6 +16,11 @@ const DemoLogin = () => {
       email: email,
       password: password,
     });
+
+    if (!response || !response.data || !response.data.userData) {
+      console.error("Invalid login response:", response);
+      return;
+    }
     const { userId, userRole } = response.data.userData;
 
     dispatch(setUserData(userId, userRole));

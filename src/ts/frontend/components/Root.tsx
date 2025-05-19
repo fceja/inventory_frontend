@@ -7,7 +7,12 @@ import Store from "@store/ConfigureStore";
 const Root = () => {
   return (
     <Provider store={Store}>
-      <BrowserRouter>
+      <BrowserRouter
+        future={{
+          v7_startTransition: true,
+          v7_relativeSplatPath: true,
+        }}
+      >
         <Routes>
           <Route path="/*" element={<App />}></Route>
         </Routes>
