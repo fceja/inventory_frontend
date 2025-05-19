@@ -11,6 +11,7 @@ export default defineConfig({
       "@components": path.resolve(__dirname, "./src/ts/frontend/components"),
       "@common": path.resolve(__dirname, "./src/ts/frontend/common"),
       "@hooks": path.resolve(__dirname, "./src/ts/frontend/hooks"),
+      "@fonts": path.resolve(__dirname, "src/fonts"),
       "@pages": path.resolve(__dirname, "./src/ts/frontend/pages"),
       "@scss": path.resolve(__dirname, "./src/scss"),
       "@store": path.resolve(__dirname, "./src/ts/frontend/store"),

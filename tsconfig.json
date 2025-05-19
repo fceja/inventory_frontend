@@ -2,11 +2,7 @@
   "compilerOptions": {
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
     /* Bundler mode */
@@ -25,39 +21,20 @@
     /* Alias paths */
     "baseUrl": "./",
     "paths": {
-      "@api/*": [
-        "src/ts/api/*"
-      ],
-      "@components/*": [
-        "src/ts/frontend/components/*"
-      ],
-      "@common/*": [
-        "src/ts/frontend/common/*"
-      ],
-      "@hooks/*": [
-        "src/ts/frontend/hooks/*"
-      ],
-      "@pages/*": [
-        "src/ts/frontend/pages/*"
-      ],
-      "@scss/*": [
-        "./src/scss/*"
-      ],
-      "@store/*": [
-        "src/ts/frontend/store/*"
-      ],
-      "@validations/*": [
-        "src/ts/frontend/validations/*"
-      ],
-      "@utils/*": [
-        "src/ts/frontend/utils/*"
-      ]
+      "@api/*": ["src/ts/api/*"],
+      "@components/*": ["src/ts/frontend/components/*"],
+      "@common/*": ["src/ts/frontend/common/*"],
+      "@fonts/*": ["./src/fonts/*"],
+      "@hooks/*": ["src/ts/frontend/hooks/*"],
+      "@pages/*": ["src/ts/frontend/pages/*"],
+      "@scss/*": ["./src/scss/*"],
+      "@store/*": ["src/ts/frontend/store/*"],
+      "@validations/*": ["src/ts/frontend/validations/*"],
+      "@utils/*": ["src/ts/frontend/utils/*"]
     }
   },
   "strictMode": true,
-  "include": [
-    "src"
-  ],
+  "include": ["src"],
   "references": [
     {
       "path": "./tsconfig.node.json"
