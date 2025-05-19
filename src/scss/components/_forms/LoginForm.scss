@@ -4,6 +4,10 @@
     align-items: center;
     justify-content: center;
 
+    span {
+        font-weight: 500;
+    }
+
     input {
         border-radius: 5px;
         border: 1px solid #A4779F;
@@ -20,6 +24,7 @@
         padding: 5px;
         font-size: 1em;
         margin-top: 25px;
-        background-color: rgb(198, 198, 198);
+        background-color: rgb(223, 223, 223);
+        color: #94638e;
     }
 }

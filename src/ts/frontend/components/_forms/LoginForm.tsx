@@ -31,32 +31,30 @@ const LoginForm = () => {
   };
 
   return (
-    <>
+    <form className="login-form" onSubmit={handleSubmit}>
       <span>Please sign in.</span>
-      <form className="login-form" onSubmit={handleSubmit}>
-        <input
-          id="email"
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          autoComplete="email"
-          placeholder="Email"
-          required
-        ></input>
-        <input
-          id="password"
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          autoComplete="current-password"
-          placeholder="Password"
-          required
-        ></input>
-        <button type="submit">Login</button>
-      </form>
-    </>
+      <input
+        id="email"
+        type="email"
+        name="email"
+        value={formData.email}
+        onChange={handleChange}
+        autoComplete="email"
+        placeholder="Email"
+        required
+      ></input>
+      <input
+        id="password"
+        type="password"
+        name="password"
+        value={formData.password}
+        onChange={handleChange}
+        autoComplete="current-password"
+        placeholder="Password"
+        required
+      ></input>
+      <button type="submit">Login</button>
+    </form>
   );
 };
 
