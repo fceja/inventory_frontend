@@ -4,8 +4,22 @@
     align-items: center;
     justify-content: center;
 
-    label,
+    input {
+        border-radius: 5px;
+        border: 1px solid #A4779F;
+        height: 20px;
+        width: 200px;
+        padding: 5px;
+        margin-top: 15px;
+    }
+
     button {
-        margin-top: 10px;
+        border-radius: 5px;
+        border: 1px solid #A4779F;
+        width: 200px;
+        padding: 5px;
+        font-size: 1em;
+        margin-top: 25px;
+        background-color: rgb(198, 198, 198);
     }
 }

@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useDispatch } from 'react-redux';
-import { Dispatch } from 'redux';
+import { useDispatch } from "react-redux";
+import { Dispatch } from "redux";
 
-import "@scss/components/_forms/LoginForm.scss"
+import "@scss/components/_forms/LoginForm.scss";
 import SystemAuthApi from "@api/SystemAuthApi";
-import { setUserData, UserActionT } from "@store/user/UserActions"
+import { setUserData, UserActionT } from "@store/user/UserActions";
 
 const LoginForm = () => {
   const dispatch: Dispatch<UserActionT> = useDispatch();
@@ -23,17 +23,17 @@ const LoginForm = () => {
 
     const response = await SystemAuthApi().systemLogin(formData);
     if (response && response.status === 200 && response.data.success) {
-      const { userId, userRole } = response.data.userData
+      const { userId, userRole } = response.data.userData;
 
-      dispatch(setUserData(userId, userRole))
+      dispatch(setUserData(userId, userRole));
       console.log("Login successful.");
     }
   };
 
   return (
     <>
+      <span>Please sign in.</span>
       <form className="login-form" onSubmit={handleSubmit}>
-        <label htmlFor="email">Email</label>
         <input
           id="email"
           type="email"
@@ -41,9 +41,9 @@ const LoginForm = () => {
           value={formData.email}
           onChange={handleChange}
           autoComplete="email"
+          placeholder="Email"
           required
         ></input>
-        <label htmlFor="password">Password</label>
         <input
           id="password"
           type="password"
@@ -51,6 +51,7 @@ const LoginForm = () => {
           value={formData.password}
           onChange={handleChange}
           autoComplete="current-password"
+          placeholder="Password"
           required
         ></input>
         <button type="submit">Login</button>
