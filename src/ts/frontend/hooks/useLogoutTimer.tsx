@@ -2,36 +2,37 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
 
-import store from "@store/ConfigureStore"
-import { cancelLogoutTimeout, resetLogoutTimer } from "@utils/store/LogoutUtils"
+import store from "@store/ConfigureStore";
+import {
+  cancelLogoutTimeout,
+  resetLogoutTimer,
+} from "@store/utils/LogoutUtils";
 
 export const useLogoutTimer = () => {
-    const dispatch: Dispatch = useDispatch();
+  const dispatch: Dispatch = useDispatch();
 
-    const logoutTimeoutHandler = () => {
-        resetLogoutTimer(dispatch);
+  const logoutTimeoutHandler = () => {
+    resetLogoutTimer(dispatch);
+  };
+
+  const { isAuthd } = store.getState().authState;
+
+  useEffect(() => {
+    if (!isAuthd) {
+      cancelLogoutTimeout();
+      return;
     }
 
-    const { isAuthd } = store.getState().authState
+    document.addEventListener("click", logoutTimeoutHandler);
+    document.addEventListener("mousemove", logoutTimeoutHandler);
+    document.addEventListener("keydown", logoutTimeoutHandler);
 
-    useEffect(() => {
+    logoutTimeoutHandler();
 
-        if (!isAuthd) {
-            cancelLogoutTimeout()
-            return;
-        }
-
-        document.addEventListener('click', logoutTimeoutHandler);
-        document.addEventListener('mousemove', logoutTimeoutHandler);
-        document.addEventListener('keydown', logoutTimeoutHandler);
-
-        logoutTimeoutHandler()
-
-        return () => {
-            document.removeEventListener('click', logoutTimeoutHandler);
-            document.removeEventListener('mousemove', logoutTimeoutHandler);
-            document.removeEventListener('keydown', logoutTimeoutHandler);
-        }
-
-    }, [isAuthd])
-}
+    return () => {
+      document.removeEventListener("click", logoutTimeoutHandler);
+      document.removeEventListener("mousemove", logoutTimeoutHandler);
+      document.removeEventListener("keydown", logoutTimeoutHandler);
+    };
+  }, [isAuthd]);
+};
