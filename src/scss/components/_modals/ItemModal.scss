@@ -1,4 +1,4 @@
-@import "@scss/Variables.scss";
+@use "@scss/Variables.scss" as *;
 
 #item-modal {
     min-width: 350px;

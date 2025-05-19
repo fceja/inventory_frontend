@@ -1,4 +1,4 @@
-@import "@scss/Variables.scss";
+@use "@scss/Variables.scss" as *;
 
 $menu-bar-container-height: 60px;
 $menu-bar-container-width: 52px;

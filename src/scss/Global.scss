@@ -1,5 +1,5 @@
 @use "@scss/fonts/inter.scss";
-@import "@scss/Variables.scss";
+@use "@scss/Variables.scss" as *;
 
 html,
 body {

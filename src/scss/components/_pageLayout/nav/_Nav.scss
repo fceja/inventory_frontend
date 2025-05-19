@@ -1,4 +1,4 @@
-@import "@scss/Variables.scss";
+@use "@scss/Variables.scss" as *;
 
 nav.nav-bar {
   display: flex;
